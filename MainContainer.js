@@ -1,20 +1,20 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Screens
 import Home from "./screens/Home";
 import TechTree from "./screens/TechTree";
 import Mypage from "./screens/Mypage";
 import { StyleSheet } from "react-native";
+import { theme } from "./theme";
 
 //Screen names
-const homeName = "Home";
-const techTreeName = "techTree";
-const myPageName = "myPage";
+export const homeName = "Home";
+export const techTreeName = "Tech Tree";
+export const myPageName = "My Page";
 
 const Tab = createBottomTabNavigator();
-//
 
 export default function MainContainer() {
   return (
@@ -25,34 +25,33 @@ export default function MainContainer() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-            let rn = route.name;
-
-            if (rn === homeName) {
+            let screen = route.name;
+            // Matching screen and icon
+            if (screen === homeName) {
               iconName = focused ? "home" : "home-outline";
-            } else if (rn === techTreeName) {
-              iconName = focused ? "list" : "list-outline";
-            } else if (rn === myPageName) {
-              iconName = focused ? "settings" : "settings-outline";
+            } else if (screen === techTreeName) {
+              iconName = focused ? "graph" : "graph-outline";
+            } else if (screen === myPageName) {
+              iconName = focused ? "account" : "account-outline";
             }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={40}
+                color={theme.black}
+              />
+            );
           },
+          tabBarActiveTintColor: theme.black,
+          tabBarShowLabel: false,
+          headerShown: false,
         })}
       >
         {/* Stack screens instead of routing */}
-        <Tab.Screen name={homeName} component={Home} />
         <Tab.Screen name={techTreeName} component={TechTree} />
+        <Tab.Screen name={homeName} component={Home} />
         <Tab.Screen name={myPageName} component={Mypage} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
