@@ -13,4 +13,5 @@ export const theme = {
   // text:{
   //     black:
   // }
+  marginHorizontal: 12,
 };
