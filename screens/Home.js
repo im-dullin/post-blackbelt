@@ -2,9 +2,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import { Calendar } from "react-native-calendars";
 import profileImg from "../assets/images/profile.png";
+import iconImg from "../assets/favicon.png";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
-const daily = {
+let daily = {
   diary_day: "2022-09-20",
   diary_title: "웨이터스윕, 오모플라타 스파링데이",
   diary_time: "19:30 - 20:30",
@@ -41,23 +43,48 @@ const daily = {
 };
 
 const _format = "YYYY-MM-DD";
-const _today = moment().format(_format);
-const markedDays = {
-  [_today]: {
-    today: true,
-    marked: true,
-  },
+let markedDays = {
   "2022-09-20": {
-    // marked: false,
-    selcted: true,
-    selectedColor: "blue",
-    dotColor: "red",
+    calCategory: "competition",
   },
-  "2022-09-21": { marked: true },
+  "2022-09-21": { calCategory: "openMat" },
   "2022-09-24": { marked: true },
+  "2022-09-25": { calCategory: "competition" },
 };
-
 export default function Home({ navigation }) {
+  const today = moment().format(_format);
+  let [selectedDay, setSelectedDay] = useState(today);
+  let [days, setDays] = useState(markedDays); // days from API
+
+  // Set today at once
+  useEffect(() => {
+    handleToday();
+  });
+  const handleToday = () => {
+    if (days[today]) {
+      markedDays[today] = { ...markedDays[today], today: true };
+    } else {
+      markedDays[today] = { today: true };
+    }
+    setDays(markedDays); // Update days data from api
+  };
+
+  // handle selected day
+  const handleDaySelected = (props) => {
+    const { dateString } = props;
+    // delete previous selected mark
+    const prevSelected = markedDays[selectedDay];
+    if (prevSelected) delete prevSelected["selected"];
+    // create or add selected object to markedDays
+    if (markedDays[dateString]) {
+      markedDays[dateString] = { ...markedDays[dateString], selected: true };
+    } else {
+      markedDays[dateString] = { selected: true };
+    }
+    setDays(markedDays); // Update days data from api
+    setSelectedDay(dateString);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -69,13 +96,13 @@ export default function Home({ navigation }) {
           </Text>
         </View>
       </View>
-      <View style={styles.calCategorayContainer}>
+      <View style={styles.calCategoryContainer}>
         {["가술 연습", "스파링 데이", "대회", "승급", "오픈매트"].map(
           (calCateory, index) => {
             return (
-              <View key={index} style={styles.calCategoray}>
-                <Image style={styles.calCategorayImg} source={profileImg} />
-                <Text style={{ fontSize: 11, color: theme.grey }}>
+              <View key={index} style={styles.calCategory}>
+                <Image style={styles.calCategoryImg} source={profileImg} />
+                <Text style={{ fontSize: 10, color: theme.grey }}>
                   {calCateory}
                 </Text>
               </View>
@@ -95,8 +122,6 @@ export default function Home({ navigation }) {
             arrowColor: theme.purpleDark,
             textMonthFontSize: 20,
             textMonthFontWeight: "400",
-            // selectedDayBackgroundColor: "#57B9BB",
-            // selectedDayTextColor: "white",
           }}
           minDate={"2000-01-01"}
           maxDate={"2030-05-30"}
@@ -106,17 +131,22 @@ export default function Home({ navigation }) {
           showScrollIndicator={true}
           disableMonthChange={true}
           disableAllTouchEventsForDisabledDays={true}
-          onDayPress={(day) => console.log(day)}
           markedDates={markedDays}
           dayComponent={({ date, state, marking }) => {
+            const calCategoryImg = {
+              competition: profileImg,
+              openMat: iconImg,
+            };
             return (
               <TouchableOpacity
+                onPress={handleDaySelected.bind(this, date)} // pre-config function
                 style={{
                   ...styles.calDate,
                   backgroundColor: marking?.today
-                    ? "rgba(100, 100, 100, 0.3)"
+                    ? "rgba(168, 216, 235, 0.4)"
                     : null,
                 }}
+                disabled={state === "disabled" ? true : false}
               >
                 <Text
                   style={{
@@ -126,8 +156,16 @@ export default function Home({ navigation }) {
                 >
                   {date.day}
                 </Text>
-                {marking?.marked === true ? (
-                  <Image style={styles.calDateImg} source={profileImg} />
+                {/* Calendar category icons */}
+                {marking ? (
+                  <Image
+                    style={styles.calDateImg}
+                    source={calCategoryImg[marking?.calCategory]}
+                  />
+                ) : null}
+                {/* Selected marking */}
+                {marking?.selected === true ? (
+                  <View style={styles.calSelected} />
                 ) : null}
               </TouchableOpacity>
             );
@@ -172,23 +210,24 @@ const styles = StyleSheet.create({
   profileContainer: {
     flex: 0.9,
     flexDirection: "row",
-    marginTop: 60,
+    marginTop: 50,
     paddingHorizontal: 15,
+    marginBottom: 5,
   },
   profileImg: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     marginRight: 15,
   },
   profileUserName: {
     color: theme.black,
     fontSize: 22,
-    fontWeight: "600",
+    fontWeight: "400",
     marginBottom: 5,
   },
-  calCategorayContainer: {
-    flex: 0.8,
+  calCategoryContainer: {
+    flex: 0.85,
     backgroundColor: theme.white,
     flexDirection: "row",
     justifyContent: "center",
@@ -197,49 +236,57 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
   },
-  calCategoray: {
+  calCategory: {
     width: 60,
     height: 60,
     marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
   },
-  calCategorayImg: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginBottom: 3,
+  calCategoryImg: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    marginBottom: 2,
   },
   calenderContainer: {
-    flex: 5,
+    flex: 7.5,
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
     borderRadius: 10,
     // backgroundColor: "orange",
   },
   calendar: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
+    borderRadius: 10,
+    // borderBottomColor: "black",
+    // borderBottomWidth: 3,
   },
   calDate: {
     // padding: 5,
-    height: 45,
+    height: 50,
     width: 45,
     alignItems: "center",
     borderRadius: 10,
+    marginBottom: -5,
   },
   calDateText: {
-    fontSize: 10,
+    fontSize: 9,
     textAlign: "center",
   },
   calDateImg: {
     marginTop: 3,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+  },
+  calSelected: {
+    width: 30,
+    height: 2,
+    backgroundColor: theme.purple,
+    marginTop: 3,
   },
   diaryContainer: {
-    flex: 2,
+    flex: 1.9,
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
     marginVertical: 10,
@@ -248,6 +295,7 @@ const styles = StyleSheet.create({
   },
   diaryRow: {
     flexDirection: "row",
+    overflow: "hidden",
   },
   diaryRowTitle: {
     color: theme.grey,
