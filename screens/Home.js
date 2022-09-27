@@ -59,29 +59,56 @@ export default function Home({ navigation }) {
   // Set today at once
   useEffect(() => {
     handleToday();
-  });
+  }, []);
   const handleToday = () => {
     if (days[today]) {
-      markedDays[today] = { ...markedDays[today], today: true };
+      setDays((prevState) => {
+        return {
+          ...prevState,
+          [today]: { ...prevState[today], today: true },
+        };
+      });
     } else {
-      markedDays[today] = { today: true };
+      setDays((prevState) => {
+        return {
+          ...prevState,
+          [today]: { today: true },
+        };
+      });
     }
-    setDays(markedDays); // Update days data from api
   };
 
   // handle selected day
   const handleDaySelected = (props) => {
     const { dateString } = props;
+    const prevSelected = days[selectedDay];
+    const currSelected = days[dateString];
     // delete previous selected mark
-    const prevSelected = markedDays[selectedDay];
-    if (prevSelected) delete prevSelected["selected"];
-    // create or add selected object to markedDays
-    if (markedDays[dateString]) {
-      markedDays[dateString] = { ...markedDays[dateString], selected: true };
-    } else {
-      markedDays[dateString] = { selected: true };
+    if (prevSelected) {
+      setDays((prevState) => {
+        return {
+          ...prevState,
+          [selectedDay]: { ...prevState[selectedDay], selected: false },
+        };
+      });
     }
-    setDays(markedDays); // Update days data from api
+    // create or add selected object to markedDays
+    if (currSelected) {
+      setDays((prevState) => {
+        return {
+          ...prevState,
+          [dateString]: { ...prevState[dateString], selected: true },
+        };
+      });
+    } else {
+      setDays((prevState) => {
+        return {
+          ...prevState,
+          [dateString]: { selected: true },
+        };
+      });
+    }
+    // 왜 리렌더링 안되는가?: 비동기로 동작하므로 useEffect() 의존성 배열 활용  or 인자로 함수를 넣기
     setSelectedDay(dateString);
   };
 
@@ -131,7 +158,7 @@ export default function Home({ navigation }) {
           showScrollIndicator={true}
           disableMonthChange={true}
           disableAllTouchEventsForDisabledDays={true}
-          markedDates={markedDays}
+          markedDates={days}
           dayComponent={({ date, state, marking }) => {
             const calCategoryImg = {
               competition: profileImg,
@@ -139,6 +166,7 @@ export default function Home({ navigation }) {
             };
             return (
               <TouchableOpacity
+                key={date.dateString}
                 onPress={handleDaySelected.bind(this, date)} // pre-config function
                 style={{
                   ...styles.calDate,
