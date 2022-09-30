@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Screens
-import Home from "./screens/Home";
-import TechTree from "./screens/TechTree";
-import Mypage from "./screens/Mypage";
+import Home from "./Home";
+import TechTree from "./TechTree";
+import Mypage from "./Mypage";
 import { StyleSheet } from "react-native";
-import { theme } from "./theme";
+import { theme } from "../theme";
 
 //Screen names
 export const homeName = "Home";
