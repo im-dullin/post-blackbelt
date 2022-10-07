@@ -44,22 +44,33 @@ let daily = {
 
 const _format = "YYYY-MM-DD";
 let markedDays = {
-  "2022-09-20": {
+  "2022-10-5": {
     calCategory: "competition",
   },
-  "2022-09-21": { calCategory: "openMat" },
-  "2022-09-24": { marked: true },
-  "2022-09-25": { calCategory: "competition" },
+  "2022-10-20": {
+    calCategory: "competition",
+  },
+  "2022-10-21": { calCategory: "openMat" },
+  "2022-10-24": { marked: true },
+  "2022-10-25": { calCategory: "competition" },
 };
 export default function Home({ navigation }) {
   const today = moment().format(_format);
   let [selectedDay, setSelectedDay] = useState(today);
-  let [days, setDays] = useState(markedDays); // days from API
+  let [days, setDays] = useState({}); // days from API
+  let [reRender, setRerender] = useState(true);
 
-  // Set today at once
+  // Rerendering button
+  // ✉️ setRerender를 전역 상태로 관리해서 navigation tab 바뀔 때마다 rerendering하자
+  const refreshClicked = () => {
+    setRerender((prev) => !prev);
+  };
+  // fetching data and set today at first rendering
   useEffect(() => {
+    setDays(markedDays);
     handleToday();
-  }, []);
+  }, [reRender]);
+
   const handleToday = () => {
     if (days[today]) {
       setDays((prevState) => {
@@ -114,7 +125,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
+      <View id="profile" style={styles.profileContainer}>
         <Image style={styles.profileImg} source={profileImg} />
         <View style={{ alignContent: "center" }}>
           <Text style={styles.profileUserName}>Rafael Mendes</Text>
@@ -122,14 +133,17 @@ export default function Home({ navigation }) {
             이번 달 00일 중 00일을 수련하셨습니다{" "}
           </Text>
         </View>
+        <TouchableOpacity onPress={refreshClicked}>
+          <Text>refresh</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.calCategoryContainer}>
+      <View id="categories" style={styles.calCategoryContainer}>
         {["가술 연습", "스파링 데이", "대회", "승급", "오픈매트"].map(
           (calCateory, index) => {
             return (
               <View key={index} style={styles.calCategory}>
                 <Image style={styles.calCategoryImg} source={profileImg} />
-                <Text style={{ fontSize: 10, color: theme.grey }}>
+                <Text style={{ fontSize: 10, color: theme.grey, marginTop: 2 }}>
                   {calCateory}
                 </Text>
               </View>
@@ -137,11 +151,10 @@ export default function Home({ navigation }) {
           }
         )}
       </View>
-      <View style={styles.calenderContainer}>
+      <View id="calendar" style={styles.calenderContainer}>
         {/* ✉️ react-native-calendars module: https://github.com/wix/react-native-calendars */}
         <Calendar
           style={styles.calendar}
-          initialDate={"2022-09-01"}
           theme={{
             backgroundColor: "#ffffff",
             calendarBackground: "#ffffff",
@@ -152,11 +165,6 @@ export default function Home({ navigation }) {
           }}
           minDate={"2000-01-01"}
           maxDate={"2030-05-30"}
-          monthFormat={"MMMM yyyy "}
-          scrollEnabled={true}
-          horizontal={true}
-          showScrollIndicator={true}
-          disableMonthChange={true}
           disableAllTouchEventsForDisabledDays={true}
           markedDates={days}
           dayComponent={({ date, state, marking }) => {
@@ -200,19 +208,26 @@ export default function Home({ navigation }) {
           }}
         />
       </View>
-      <View style={styles.diaryContainer}>
+      <View id="selected-diary" style={styles.diaryContainer}>
         <Text
-          style={{ color: theme.purpleDark, fontSize: 16, fontWeight: "500" }}
+          style={{
+            color: theme.purpleDark,
+            fontSize: 14,
+            fontWeight: "500",
+          }}
         >
           03 Sep 2022
         </Text>
-        <View style={styles.diaryRow}>
-          <Text style={styles.diaryRowTitle}>키워드</Text>
-          <Image style={{ width: 25, height: 25 }} source={profileImg} />
+        <View style={styles.diaryRowCategories}>
+          <Image style={styles.diaryRowCategory} source={profileImg} />
+          <Image style={styles.diaryRowCategory} source={profileImg} />
+          <Image style={styles.diaryRowCategory} source={profileImg} />
         </View>
         <View style={styles.diaryRow}>
           <Text style={styles.diaryRowTitle}>기술</Text>
-          <Text>{daily.techtag[0].tech_title}</Text>
+          <Text style={styles.diaryRowContent}>
+            {daily.techtag[0].tech_title}
+          </Text>
         </View>
         {[
           ["시간", daily.diary_time],
@@ -272,10 +287,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   calCategoryImg: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    marginBottom: 2,
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
   },
   calenderContainer: {
     flex: 7.5,
@@ -317,16 +331,36 @@ const styles = StyleSheet.create({
     flex: 1.9,
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
-    marginVertical: 10,
+    marginVertical: 7,
     borderRadius: 10,
-    padding: 15,
+    padding: 10,
+  },
+  diaryRowCategories: {
+    flexDirection: "row",
+    alignContent: "center",
+    marginVertical: 3,
+  },
+  diaryRowCategory: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 8,
   },
   diaryRow: {
     flexDirection: "row",
+    alignContent: "center",
     overflow: "hidden",
+    marginBottom: 1,
+    height: 17,
   },
   diaryRowTitle: {
     color: theme.grey,
+    width: 45,
+    fontSize: 12,
+    // marginRight: 10,
   },
-  diaryRowContent: {},
+  diaryRowContent: {
+    fontSize: 12,
+    alignSelf: "stretch",
+  },
 });

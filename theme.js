@@ -7,6 +7,7 @@ export const theme = {
   skyBlue: "#A8D8EA",
   pink: "#FCBAD3",
   yellow: "#FFFFD2",
+  red: "#f70200",
 
   background: "#F9F9F9",
   techBackground: "#0D1018",
