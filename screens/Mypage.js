@@ -19,28 +19,28 @@ export default function MyPage({ navigation }) {
     {
       name: "standing",
       diaryCount: 3,
-      color: theme.skyBlue,
+      color: theme.standing,
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "guard",
       diaryCount: 10,
-      color: theme.purple,
+      color: theme.guard,
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "guard pass",
       diaryCount: 21,
-      color: theme.purpleDark,
+      color: theme.guardPass,
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "after pass",
       diaryCount: 5,
-      color: theme.pink,
+      color: theme.afterPass,
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
@@ -164,7 +164,7 @@ export default function MyPage({ navigation }) {
             accessor={"diaryCount"}
             backgroundColor={"transparent"}
             paddingLeft={"5"}
-            center={[0, 0]}
+            center={[5, 0]}
             absolute
           />
         </View>
