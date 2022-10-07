@@ -5,6 +5,8 @@ import backgroundImg from "../assets/images/background.jpeg";
 import { theme } from "../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { PieChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
 
 export default function MyPage({ navigation }) {
   const belt = {
@@ -12,6 +14,52 @@ export default function MyPage({ navigation }) {
     rankBar: theme.red,
     grau: 3,
   };
+  const screenWidth = Dimensions.get("window").width;
+  const data = [
+    {
+      name: "standing",
+      diaryCount: 3,
+      color: theme.skyBlue,
+      legendFontColor: theme.grey,
+      legendFontSize: 15,
+    },
+    {
+      name: "guard",
+      diaryCount: 10,
+      color: theme.purple,
+      legendFontColor: theme.grey,
+      legendFontSize: 15,
+    },
+    {
+      name: "guard pass",
+      diaryCount: 21,
+      color: theme.purpleDark,
+      legendFontColor: theme.grey,
+      legendFontSize: 15,
+    },
+    {
+      name: "after pass",
+      diaryCount: 5,
+      color: theme.pink,
+      legendFontColor: theme.grey,
+      legendFontSize: 15,
+    },
+  ];
+  // const data = {
+  //   labels: ["standing", "guard", "guard pass", "after pass", "competition"], // optional
+  //   data: [0.4, 0.6, 0.8, 0.2, 0.5],
+  // };
+  const chartConfig = {
+    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1) => `rgba(93,75,156, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.4,
+    useShadowColorFromDataset: false, // optional
+  };
+
   return (
     <View style={styles.container}>
       <View id="mypage-header" style={styles.header}>
@@ -107,6 +155,18 @@ export default function MyPage({ navigation }) {
           style={{ ...styles.subContainer, height: 230, marginTop: -15 }}
         >
           <Text>나의 기술 분포도</Text>
+          {/* Pie chart using React Native Chart Kit library*/}
+          <PieChart
+            data={data}
+            width={screenWidth * 0.8}
+            height={200}
+            chartConfig={chartConfig}
+            accessor={"diaryCount"}
+            backgroundColor={"transparent"}
+            paddingLeft={"5"}
+            center={[0, 0]}
+            absolute
+          />
         </View>
       </View>
     </View>
@@ -134,7 +194,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     backgroundColor: theme.white,
-    width: "80%",
+    width: "90%",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
