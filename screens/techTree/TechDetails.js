@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { techTreeName } from "../../App";
 import DiaryBrief from "../../components/DairyBrief";
 import TechProfile from "../../components/TechProfile";
 import { theme } from "../../theme";
-import { techTreeName } from "../MainContainer";
 export default function TechDetails({ navigation }) {
   const techTitle = navigation.getState().routes[1].params.techTitle;
   return (

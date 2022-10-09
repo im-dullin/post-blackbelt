@@ -6,7 +6,6 @@ import iconImg from "../assets/favicon.png";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
 import DiaryBrief from "../components/DairyBrief";
 
 const _format = "YYYY-MM-DD";
@@ -24,28 +23,22 @@ let markedDays = {
 export default function Home({ navigation }) {
   const today = moment().format(_format);
   let [selectedDay, setSelectedDay] = useState(today);
-  let [days, setDays] = useState({}); // days from API
+  let [days, setDays] = useState({});
   let [reRender, setRerender] = useState(true);
+  // useEffect hook in Tab navigator
   useFocusEffect(
     useCallback(() => {
       // Do something when the screen is focused
-
+      // alert("Screen was focused");
+      setDays(markedDays); // Get ays from API
+      handleToday();
       return () => {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
+        // alert("Screen was unfocused");
       };
     }, [])
   );
-  // Rerendering button
-  // ✉️ setRerender를 전역 상태로 관리해서 navigation tab 바뀔 때마다 rerendering하자
-  const refreshClicked = () => {
-    setRerender((prev) => !prev);
-  };
-  // fetching data and set today at first rendering
-  useEffect(() => {
-    setDays(markedDays);
-    handleToday();
-  }, [reRender]);
 
   const handleToday = () => {
     if (days[today]) {
@@ -109,9 +102,6 @@ export default function Home({ navigation }) {
             이번 달 00일 중 00일을 수련하셨습니다{" "}
           </Text>
         </View>
-        <TouchableOpacity onPress={refreshClicked}>
-          <Text>refresh</Text>
-        </TouchableOpacity>
       </View>
       <View id="categories" style={styles.calCategoryContainer}>
         {["가술 연습", "스파링 데이", "대회", "승급", "오픈매트"].map(

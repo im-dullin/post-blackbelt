@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screens
 import Home from "./Home";
@@ -15,6 +16,9 @@ import { StatusBar } from "expo-status-bar";
 export const homeName = "Home";
 export const techTreeName = "Tech Tree";
 export const myPageName = "My Page";
+const HomeStack = createNativeStackNavigator();
+const TechTreeStack = createNativeStackNavigator();
+const MyPageStack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
@@ -52,9 +56,43 @@ export default function MainContainer() {
       >
         {/* Stack screens instead of routing */}
 
-        <Tab.Screen name={techTreeName} component={TechTree} />
-        <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={myPageName} component={Mypage} />
+        <Tab.Screen name="techTreeTab">
+          {() => (
+            <TechTreeStack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <TechTreeStack.Screen name={techTreeName} component={TechTree} />
+              <TechTreeStack.Screen
+                name="TechDetails"
+                component={TechDetails}
+              />
+            </TechTreeStack.Navigator>
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="HomeTab">
+          {() => (
+            <HomeStack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <HomeStack.Screen name={homeName} component={Home} />
+            </HomeStack.Navigator>
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="MyPageTab">
+          {() => (
+            <MyPageStack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <MyPageStack.Screen name={myPageName} component={Mypage} />
+            </MyPageStack.Navigator>
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
       {/* </NavigationContainer> */}
     </>

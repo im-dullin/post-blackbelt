@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { myPageName } from "./MainContainer";
 import profileImg from "../assets/images/profile.png";
 import backgroundImg from "../assets/images/background.jpeg";
 import { theme } from "../theme";
@@ -7,8 +6,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
+import { myPageName } from "../App";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 export default function MyPage({ navigation }) {
+  // useEffect hook in react-native Tab navigator
+  useFocusEffect(
+    useCallback(() => {
+      // Do something when the screen is focused
+      return () => {
+        // Do something when the screen is unfocused
+      };
+    }, [])
+  );
+
   const belt = {
     color: theme.black,
     rankBar: theme.red,
