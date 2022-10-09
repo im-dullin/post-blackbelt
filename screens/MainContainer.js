@@ -21,7 +21,6 @@ const Tab = createBottomTabNavigator();
 export default function MainContainer() {
   return (
     <>
-      <StatusBar />
       {/* <NavigationContainer> */}
       {/* Botton navigator */}
       <Tab.Navigator
@@ -52,6 +51,7 @@ export default function MainContainer() {
         })}
       >
         {/* Stack screens instead of routing */}
+
         <Tab.Screen name={techTreeName} component={TechTree} />
         <Tab.Screen name={homeName} component={Home} />
         <Tab.Screen name={myPageName} component={Mypage} />

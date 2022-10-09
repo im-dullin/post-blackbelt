@@ -10,10 +10,10 @@ export const theme = {
   red: "#f70200",
   background: "#F9F9F9",
   techBackground: "#0D1018",
-  standing: "#9A86A4",
-  guard: "#B1BCE6",
-  guardPass: "#B7E5DD",
-  afterPass: "#F1F0C0",
+  standing: "#A8D8EA",
+  guard: "#FCBAD3",
+  "guard pass": "#B7E5DD",
+  "after pass": "#F1F0C0",
 
   // text:{
   //     black:

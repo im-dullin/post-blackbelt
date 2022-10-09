@@ -4,43 +4,10 @@ import { Calendar } from "react-native-calendars";
 import profileImg from "../assets/images/profile.png";
 import iconImg from "../assets/favicon.png";
 import moment from "moment";
-import { useEffect, useState } from "react";
-
-let daily = {
-  diary_day: "2022-09-20",
-  diary_title: "웨이터스윕, 오모플라타 스파링데이",
-  diary_time: "19:30 - 20:30",
-  diary_content:
-    "오늘은 이런저런 연습을 했다... 이거는 이렇게 하는거구나 깨달았다. 웨이터스윕은 .. 베림보로는 ...",
-  diary_cal_cat: [
-    {
-      name: "기술연습",
-    },
-    {
-      name: "스파링",
-    },
-  ],
-  techtag: [
-    {
-      category1: "standing",
-      category2: "take down",
-      category3: "",
-      tech_title: "싱글렉 테이크 다운",
-    },
-    {
-      category1: "guard",
-      category2: "deep half guard",
-      category3: "sweep",
-      tech_title: "웨이터스윕",
-    },
-    {
-      category1: "guard",
-      category2: "open guard",
-      category3: "sweep",
-      tech_title: "오픈가드 벡테이크",
-    },
-  ],
-};
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import DiaryBrief from "../components/DairyBrief";
 
 const _format = "YYYY-MM-DD";
 let markedDays = {
@@ -59,7 +26,16 @@ export default function Home({ navigation }) {
   let [selectedDay, setSelectedDay] = useState(today);
   let [days, setDays] = useState({}); // days from API
   let [reRender, setRerender] = useState(true);
+  useFocusEffect(
+    useCallback(() => {
+      // Do something when the screen is focused
 
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
   // Rerendering button
   // ✉️ setRerender를 전역 상태로 관리해서 navigation tab 바뀔 때마다 rerendering하자
   const refreshClicked = () => {
@@ -209,38 +185,7 @@ export default function Home({ navigation }) {
         />
       </View>
       <View id="selected-diary" style={styles.diaryContainer}>
-        <Text
-          style={{
-            color: theme.purpleDark,
-            fontSize: 14,
-            fontWeight: "500",
-          }}
-        >
-          03 Sep 2022
-        </Text>
-        <View style={styles.diaryRowCategories}>
-          <Image style={styles.diaryRowCategory} source={profileImg} />
-          <Image style={styles.diaryRowCategory} source={profileImg} />
-          <Image style={styles.diaryRowCategory} source={profileImg} />
-        </View>
-        <View style={styles.diaryRow}>
-          <Text style={styles.diaryRowTitle}>기술</Text>
-          <Text style={styles.diaryRowContent}>
-            {daily.techtag[0].tech_title}
-          </Text>
-        </View>
-        {[
-          ["시간", daily.diary_time],
-          ["제목", daily.diary_title],
-          ["내용", daily.diary_content],
-        ].map((v, i) => {
-          return (
-            <View key={i} style={styles.diaryRow}>
-              <Text style={styles.diaryRowTitle}>{v[0]}</Text>
-              <Text style={styles.diaryRowContent}>{v[1]}</Text>
-            </View>
-          );
-        })}
+        <DiaryBrief />
       </View>
     </View>
   );
@@ -328,39 +273,6 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   diaryContainer: {
-    flex: 1.9,
-    backgroundColor: theme.white,
-    marginHorizontal: theme.marginHorizontal,
-    marginVertical: 7,
-    borderRadius: 10,
-    padding: 10,
-  },
-  diaryRowCategories: {
-    flexDirection: "row",
-    alignContent: "center",
-    marginVertical: 3,
-  },
-  diaryRowCategory: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    marginRight: 8,
-  },
-  diaryRow: {
-    flexDirection: "row",
-    alignContent: "center",
-    overflow: "hidden",
-    marginBottom: 1,
-    height: 17,
-  },
-  diaryRowTitle: {
-    color: theme.grey,
-    width: 45,
-    fontSize: 12,
-    // marginRight: 10,
-  },
-  diaryRowContent: {
-    fontSize: 12,
-    alignSelf: "stretch",
+    flex: 2.5,
   },
 });

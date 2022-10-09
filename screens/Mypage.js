@@ -33,14 +33,14 @@ export default function MyPage({ navigation }) {
     {
       name: "guard pass",
       diaryCount: 21,
-      color: theme.guardPass,
+      color: theme["guard pass"],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "after pass",
       diaryCount: 5,
-      color: theme.afterPass,
+      color: theme["after pass"],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
@@ -93,7 +93,6 @@ export default function MyPage({ navigation }) {
             <Text style={styles.userInfo}>주짓수를 2022.22.22 에 시작해서</Text>
             <Text style={styles.userInfo}>오늘 12345 일이 되었어요.</Text>
           </View>
-
           <View id="mypage-belt-container">
             <View
               style={{
