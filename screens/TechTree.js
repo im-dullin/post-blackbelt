@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import TechProfile from "../components/TechProfile";
-import { Ionicons } from "@expo/vector-icons";
 export default function TechTree({ navigation }) {
   const techs = ["STANDING", "GUARD", "GUARD PASS", "AFTER PASS"];
   return (

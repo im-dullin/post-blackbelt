@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import profileImg from "../assets/images/profile.png";
 import backgroundImg from "../assets/images/background.jpeg";
-import { theme } from "../theme";
+import { myPageName, theme } from "../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-import { myPageName } from "../App";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 

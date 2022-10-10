@@ -25,7 +25,7 @@ export default function Home({ navigation }) {
   let [selectedDay, setSelectedDay] = useState(today);
   let [days, setDays] = useState({});
   let [reRender, setRerender] = useState(true);
-  // useEffect hook in Tab navigator
+  // useEffect hook in react-native Tab navigator
   useFocusEffect(
     useCallback(() => {
       // Do something when the screen is focused

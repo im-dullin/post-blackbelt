@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { techTreeName } from "../../App";
 import DiaryBrief from "../../components/DairyBrief";
 import TechProfile from "../../components/TechProfile";
 import { theme } from "../../theme";
@@ -18,7 +17,7 @@ export default function TechDetails({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={{ flex: 1 }}
-        onPress={() => navigation.navigate(techTreeName)}
+        onPress={() => navigation.navigate("Tech Tree")}
       >
         <TechProfile />
       </TouchableOpacity>

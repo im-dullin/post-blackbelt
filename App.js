@@ -1,19 +1,14 @@
-// import MainContainer from "./MainContainer";
 import TechDetails from "./screens/techTree/TechDetails";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { theme } from "./theme";
+import { homeName, myPageName, techTreeName, theme } from "./theme";
 import TechTree from "./screens/TechTree";
 import Home from "./screens/Home";
 import MyPage from "./screens/Mypage";
 
-//Screen names
-export const homeName = "Home";
-export const techTreeName = "Tech Tree";
-export const myPageName = "My Page";
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();
 const MyPageStack = createNativeStackNavigator();
@@ -25,7 +20,7 @@ export default function App() {
       {/* ✉️ Need state management in status bar stlye */}
       <StatusBar style="dark" />
       <Tab.Navigator
-        initialRouteName={homeName}
+        initialRouteName="HomeTab"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
