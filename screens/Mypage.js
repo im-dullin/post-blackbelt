@@ -79,7 +79,12 @@ export default function MyPage({ navigation }) {
         </TouchableOpacity>
         <Text>{myPageName}</Text>
         <TouchableOpacity>
-          <Ionicons name="settings" size={24} color="black" />
+          <Ionicons
+            name="settings"
+            size={24}
+            color="black"
+            onPress={() => navigation.navigate("Login")}
+          />
         </TouchableOpacity>
       </View>
 

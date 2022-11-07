@@ -27,6 +27,9 @@ export default function TechDetails({ navigation }) {
         >
           {techTitle}
         </Text>
+        <View>
+          {/* https://github.com/react-native-svg/react-native-svg/blob/main/USAGE.md: Marker */}
+        </View>
       </View>
       <SafeAreaView style={{ flex: 2.5 }}>
         <ScrollView

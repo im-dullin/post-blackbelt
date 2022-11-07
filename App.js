@@ -8,6 +8,7 @@ import { homeName, myPageName, techTreeName, theme } from "./theme";
 import TechTree from "./screens/TechTree";
 import Home from "./screens/Home";
 import MyPage from "./screens/Mypage";
+import Login from "./screens/myPage/Login";
 
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();
@@ -81,6 +82,7 @@ export default function App() {
               }}
             >
               <MyPageStack.Screen name={myPageName} component={MyPage} />
+              <MyPageStack.Screen name={"Login"} component={Login} />
             </MyPageStack.Navigator>
           )}
         </Tab.Screen>
