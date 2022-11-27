@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigationState } from "@react-navigation/native";
 import {
   Button,
@@ -16,22 +17,26 @@ export default function TechDetails({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={{ flex: 1 }}
+        style={styles.TitleContainer}
         onPress={() => navigation.navigate("Tech Tree")}
       >
-        <TechProfile />
-      </TouchableOpacity>
-      <View style={styles.techContainer}>
+        <MaterialCommunityIcons
+          name="chevron-left"
+          size={50}
+          color={theme[techTitle.toLowerCase()]}
+          style={styles.backIcon}
+        />
         <Text
           style={{ ...styles.title, color: theme[techTitle.toLowerCase()] }}
         >
           {techTitle}
         </Text>
-        <View>
-          {/* https://github.com/react-native-svg/react-native-svg/blob/main/USAGE.md: Marker */}
-        </View>
-      </View>
-      <SafeAreaView style={{ flex: 2.5 }}>
+        {/* <TechProfile /> */}
+      </TouchableOpacity>
+
+      {/* https://github.com/react-native-svg/react-native-svg/blob/main/USAGE.md: Marker */}
+
+      <SafeAreaView style={styles.scrollContainer}>
         <ScrollView
           vertical={true}
           alwaysBounceVertical
@@ -50,12 +55,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
     backgroundColor: theme.black,
   },
-  techContainer: {
-    flex: 2.5,
+  TitleContainer: {
+    flex: 1,
+    marginTop: 50,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  backIcon: { position: "absolute", left: 10 },
+  scrollContainer: { flex: 12 },
   diarysContainer: {},
   title: {
     fontSize: 32,

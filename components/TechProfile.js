@@ -2,10 +2,11 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import profileImg from "../assets/images/profile.png";
 import { theme } from "../theme";
 export default function TechProfile({ navigation }) {
+  const userName = "User";
   return (
     <View style={styles.profileContainer}>
       <Image style={styles.profileImg} source={profileImg} />
-      <Text style={styles.title}>Rafael's technique tree</Text>
+      <Text style={styles.title}>{userName}'s Technique Tree</Text>
     </View>
   );
 }

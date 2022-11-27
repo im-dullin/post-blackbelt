@@ -3,6 +3,7 @@ import { theme } from "../theme";
 import TechProfile from "../components/TechProfile";
 export default function TechTree({ navigation }) {
   const techs = ["STANDING", "GUARD", "GUARD PASS", "AFTER PASS"];
+
   return (
     <View style={styles.container}>
       <TechProfile />
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     color: theme.black,
     fontSize: 32,
     fontWeight: "800",
+    marginLeft: 30,
     borderColor: theme.white,
     textShadowColor: theme.grey,
     textShadowRadius: 1.5,
