@@ -7,18 +7,19 @@ import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import DiaryBrief from "../components/DairyBrief";
+import { diaryCategory } from "../components/diaryCategory";
 
 const _format = "YYYY-MM-DD";
 let markedDays = {
-  "2022-10-5": {
-    calCategory: "competition",
+  "2022-11-5": {
+    diaryCategory: "competition",
   },
-  "2022-10-20": {
-    calCategory: "competition",
+  "2022-11-20": {
+    diaryCategory: "competition",
   },
-  "2022-10-21": { calCategory: "openMat" },
-  "2022-10-24": { marked: true },
-  "2022-10-25": { calCategory: "competition" },
+  "2022-11-21": { diaryCategory: "openMat" },
+  "2022-11-24": { marked: true },
+  "2022-11-25": { diaryCategory: "competition" },
 };
 export default function Home({ navigation }) {
   const today = moment().format(_format);
@@ -32,6 +33,7 @@ export default function Home({ navigation }) {
       // alert("Screen was focused");
       setDays(markedDays); // Get ays from API
       handleToday();
+      setSelectedDay(today);
       return () => {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
@@ -40,22 +42,25 @@ export default function Home({ navigation }) {
     }, [])
   );
 
-  const handleToday = () => {
-    if (days[today]) {
-      setDays((prevState) => {
+  const updateSetDays = (isDaysContain, updateDay, updateObject) => {
+    if (isDaysContain) {
+      return setDays((prevState) => {
         return {
           ...prevState,
-          [today]: { ...prevState[today], today: true },
-        };
-      });
-    } else {
-      setDays((prevState) => {
-        return {
-          ...prevState,
-          [today]: { today: true },
+          [updateDay]: { ...prevState[updateDay], ...updateObject },
         };
       });
     }
+    setDays((prevState) => {
+      return {
+        ...prevState,
+        [updateDay]: updateObject,
+      };
+    });
+  };
+
+  const handleToday = () => {
+    updateSetDays(days[today], today, { today: true, selected: true });
   };
 
   // handle selected day
@@ -64,31 +69,17 @@ export default function Home({ navigation }) {
     const prevSelected = days[selectedDay];
     const currSelected = days[dateString];
     // delete previous selected mark
-    if (prevSelected) {
-      setDays((prevState) => {
-        return {
-          ...prevState,
-          [selectedDay]: { ...prevState[selectedDay], selected: false },
-        };
-      });
+    if (selectedDay === today) {
+      updateSetDays(days[today], today, { today: true, selected: false });
+    } else {
+      updateSetDays(prevSelected, selectedDay, { selected: false });
     }
     // create or add selected object to markedDays
-    if (currSelected) {
-      setDays((prevState) => {
-        return {
-          ...prevState,
-          [dateString]: { ...prevState[dateString], selected: true },
-        };
-      });
+    if (dateString === today) {
+      updateSetDays(days[today], today, { today: true, selected: true });
     } else {
-      setDays((prevState) => {
-        return {
-          ...prevState,
-          [dateString]: { selected: true },
-        };
-      });
+      updateSetDays(currSelected, dateString, { selected: true });
     }
-    // 왜 리렌더링 안되는가?: 비동기로 동작하므로 useEffect() 의존성 배열 활용  or 인자로 함수를 넣기
     setSelectedDay(dateString);
   };
 
@@ -134,7 +125,7 @@ export default function Home({ navigation }) {
           disableAllTouchEventsForDisabledDays={true}
           markedDates={days}
           dayComponent={({ date, state, marking }) => {
-            const calCategoryImg = {
+            const diaryCategoryImg = {
               competition: profileImg,
               openMat: iconImg,
             };
@@ -162,7 +153,7 @@ export default function Home({ navigation }) {
                 {marking ? (
                   <Image
                     style={styles.calDateImg}
-                    source={calCategoryImg[marking?.calCategory]}
+                    source={diaryCategoryImg[marking?.diaryCategory]}
                   />
                 ) : null}
                 {/* Selected marking */}
@@ -204,7 +195,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     marginBottom: 5,
   },
-  calCategoryContainer: {
+  diaryCategoryContainer: {
     flex: 0.85,
     backgroundColor: theme.white,
     flexDirection: "row",
@@ -214,14 +205,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
   },
-  calCategory: {
+  diaryCategory: {
     width: 60,
     height: 60,
     marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
   },
-  calCategoryImg: {
+  diaryCategoryImg: {
     width: 25,
     height: 25,
     borderRadius: 12.5,
