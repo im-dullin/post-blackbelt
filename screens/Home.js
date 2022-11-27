@@ -36,19 +36,25 @@ export default function Home({ navigation }) {
     }, [])
   );
 
-  const updateSetDays = (isDaysContain, updateDay, updateObject) => {
+  const checkToday = (compareDay, updateMark) => {
+    if (compareDay === today) {
+      return { today: true, ...updateMark };
+    }
+    return updateMark;
+  };
+  const updateSetDays = (isDaysContain, updateDay, updateMark) => {
     if (isDaysContain) {
       return setDays((prevState) => {
         return {
           ...prevState,
-          [updateDay]: { ...prevState[updateDay], ...updateObject },
+          [updateDay]: { ...prevState[updateDay], ...updateMark },
         };
       });
     }
     setDays((prevState) => {
       return {
         ...prevState,
-        [updateDay]: updateObject,
+        [updateDay]: updateMark,
       };
     });
   };
@@ -59,23 +65,20 @@ export default function Home({ navigation }) {
 
   // handle selected day
   const handleDaySelected = (props) => {
-    const { dateString } = props;
+    const { dateString: currSelectedDay } = props;
     const prevSelected = days[selectedDay];
-    const currSelected = days[dateString];
+    const currSelected = days[currSelectedDay];
     // delete previous selected mark
-    if (selectedDay === today) {
-      updateSetDays(days[today], today, { today: true, selected: false });
-    } else {
-      updateSetDays(prevSelected, selectedDay, { selected: false });
-    }
+    const prevUpdateMark = checkToday(selectedDay, { selected: false });
+    updateSetDays(prevSelected, selectedDay, prevUpdateMark);
+
     // create or add selected object to markedDays
-    if (dateString === today) {
-      updateSetDays(days[today], today, { today: true, selected: true });
-    } else {
-      updateSetDays(currSelected, dateString, { selected: true });
-    }
-    setSelectedDay(dateString);
+    const currUpdateMark = checkToday(currSelectedDay, { selected: true });
+    updateSetDays(currSelected, currSelectedDay, currUpdateMark);
+
+    setSelectedDay(currSelectedDay);
   };
+
   return (
     <View style={styles.container}>
       <View id="profile" style={styles.profileContainer}>
