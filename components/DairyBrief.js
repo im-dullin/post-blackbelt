@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import profileImg from "../assets/images/profile.png";
 import { theme } from "../theme";
+import { DIARY_CAT } from "./diaryCategory";
 
 let daily = {
   diary_day: "2022-09-20",
@@ -41,19 +42,9 @@ let daily = {
 export default function DiaryBrief() {
   return (
     <View style={styles.diaryContainer}>
-      <Text
-        style={{
-          color: theme.purpleDark,
-          fontSize: 14,
-          fontWeight: "500",
-        }}
-      >
-        03 Sep 2022
-      </Text>
-      <View style={styles.diaryRowCategories}>
-        <Image style={styles.diaryRowCategory} source={profileImg} />
-        <Image style={styles.diaryRowCategory} source={profileImg} />
-        <Image style={styles.diaryRowCategory} source={profileImg} />
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>03 Sep 2022</Text>
+        <Image style={styles.diaryCategory} source={DIARY_CAT[3].IMG_SRC} />
       </View>
       <View style={styles.diaryRow}>
         <Text style={styles.diaryRowTitle}>기술</Text>
@@ -62,7 +53,7 @@ export default function DiaryBrief() {
         </Text>
       </View>
       {[
-        ["시간", daily.diary_time],
+        // ["시간", daily.diary_time],
         ["제목", daily.diary_title],
         ["내용", daily.diary_content],
       ].map((v, i) => {
@@ -85,32 +76,36 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
-  diaryRowCategories: {
+  titleContainer: {
     flexDirection: "row",
     alignContent: "center",
-    marginVertical: 3,
+    marginVertical: 10,
   },
-  diaryRowCategory: {
+  title: {
+    color: theme.purpleDark,
+    fontSize: 16,
+    fontWeight: "500",
+    marginRight: 5,
+  },
+  diaryCategory: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    marginRight: 8,
   },
   diaryRow: {
     flexDirection: "row",
     alignContent: "center",
     overflow: "hidden",
-    marginBottom: 1,
+    marginBottom: 3,
     height: 17,
   },
   diaryRowTitle: {
     color: theme.grey,
     width: 45,
-    fontSize: 12,
-    // marginRight: 10,
+    fontSize: 13,
   },
   diaryRowContent: {
-    fontSize: 12,
+    fontSize: 13,
     alignSelf: "stretch",
   },
 });

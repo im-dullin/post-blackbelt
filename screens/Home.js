@@ -2,43 +2,37 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import { Calendar } from "react-native-calendars";
 import profileImg from "../assets/images/profile.png";
-import iconImg from "../assets/favicon.png";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import DiaryBrief from "../components/DairyBrief";
-import { diaryCategory } from "../components/diaryCategory";
+import { DIARY_CAT } from "../components/diaryCategory";
 
 const _format = "YYYY-MM-DD";
 let markedDays = {
-  "2022-11-5": {
-    diaryCategory: "competition",
+  "2022-11-05": {
+    diaryCategory: DIARY_CAT[0],
   },
   "2022-11-20": {
-    diaryCategory: "competition",
+    diaryCategory: DIARY_CAT[1],
   },
-  "2022-11-21": { diaryCategory: "openMat" },
+  "2022-11-21": { diaryCategory: DIARY_CAT[2] },
   "2022-11-24": { marked: true },
-  "2022-11-25": { diaryCategory: "competition" },
+  "2022-11-25": { diaryCategory: DIARY_CAT[3] },
 };
 export default function Home({ navigation }) {
   const today = moment().format(_format);
   let [selectedDay, setSelectedDay] = useState(today);
   let [days, setDays] = useState({});
   let [reRender, setRerender] = useState(true);
-  // useEffect hook in react-native Tab navigator
+
   useFocusEffect(
+    // useEffect hook in react-native Tab navigator
     useCallback(() => {
-      // Do something when the screen is focused
-      // alert("Screen was focused");
       setDays(markedDays); // Get ays from API
       handleToday();
       setSelectedDay(today);
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-        // alert("Screen was unfocused");
-      };
+      return () => {};
     }, [])
   );
 
@@ -82,7 +76,6 @@ export default function Home({ navigation }) {
     }
     setSelectedDay(dateString);
   };
-
   return (
     <View style={styles.container}>
       <View id="profile" style={styles.profileContainer}>
@@ -94,19 +87,17 @@ export default function Home({ navigation }) {
           </Text>
         </View>
       </View>
-      <View id="categories" style={styles.calCategoryContainer}>
-        {["가술 연습", "스파링 데이", "대회", "승급", "오픈매트"].map(
-          (calCateory, index) => {
-            return (
-              <View key={index} style={styles.calCategory}>
-                <Image style={styles.calCategoryImg} source={profileImg} />
-                <Text style={{ fontSize: 10, color: theme.grey, marginTop: 2 }}>
-                  {calCateory}
-                </Text>
-              </View>
-            );
-          }
-        )}
+      <View id="categories" style={styles.diaryCategoryContainer}>
+        {DIARY_CAT.map((CAT) => {
+          return (
+            <View key={CAT.KOR} style={styles.diaryCategory}>
+              <Image style={styles.diaryCategoryImg} source={CAT.IMG_SRC} />
+              <Text style={{ fontSize: 10, color: theme.grey, marginTop: 2 }}>
+                {CAT.KOR}
+              </Text>
+            </View>
+          );
+        })}
       </View>
       <View id="calendar" style={styles.calenderContainer}>
         {/* ✉️ react-native-calendars module: https://github.com/wix/react-native-calendars */}
@@ -120,24 +111,18 @@ export default function Home({ navigation }) {
             textMonthFontSize: 20,
             textMonthFontWeight: "400",
           }}
-          minDate={"2000-01-01"}
-          maxDate={"2030-05-30"}
+          initialDate={today}
+          enableSwipeMonths={true}
           disableAllTouchEventsForDisabledDays={true}
           markedDates={days}
           dayComponent={({ date, state, marking }) => {
-            const diaryCategoryImg = {
-              competition: profileImg,
-              openMat: iconImg,
-            };
             return (
               <TouchableOpacity
                 key={date.dateString}
-                onPress={handleDaySelected.bind(this, date)} // pre-config function
+                onPress={handleDaySelected.bind(this, date)}
                 style={{
                   ...styles.calDate,
-                  backgroundColor: marking?.today
-                    ? "rgba(168, 216, 235, 0.4)"
-                    : null,
+                  backgroundColor: marking?.today && "rgba(168, 216, 235, 0.4)",
                 }}
                 disabled={state === "disabled" ? true : false}
               >
@@ -149,17 +134,17 @@ export default function Home({ navigation }) {
                 >
                   {date.day}
                 </Text>
-                {/* Calendar category icons */}
-                {marking ? (
+
+                {marking?.diaryCategory && (
                   <Image
                     style={styles.calDateImg}
-                    source={diaryCategoryImg[marking?.diaryCategory]}
+                    source={marking?.diaryCategory?.IMG_SRC}
                   />
-                ) : null}
-                {/* Selected marking */}
-                {marking?.selected === true ? (
+                )}
+
+                {marking?.selected === true && (
                   <View style={styles.calSelected} />
-                ) : null}
+                )}
               </TouchableOpacity>
             );
           }}
@@ -251,7 +236,8 @@ const styles = StyleSheet.create({
     width: 30,
     height: 2,
     backgroundColor: theme.purple,
-    marginTop: 3,
+    position: "absolute",
+    bottom: 4,
   },
   diaryContainer: {
     flex: 2.5,
