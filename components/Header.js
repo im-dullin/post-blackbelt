@@ -23,22 +23,26 @@ export default function Header({ headerInfo, navigation }) {
   };
   return (
     <View id="mypage-header" style={styles.header}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        style={styles.touchableArea}
+        onPress={handleLeftOnPress}
+      >
         <MaterialIcons
           name={left.icon}
           size={24}
           color={left.iconColor}
-          onPress={handleLeftOnPress}
           // onPress={() => navigation.navigate(left.navigate)}
         />
       </TouchableOpacity>
-      <Text>{headerInfo.title}</Text>
-      <TouchableOpacity>
+      <Text style={styles.title}>{headerInfo.title}</Text>
+      <TouchableOpacity
+        style={styles.touchableArea}
+        onPress={handleRigthOnPress}
+      >
         <MaterialIcons
           name={right.icon}
           size={24}
           color={right.iconColor}
-          onPress={handleRigthOnPress}
           // onPress={() => navigation.navigate(right.navigate)}
         />
       </TouchableOpacity>
@@ -54,5 +58,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "flex-end",
     paddingBottom: 13,
+  },
+  title: {
+    fontSize: 16,
+    paddingBottom: 10,
+  },
+  touchableArea: {
+    padding: 10,
+    paddingHorizontal: 30,
   },
 });
