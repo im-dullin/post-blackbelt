@@ -11,7 +11,7 @@ import { theme } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 
-export default function Input({ type }) {
+export default function Input({ type, lineInputProp }) {
   const [text, setText] = useState("");
   const [user, setUser] = useState({});
 
@@ -48,18 +48,15 @@ export default function Input({ type }) {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
-      {type === "NAME" && (
-        <TextInput
-          onSubmitEditing={updateUser}
-          onChangeText={onChangeText}
-          value={text}
-          maxLength={20}
-          placeholder={`${INPUT_TITLE[type]}을 입력하세요`}
-          // keyboardType="decimal-pad"
-          style={styles.input}
-        />
-      )}
-
+      <TextInput
+        onSubmitEditing={updateUser}
+        onChangeText={onChangeText}
+        value={text}
+        maxLength={lineInputProp.maxLength}
+        multiline={lineInputProp.multiline}
+        placeholder={`${INPUT_TITLE[type]}(을/를) 입력하세요`}
+        style={styles.input}
+      />
       <TouchableOpacity style={styles.submit} onPress={updateUser}>
         <Text>저장</Text>
       </TouchableOpacity>
@@ -82,11 +79,12 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
     paddingVertical: 15,
+    paddingTop: 15,
     paddingHorizontal: 25,
     width: 230,
     borderRadius: 30,
-    // marginTop: 20,
     fontSize: 14,
+    justifyContent: "center",
   },
   submit: {
     marginLeft: 10,

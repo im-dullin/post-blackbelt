@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Header from "../../components/Header";
 import DatePicker from "../../components/inputs/datePicker";
 import Input from "../../components/inputs/Input";
@@ -38,12 +39,30 @@ const INPUT_TYPE = {
   MONTHLY_GOAL: "MONTHLY_GOAL",
 };
 export default function EditMyPage({ navigation }) {
+  const singleInputProp = {
+    maxLength: 20,
+    multiline: false,
+  };
+  const multiInputProp = {
+    maxLength: 40,
+    multiline: true,
+  };
+
   return (
     <View style={styles.container}>
       <Header headerInfo={headerInfo} navigation={navigation} />
       <View style={styles.inputs}>
-        <Input type={INPUT_TYPE.NAME} />
-        <DatePicker type={INPUT_TYPE.START_DATE} />
+        <KeyboardAwareScrollView>
+          <Input type={INPUT_TYPE.NAME} lineInputProp={singleInputProp} />
+          <Input type={INPUT_TYPE.TEAM} lineInputProp={singleInputProp} />
+          <DatePicker type={INPUT_TYPE.START_DATE} />
+          <DatePicker type={INPUT_TYPE.PROMOTION_DATE} />
+          <Input type={INPUT_TYPE.YEARLY_GOAL} lineInputProp={multiInputProp} />
+          <Input
+            type={INPUT_TYPE.MONTHLY_GOAL}
+            lineInputProp={multiInputProp}
+          />
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );

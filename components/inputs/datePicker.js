@@ -28,17 +28,13 @@ export default function DatePicker({ type }) {
 
   useEffect(() => {
     loadUser();
-    // console.log(new Date().toLocaleDateString());
-    removeStorageData(STORAGE_KEY.USER);
+    // removeStorageData(STORAGE_KEY.USER);
   }, []);
   useEffect(() => {
     if (user && user[type]) {
       const dateData = new Date(user[type]);
-      console.log(typeof user[type]);
-      console.log(user[type]);
       setDate(dateData);
       setShowingDate(dateFormatter(dateData));
-      //   setShowingDate(dateFormatter(Date.parse(user[type])));
     }
   }, [user]);
 
