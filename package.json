@@ -20,6 +20,7 @@
     "@react-navigation/stack": "^6.3.0",
     "@reduxjs/toolkit": "^1.9.0",
     "cocoapods": "^0.0.0",
+    "eslint-config": "^0.3.0",
     "expo": "~46.0.9",
     "expo-application": "^4.2.2",
     "expo-auth-session": "~3.7.1",
@@ -45,7 +46,10 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "eslint": "^8.27.0"
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.31.11"
   },
   "private": true
 }
