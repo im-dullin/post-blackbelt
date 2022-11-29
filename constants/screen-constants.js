@@ -27,8 +27,3 @@ export const NAV_ICON_MAP = {
     [false]: "account-outline",
   },
 };
-
-export const STORAGE_KEY = {
-  USER: "@user",
-  DIARY: "@diary",
-};

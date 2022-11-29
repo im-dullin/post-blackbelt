@@ -7,7 +7,11 @@ import TechDetail from "../screens/techTree/TechDetail";
 import Home from "../screens/Home";
 import MyPage from "../screens/MyPage";
 import Login from "../screens/myPage/Login";
-import { NAV_ICON_MAP, SCREEN_NAME, TAB_NAME } from "../constants/names";
+import {
+  NAV_ICON_MAP,
+  SCREEN_NAME,
+  TAB_NAME,
+} from "../constants/screen-constants";
 import EditMyPage from "../screens/myPage/EditMyPage";
 
 const HomeStack = createNativeStackNavigator();

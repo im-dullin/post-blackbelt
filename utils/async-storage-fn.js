@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { STORAGE_KEY } from "../constants/names";
 
 // Async Storage functions
 export const saveStorageData = async (key, value) => {
@@ -38,6 +37,11 @@ export const containsKey = async (key) => {
   } catch (e) {
     console.error(e.message);
   }
+};
+
+export const STORAGE_KEY = {
+  USER: "@user",
+  DIARY: "@diary",
 };
 
 // user storage functions

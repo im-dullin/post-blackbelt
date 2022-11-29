@@ -9,10 +9,11 @@ import {
   View,
 } from "react-native";
 import DiaryBrief from "../../components/DairyBrief";
-import { SCREEN_NAME } from "../../constants/names";
+import { SCREEN_NAME } from "../../constants/screen-constants";
 import { theme } from "../../theme";
+
 export default function TechDetail({ navigation }) {
-  const techTitle = navigation.getState().routes[1].params.techTitle;
+  const { techTitle } = navigation.getState().routes[1].params;
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -37,7 +38,7 @@ export default function TechDetail({ navigation }) {
 
       <SafeAreaView style={styles.scrollContainer}>
         <ScrollView
-          vertical={true}
+          vertical
           alwaysBounceVertical
           showsVerticalScrollIndicator
           contentContainerStyle={styles.diarysContainer}

@@ -6,7 +6,7 @@ import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import DiaryBrief from "../components/DairyBrief";
-import { DIARY_CAT } from "../constants/diaryCategory";
+import { DIARY_CAT } from "../constants/diary-category-constants";
 
 const _format = "YYYY-MM-DD";
 let markedDays = {

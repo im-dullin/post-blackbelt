@@ -4,7 +4,7 @@ import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import { useEffect, useState } from "react";
-import { SCREEN_NAME } from "../../constants/names";
+import { SCREEN_NAME } from "../../constants/screen-constants";
 
 WebBrowser.maybeCompleteAuthSession();
 export default function Login({ navigation }) {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { SCREEN_NAME } from "../constants/names";
+import { SCREEN_NAME } from "../constants/screen-constants";
 
 export default function Header({ headerInfo, navigation }) {
   const { left } = headerInfo;

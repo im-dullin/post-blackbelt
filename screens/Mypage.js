@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 import TechPieChart from "../components/TechPieChart";
 import Belt from "../components/Belt";
 import userStore from "../utils/user-store";
-import { SCREEN_NAME } from "../constants/names";
+import { SCREEN_NAME } from "../constants/screen-constants";
 import Header from "../components/Header";
 
 const headerInfo = {
