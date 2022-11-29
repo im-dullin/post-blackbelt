@@ -48,13 +48,6 @@ export default function EditMyPage({ navigation }) {
     maxLength: 40,
     multiline: true,
   };
-  const loadUser = async () => {
-    const storedUser = await getStorageUser();
-    console.log(storedUser);
-  };
-
-  loadUser();
-  //   removeStorageData(STORAGE_KEY.USER);
 
   return (
     <View style={styles.container}>

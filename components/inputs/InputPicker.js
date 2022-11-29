@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
-import { theme } from "../../theme";
+import { theme, themeBelt } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
 
 export default function InputPicker({ type, pickerItem }) {
@@ -17,6 +17,7 @@ export default function InputPicker({ type, pickerItem }) {
   // picker
   const [selectedData, setSelectedData] = useState("");
 
+  const [backgroundColor, setBackgroundColor] = useState(themeBelt.white);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,8 +36,11 @@ export default function InputPicker({ type, pickerItem }) {
   };
 
   const updateUser = async () => {
+    setBackgroundColor(theme.white);
+    setLoading(true);
     const storedUser = await loadUser();
     if (selectedData === "") {
+      setLoading(false);
       Alert.alert(
         `${INPUT_TITLE[type]}(을/를) 선택하세요`,
         INPUT_ERROR_MSG[type],
@@ -56,7 +60,7 @@ export default function InputPicker({ type, pickerItem }) {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
-      <SafeAreaView style={styles.input}>
+      <SafeAreaView style={{ ...styles.input, backgroundColor }}>
         <Picker
           selectedValue={selectedData}
           style={styles.picker}
@@ -65,7 +69,10 @@ export default function InputPicker({ type, pickerItem }) {
             transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
           }}
           mode="dropdown"
-          onValueChange={(itemValue) => setSelectedData(itemValue)}
+          onValueChange={(itemValue) => {
+            setBackgroundColor(theme.lightred);
+            setSelectedData(itemValue);
+          }}
         >
           <Picker.Item label="" value="" />
           {pickerItem.map((item) => {
@@ -104,13 +111,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    backgroundColor: "white",
-    // paddingVertical: 15,
-    // paddingTop: 15,
     paddingHorizontal: 25,
     width: 230,
     borderRadius: 30,
-    // fontSize: 14,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
@@ -122,10 +125,10 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   submit: {
-    marginLeft: 10,
+    marginLeft: 5,
     backgroundColor: theme.skyBlue,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
+    paddingVertical: 22,
+    paddingHorizontal: 14,
     borderRadius: 5,
   },
 });

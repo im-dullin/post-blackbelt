@@ -14,6 +14,8 @@ import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 export default function Input({ type, lineInputProp }) {
   const [text, setText] = useState("");
   const [user, setUser] = useState({});
+
+  const [backgroundColor, setBackgroundColor] = useState(theme.white);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     loadUser();
@@ -29,12 +31,17 @@ export default function Input({ type, lineInputProp }) {
     return storedUser;
   };
 
-  const onChangeText = (payload) => setText(payload);
+  const onChangeText = (payload) => {
+    setBackgroundColor(theme.lightred);
+    setText(payload);
+  };
 
   const updateUser = async () => {
-    const storedUser = await loadUser();
+    setBackgroundColor(theme.white);
     setLoading(true);
+    const storedUser = await loadUser();
     if (text === "") {
+      setLoading(false);
       Alert.alert(
         `${INPUT_TITLE[type]}(을/를) 입력하세요`,
         INPUT_ERROR_MSG[type],
@@ -62,7 +69,7 @@ export default function Input({ type, lineInputProp }) {
           maxLength={lineInputProp.maxLength}
           multiline={lineInputProp.multiline}
           placeholder={`${INPUT_TITLE[type]}(을/를) 입력하세요`}
-          style={styles.input}
+          style={{ ...styles.input, backgroundColor }}
         />
         {loading && (
           <View style={styles.loading}>
@@ -102,7 +109,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   input: {
-    backgroundColor: "white",
     paddingVertical: 15,
     paddingTop: 15,
     paddingHorizontal: 25,
@@ -112,10 +118,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submit: {
-    marginLeft: 10,
+    marginLeft: 5,
     backgroundColor: theme.skyBlue,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
+    paddingVertical: 22,
+    paddingHorizontal: 14,
     borderRadius: 5,
   },
 });

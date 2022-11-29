@@ -8,6 +8,7 @@ export const theme = {
   pink: "#FCBAD3",
   yellow: "#FFFFD2",
   red: "#f70200",
+  lightred: "#FFCCCB",
   background: "#F9F9F9",
   techBackground: "#0D1018",
   standing: "#A8D8EA",

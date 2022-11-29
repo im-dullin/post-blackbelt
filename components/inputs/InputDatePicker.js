@@ -21,6 +21,7 @@ export default function DatePicker({ type }) {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
+  const [backgroundColor, setBackgroundColor] = useState(theme.white);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,9 +42,11 @@ export default function DatePicker({ type }) {
   };
 
   const updateUser = async () => {
-    const storedUser = await loadUser();
+    setBackgroundColor(theme.white);
     setLoading(true);
+    const storedUser = await loadUser();
     if (showingDate === "") {
+      setLoading(false);
       Alert.alert(
         `${INPUT_TITLE[type]}(을/를) 입력하세요`,
         INPUT_ERROR_MSG[type],
@@ -67,6 +70,7 @@ export default function DatePicker({ type }) {
   };
 
   const showDatepicker = () => {
+    setBackgroundColor(theme.lightred);
     setShow(true);
   };
 
@@ -76,7 +80,7 @@ export default function DatePicker({ type }) {
       <TouchableOpacity onPress={showDatepicker} style={styles.touchable}>
         <TextInput
           pointerEvents="none"
-          style={styles.input}
+          style={{ ...styles.input, backgroundColor }}
           placeholder={`${INPUT_TITLE[type]}(을/를) 입력하세요`}
           editable={false}
           value={showingDate}
@@ -116,7 +120,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   input: {
-    backgroundColor: "white",
     paddingVertical: 15,
     paddingHorizontal: 25,
     width: 230,
@@ -126,10 +129,10 @@ const styles = StyleSheet.create({
     color: "black",
   },
   submit: {
-    marginLeft: 10,
+    marginLeft: 5,
     backgroundColor: theme.skyBlue,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
+    paddingVertical: 22,
+    paddingHorizontal: 14,
     borderRadius: 5,
   },
   touchable: {
