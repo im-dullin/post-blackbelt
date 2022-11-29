@@ -71,7 +71,7 @@ export default function DatePicker({ type }) {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
-      <TouchableOpacity onPress={showDatepicker}>
+      <TouchableOpacity onPress={showDatepicker} style={styles.touchable}>
         <TextInput
           pointerEvents="none"
           style={styles.input}
@@ -81,6 +81,7 @@ export default function DatePicker({ type }) {
         />
         {show && (
           <DateTimePicker
+            style={styles.datePicker}
             testID="dateTimePicker"
             value={date}
             mode="date"
@@ -123,5 +124,18 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
+  },
+  touchable: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  datePicker: {
+    position: "absolute",
+    zIndex: 5,
+    width: 100,
+    left: 0,
+    backgroundColor: theme.white,
+    height: 50,
+    borderRadius: 50,
   },
 });
