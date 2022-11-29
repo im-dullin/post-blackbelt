@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import profileImg from "../assets/images/profile.png";
 import { theme } from "../theme";
-import { DIARY_CAT } from "./diaryCategory";
+import { DIARY_CAT } from "../constants/diaryCategory";
 
 let daily = {
   diary_day: "2022-09-20",

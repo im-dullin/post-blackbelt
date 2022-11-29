@@ -1,10 +1,10 @@
 import { useNavigationState } from "@react-navigation/native";
 import { Button, StyleSheet, View } from "react-native";
-import { myPageName, theme } from "../../theme";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import { useEffect, useState } from "react";
+import { SCREEN_NAME } from "../../constants/names";
 
 WebBrowser.maybeCompleteAuthSession();
 export default function Login({ navigation }) {
@@ -58,7 +58,7 @@ export default function Login({ navigation }) {
     <View style={styles.container}>
       <Button
         style={{ flex: 1 }}
-        onPress={() => navigation.navigate(myPageName)}
+        onPress={() => navigation.navigate(SCREEN_NAME.MY_PAGE)}
         title="To Mypage"
       ></Button>
       {showUserInfo()}

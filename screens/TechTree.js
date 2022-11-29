@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import TechProfile from "../components/TechProfile";
+import { SCREEN_NAME } from "../constants/names";
 export default function TechTree({ navigation }) {
   const techs = ["STANDING", "GUARD", "GUARD PASS", "AFTER PASS"];
-
   return (
     <View style={styles.container}>
       <TechProfile />
@@ -12,7 +12,7 @@ export default function TechTree({ navigation }) {
           return (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("TechDetails", {
+                navigation.navigate(SCREEN_NAME.TECH_DETAIL, {
                   techTitle: v,
                 })
               }

@@ -1,5 +1,4 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigationState } from "@react-navigation/native";
 import {
   Button,
   SafeAreaView,
@@ -10,15 +9,15 @@ import {
   View,
 } from "react-native";
 import DiaryBrief from "../../components/DairyBrief";
-import TechProfile from "../../components/TechProfile";
+import { SCREEN_NAME } from "../../constants/names";
 import { theme } from "../../theme";
-export default function TechDetails({ navigation }) {
+export default function TechDetail({ navigation }) {
   const techTitle = navigation.getState().routes[1].params.techTitle;
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.TitleContainer}
-        onPress={() => navigation.navigate("Tech Tree")}
+        onPress={() => navigation.navigate(SCREEN_NAME.TECH_TREE)}
       >
         <MaterialCommunityIcons
           name="chevron-left"

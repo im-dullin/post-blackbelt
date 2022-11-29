@@ -1,37 +1,20 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { homeName, myPageName, techTreeName, theme } from "../theme";
+import { theme } from "../theme";
 import TechTree from "../screens/TechTree";
-import TechDetails from "../screens/techTree/TechDetails";
+import TechDetail from "../screens/techTree/TechDetail";
 import Home from "../screens/Home";
-import MyPage from "../screens/Mypage";
+import MyPage from "../screens/MyPage";
 import Login from "../screens/myPage/Login";
+import { NAV_ICON_MAP, SCREEN_NAME, TAB_NAME } from "../constants/names";
+import EditMyPage from "../screens/myPage/EditMyPage";
 
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();
 const MyPageStack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
-const TAB_NAME = {
-  HOME: "HomeTab",
-  TECH_TREE: "techTreeTab",
-  MY_PAGE: "MyPageTab",
-};
-const NAV_ICON_MAP = {
-  [TAB_NAME.HOME]: {
-    [true]: "home",
-    [false]: "home-outline",
-  },
-  [TAB_NAME.TECH_TREE]: {
-    [true]: "graph",
-    [false]: "graph-outline",
-  },
-  [TAB_NAME.MY_PAGE]: {
-    [true]: "account",
-    [false]: "account-outline",
-  },
-};
 
 export default function TabNavigation() {
   return (
@@ -62,8 +45,14 @@ export default function TabNavigation() {
               headerShown: false,
             }}
           >
-            <TechTreeStack.Screen name={techTreeName} component={TechTree} />
-            <TechTreeStack.Screen name="TechDetails" component={TechDetails} />
+            <TechTreeStack.Screen
+              name={SCREEN_NAME.TECH_TREE}
+              component={TechTree}
+            />
+            <TechTreeStack.Screen
+              name={SCREEN_NAME.TECH_DETAIL}
+              component={TechDetail}
+            />
           </TechTreeStack.Navigator>
         )}
       </Tab.Screen>
@@ -74,7 +63,7 @@ export default function TabNavigation() {
               headerShown: false,
             }}
           >
-            <HomeStack.Screen name={homeName} component={Home} />
+            <HomeStack.Screen name={SCREEN_NAME.HOME} component={Home} />
           </HomeStack.Navigator>
         )}
       </Tab.Screen>
@@ -85,8 +74,12 @@ export default function TabNavigation() {
               headerShown: false,
             }}
           >
-            <MyPageStack.Screen name={myPageName} component={MyPage} />
-            <MyPageStack.Screen name={"Login"} component={Login} />
+            <MyPageStack.Screen name={SCREEN_NAME.MY_PAGE} component={MyPage} />
+            <MyPageStack.Screen name={SCREEN_NAME.LOGIN} component={Login} />
+            <MyPageStack.Screen
+              name={SCREEN_NAME.EDIT_MY_PAGE}
+              component={EditMyPage}
+            />
           </MyPageStack.Navigator>
         )}
       </Tab.Screen>

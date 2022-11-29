@@ -20,7 +20,3 @@ export const theme = {
   // }
   marginHorizontal: 12,
 };
-//Screen names
-export const homeName = "Home";
-export const techTreeName = "Tech Tree";
-export const myPageName = "My Page";
