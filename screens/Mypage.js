@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import profileImg from "../assets/images/user.png";
-import backgroundImg from "../assets/images/userBackground.jpg";
-import { theme } from "../theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
+import profileImg from "../assets/images/user.png";
+import backgroundImg from "../assets/images/userBackground.jpg";
+import { theme } from "../theme";
 import TechPieChart from "../components/TechPieChart";
 import Belt from "../components/Belt";
 import userStore from "../utils/user-store";
@@ -15,14 +15,17 @@ const headerInfo = {
   left: {
     icon: "edit",
     iconColor: "black",
-    navigate: SCREEN_NAME.EDIT_MY_PAGE,
+    onPress: {
+      navigate: SCREEN_NAME.EDIT_MY_PAGE,
+    },
   },
   title: SCREEN_NAME.MY_PAGE,
   right: {
     icon: "settings",
     iconColor: "white",
-    // navigate: SCREEN_NAME.LOGIN,
-    navigate: SCREEN_NAME.MY_PAGE,
+    onPress: {
+      // navigate: SCREEN_NAME.LOGIN,
+    },
   },
 };
 

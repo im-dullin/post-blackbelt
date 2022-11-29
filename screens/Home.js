@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { theme } from "../theme";
 import { Calendar } from "react-native-calendars";
-import profileImg from "../assets/images/profile.png";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import profileImg from "../assets/images/profile.png";
+import { theme } from "../theme";
 import DiaryBrief from "../components/DairyBrief";
 import { DIARY_CAT } from "../constants/diary-category-constants";
 
 const _format = "YYYY-MM-DD";
-let markedDays = {
+const markedDays = {
   "2022-11-05": {
     diaryCategory: DIARY_CAT[0],
   },
@@ -22,9 +22,9 @@ let markedDays = {
 };
 export default function Home({ navigation }) {
   const today = moment().format(_format);
-  let [selectedDay, setSelectedDay] = useState(today);
-  let [days, setDays] = useState({});
-  let [reRender, setRerender] = useState(true);
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [days, setDays] = useState({});
+  const [reRender, setRerender] = useState(true);
 
   useFocusEffect(
     // useEffect hook in react-native Tab navigator
@@ -115,8 +115,8 @@ export default function Home({ navigation }) {
             textMonthFontWeight: "400",
           }}
           initialDate={today}
-          enableSwipeMonths={true}
-          disableAllTouchEventsForDisabledDays={true}
+          enableSwipeMonths
+          disableAllTouchEventsForDisabledDays
           markedDates={days}
           dayComponent={({ date, state, marking }) => {
             return (
@@ -127,7 +127,7 @@ export default function Home({ navigation }) {
                   ...styles.calDate,
                   backgroundColor: marking?.today && "rgba(168, 216, 235, 0.4)",
                 }}
-                disabled={state === "disabled" ? true : false}
+                disabled={state === "disabled"}
               >
                 <Text
                   style={{

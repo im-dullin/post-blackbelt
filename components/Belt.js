@@ -21,7 +21,7 @@ export default function Belt() {
           }}
         >
           {grauArr.map((v, i) => {
-            return <View key={i} style={styles.grau}></View>;
+            return <View key={i} style={styles.grau} />;
           })}
         </View>
       </View>

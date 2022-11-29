@@ -26,8 +26,8 @@ export default function TabNavigation() {
       initialRouteName={TAB_NAME.HOME}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let screen = route.name;
-          let iconName = NAV_ICON_MAP[screen][focused];
+          const screen = route.name;
+          const iconName = NAV_ICON_MAP[screen][focused];
           return (
             <MaterialCommunityIcons
               name={iconName}

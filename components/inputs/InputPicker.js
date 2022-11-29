@@ -1,42 +1,44 @@
+import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 import { theme } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
-import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 
-export default function Input({ type, lineInputProp }) {
-  const [text, setText] = useState("");
+export default function InputPicker({ type, pickerItem }) {
   const [user, setUser] = useState({});
+  // picker
+  const [selectedData, setSelectedData] = useState("");
+
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     loadUser();
   }, []);
   useEffect(() => {
     if (user && user[type]) {
-      setText(user[type]);
+      setSelectedData(user[type]);
     }
   }, [user]);
+
   const loadUser = async () => {
     const storedUser = await getStorageUser();
     setUser(storedUser);
     return storedUser;
   };
 
-  const onChangeText = (payload) => setText(payload);
-
   const updateUser = async () => {
     const storedUser = await loadUser();
-    setLoading(true);
-    if (text === "") {
+    if (selectedData === "") {
       Alert.alert(
-        `${INPUT_TITLE[type]}(을/를) 입력하세요`,
+        `${INPUT_TITLE[type]}(을/를) 선택하세요`,
         INPUT_ERROR_MSG[type],
         [{ text: "OK" }]
       );
@@ -44,7 +46,7 @@ export default function Input({ type, lineInputProp }) {
     }
     const newUser = {
       ...storedUser,
-      [type]: text,
+      [type]: selectedData,
     };
     setUser(newUser);
     await saveStorageUser(newUser);
@@ -54,29 +56,34 @@ export default function Input({ type, lineInputProp }) {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
-      <View style={styles.inputItemWrapper}>
-        <TextInput
-          onSubmitEditing={updateUser}
-          onChangeText={onChangeText}
-          value={text}
-          maxLength={lineInputProp.maxLength}
-          multiline={lineInputProp.multiline}
-          placeholder={`${INPUT_TITLE[type]}(을/를) 입력하세요`}
-          style={styles.input}
-        />
+      <SafeAreaView style={styles.input}>
+        <Picker
+          selectedValue={selectedData}
+          style={styles.picker}
+          itemStyle={{
+            height: 40,
+            transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+          }}
+          mode="dropdown"
+          onValueChange={(itemValue) => setSelectedData(itemValue)}
+        >
+          <Picker.Item label="" value="" />
+          {pickerItem.map((item) => {
+            return <Picker.Item key={item} label={item} value={item} />;
+          })}
+        </Picker>
         {loading && (
           <View style={styles.loading}>
             <Text>저장중입니다.. 기다려주세요..</Text>
           </View>
         )}
-      </View>
+      </SafeAreaView>
       <TouchableOpacity style={styles.submit} onPress={updateUser}>
         <Text>저장</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
@@ -89,7 +96,21 @@ const styles = StyleSheet.create({
     width: 50,
     lineHeight: 20,
   },
-  inputItemWrapper: {
+  picker: {
+    width: 160,
+    // postion: "absolute",
+    fontSize: 14,
+    height: 45,
+    justifyContent: "center",
+  },
+  input: {
+    backgroundColor: "white",
+    // paddingVertical: 15,
+    // paddingTop: 15,
+    paddingHorizontal: 25,
+    width: 230,
+    borderRadius: 30,
+    // fontSize: 14,
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
@@ -99,17 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingVertical: 15,
     paddingTop: 15,
-    paddingHorizontal: 15,
-  },
-  input: {
-    backgroundColor: "white",
-    paddingVertical: 15,
-    paddingTop: 15,
-    paddingHorizontal: 25,
-    width: 230,
-    borderRadius: 30,
-    fontSize: 14,
-    justifyContent: "center",
   },
   submit: {
     marginLeft: 10,

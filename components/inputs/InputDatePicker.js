@@ -10,12 +10,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { theme } from "../../theme";
-import {
-  getStorageUser,
-  removeStorageData,
-  saveStorageUser,
-  STORAGE_KEY,
-} from "../../utils/async-storage-fn";
+import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 import { dateFormatter } from "../../constants/formatter";
 
@@ -26,9 +21,10 @@ export default function DatePicker({ type }) {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     loadUser();
-    // removeStorageData(STORAGE_KEY.USER);
   }, []);
   useEffect(() => {
     if (user && user[type]) {
@@ -41,21 +37,27 @@ export default function DatePicker({ type }) {
   const loadUser = async () => {
     const storedUser = await getStorageUser();
     setUser(storedUser);
+    return storedUser;
   };
 
   const updateUser = async () => {
-    if (date === "") {
-      Alert.alert(`${INPUT_TITLE[type]}을 입력하세요`, INPUT_ERROR_MSG[type], [
-        { text: "OK" },
-      ]);
+    const storedUser = await loadUser();
+    setLoading(true);
+    if (showingDate === "") {
+      Alert.alert(
+        `${INPUT_TITLE[type]}(을/를) 입력하세요`,
+        INPUT_ERROR_MSG[type],
+        [{ text: "OK" }]
+      );
       return;
     }
     const newUser = {
-      ...user,
+      ...storedUser,
       [type]: date,
     };
     setUser(newUser);
     await saveStorageUser(newUser);
+    setLoading(false);
   };
 
   const onChange = (event, selectedDate) => {
@@ -75,7 +77,7 @@ export default function DatePicker({ type }) {
         <TextInput
           pointerEvents="none"
           style={styles.input}
-          placeholder={`${INPUT_TITLE[type]}을 입력하세요`}
+          placeholder={`${INPUT_TITLE[type]}(을/를) 입력하세요`}
           editable={false}
           value={showingDate}
         />
@@ -87,6 +89,11 @@ export default function DatePicker({ type }) {
             mode="date"
             onChange={onChange}
           />
+        )}
+        {loading && (
+          <View style={styles.loading}>
+            <Text>저장중입니다.. 기다려주세요..</Text>
+          </View>
         )}
       </TouchableOpacity>
       <TouchableOpacity style={styles.submit} onPress={updateUser}>
@@ -128,6 +135,7 @@ const styles = StyleSheet.create({
   touchable: {
     position: "relative",
     justifyContent: "center",
+    alignItems: "center",
   },
   datePicker: {
     position: "absolute",
@@ -137,5 +145,12 @@ const styles = StyleSheet.create({
     backgroundColor: theme.white,
     height: 50,
     borderRadius: 50,
+  },
+  loading: {
+    position: "absolute",
+    backgroundColor: "white",
+    paddingVertical: 15,
+    paddingTop: 15,
+    paddingHorizontal: 15,
   },
 });

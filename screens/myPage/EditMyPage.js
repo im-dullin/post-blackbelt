@@ -1,39 +1,40 @@
-import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Header from "../../components/Header";
-import DatePicker from "../../components/inputs/datePicker";
+import DatePicker from "../../components/inputs/InputDatePicker";
 import Input from "../../components/inputs/Input";
+import InputPicker from "../../components/inputs/InputPicker";
 import { SCREEN_NAME } from "../../constants/screen-constants";
-import { theme } from "../../theme";
-import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
+import {
+  BELT_COLOR_KEY,
+  BELT_GRAU_KEY,
+} from "../../constants/inputs-constants";
+import { getStorageUser } from "../../utils/async-storage-fn";
 
 const headerInfo = {
   left: {
     icon: "chevron-left",
     iconColor: "black",
-    navigate: SCREEN_NAME.MY_PAGE,
+    onPress: {
+      navigate: SCREEN_NAME.MY_PAGE,
+    },
   },
   title: `Edit ${SCREEN_NAME.MY_PAGE}`,
   right: {
-    icon: "check",
-    iconColor: "white",
-    // navigate: SCREEN_NAME.LOGIN,
-    navigate: SCREEN_NAME.EDIT_MY_PAGE,
+    icon: "delete",
+    iconColor: "black",
+    onPress: {
+      // navigate: SCREEN_NAME.LOGIN,
+      msg: "deleteUser", // test for delete userStorage
+    },
   },
 };
 const INPUT_TYPE = {
   NAME: "NAME",
   TEAM: "TEAM",
   START_DATE: "START_DATE",
-  BELT: "BELT",
+  BELT_COLOR: "BELT_COLOR",
+  BELT_GRAU: "BELT_GRAU",
   PROMOTION_DATE: "PROMOTION_DATE",
   YEARLY_GOAL: "YEARLY_GOAL",
   MONTHLY_GOAL: "MONTHLY_GOAL",
@@ -47,6 +48,13 @@ export default function EditMyPage({ navigation }) {
     maxLength: 40,
     multiline: true,
   };
+  const loadUser = async () => {
+    const storedUser = await getStorageUser();
+    console.log(storedUser);
+  };
+
+  loadUser();
+  //   removeStorageData(STORAGE_KEY.USER);
 
   return (
     <View style={styles.container}>
@@ -56,6 +64,11 @@ export default function EditMyPage({ navigation }) {
           <Input type={INPUT_TYPE.NAME} lineInputProp={singleInputProp} />
           <Input type={INPUT_TYPE.TEAM} lineInputProp={singleInputProp} />
           <DatePicker type={INPUT_TYPE.START_DATE} />
+          <InputPicker
+            type={INPUT_TYPE.BELT_COLOR}
+            pickerItem={BELT_COLOR_KEY}
+          />
+          <InputPicker type={INPUT_TYPE.BELT_GRAU} pickerItem={BELT_GRAU_KEY} />
           <DatePicker type={INPUT_TYPE.PROMOTION_DATE} />
           <Input type={INPUT_TYPE.YEARLY_GOAL} lineInputProp={multiInputProp} />
           <Input

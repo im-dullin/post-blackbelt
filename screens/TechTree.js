@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import TechProfile from "../components/TechProfile";
 import { SCREEN_NAME } from "../constants/screen-constants";
+
 export default function TechTree({ navigation }) {
   const techs = ["STANDING", "GUARD", "GUARD PASS", "AFTER PASS"];
   return (
