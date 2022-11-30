@@ -11,7 +11,7 @@ export const defaultUser = {
   START_DATE: dateFormatter(new Date()),
   BELT_COLOR: "WHITE",
   DDay: 0,
-  BELT_GRAU: 1,
+  BELT_GRAU: 0,
   PROMOTION_DATE: dateFormatter(new Date()),
   YEARLY_GOAL: "올해의 목표를 입력해주세요",
   MONTHLY_GOAL: "이 달의 목표를 입력해주세요",

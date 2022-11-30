@@ -29,7 +29,7 @@ export default function HomeProfile() {
   };
 
   return (
-    <View id="profile" style={styles.profileContainer}>
+    <>
       <Image style={styles.profileImg} source={user.profile} />
       <View style={{ alignContent: "center" }}>
         <Text style={styles.profileUserName}>{user.userName}</Text>
@@ -37,18 +37,11 @@ export default function HomeProfile() {
           이번 달 00일 중 00일을 수련하셨습니다
         </Text>
       </View>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  profileContainer: {
-    flex: 0.9,
-    flexDirection: "row",
-    marginTop: 50,
-    paddingHorizontal: 15,
-    marginBottom: 5,
-  },
   profileImg: {
     width: 50,
     height: 50,

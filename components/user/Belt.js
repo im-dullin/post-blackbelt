@@ -1,8 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
-import { BELT_COLOR_MAP } from "../../constants/inputs-constants";
+import {
+  BELT_COLOR,
+  BELT_COLOR_MAP,
+  BELT_GRAU,
+  PROMOTION_DATE,
+} from "../../constants/inputs-constants";
 import { theme } from "../../theme";
 
-export default function Belt({ beltColor, beltGrau, promotionDate }) {
+export default function Belt({ user }) {
+  const beltColor = user[BELT_COLOR];
+  const beltGrau = user[BELT_GRAU];
+  const promotionDate = user[PROMOTION_DATE];
+
   const grauArr = Array(parseInt(beltGrau, 10)).fill(0);
 
   return (

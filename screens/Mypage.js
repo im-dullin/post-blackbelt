@@ -19,11 +19,12 @@ import {
   PROMOTION_DATE,
   START_DATE,
   TEAM,
-  YEARLY_GOAL,
 } from "../constants/inputs-constants";
 import { dateDiffInDays, dateFormatter } from "../utils/date-fn";
 import Belt from "../components/user/Belt";
 import Header from "../components/utils/Header";
+import MyPageProfile from "../components/user/MyPageProfile";
+import MyPageGoals from "../components/user/MyPageGoals";
 
 export default function MyPage({ navigation }) {
   const [user, setUser] = useState(defaultUser);
@@ -94,53 +95,27 @@ export default function MyPage({ navigation }) {
   return (
     <View style={styles.container}>
       <Header headerInfo={headerInfo} />
-      <View style={styles.backgroundContainer}>
+      <View id="mypage-background" style={styles.backgroundContainer}>
         <Image style={styles.backgroundImg} source={user[BACKGROUND_IMG]} />
       </View>
       <View id="mypage-main" style={styles.mainContainer}>
-        <Image style={styles.profileImg} source={user[PROFILE_IMG]} />
-        <View id="mypage-profile" style={styles.profileContainer}>
-          <Text style={styles.userName}>{user[NAME]}</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 3,
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>소속</Text>
-            <Text>{user[TEAM]}</Text>
-          </View>
-          <View style={styles.userInfos}>
-            <Text style={styles.userInfo}>
-              주짓수를 {user[START_DATE]} 에 시작해서
-            </Text>
-            <Text style={styles.userInfo}>오늘 {user.DDay} 일이 되었어요.</Text>
-          </View>
+        <Image
+          id="mypage-profile-img"
+          style={styles.profileImg}
+          source={user[PROFILE_IMG]}
+        />
+        <View id="mypage-profile-container" style={styles.profileContainer}>
+          <MyPageProfile user={user} />
           <View id="mypage-belt-container">
-            <Belt
-              beltColor={user[BELT_COLOR]}
-              beltGrau={user[BELT_GRAU]}
-              promotionDate={user[PROMOTION_DATE]}
-            />
+            <Belt user={user} />
           </View>
         </View>
-        <View id="mypage-goals" style={{ ...styles.subContainer, height: 90 }}>
-          <>
-            <View style={styles.goal}>
-              <Text>올해의 목표</Text>
-              <Text>{user[YEARLY_GOAL]}</Text>
-            </View>
-            <View style={styles.goal}>
-              <Text>이 달의 목표</Text>
-              <Text>{user[MONTHLY_GOAL]}</Text>
-            </View>
-          </>
+        <View id="mypage-goals" style={inheritStyles.goalsSubContainer}>
+          <MyPageGoals user={user} />
         </View>
-
         <View
-          id="mypage-techs"
-          style={{ ...styles.subContainer, height: 230, marginTop: -15 }}
+          id="mypage-tech-piechart"
+          style={inheritStyles.pieChartSubContainer}
         >
           <Text>나의 기술 분포도</Text>
           <TechPieChart />
@@ -177,9 +152,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.white,
     width: "90%",
     borderRadius: 10,
-    justifyContent: "center",
+
     alignItems: "center",
   },
+
   backgroundImg: {
     width: "100%",
     height: "100%",
@@ -194,20 +170,19 @@ const styles = StyleSheet.create({
   profileContainer: {
     alignItems: "center",
   },
-  userName: {
-    marginTop: 45,
-    fontSize: 22,
-    fontWeight: "500",
+});
+
+const inheritStyles = StyleSheet.create({
+  goalsSubContainer: {
+    ...styles.subContainer,
+    height: 90,
+    justifyContent: "space-around",
   },
-  userInfos: {
-    alignItems: "center",
-    marginVertical: 6,
-  },
-  userInfo: {
-    color: theme.grey,
-    fontSize: 11.5,
-  },
-  goal: {
-    alignItems: "center",
+
+  pieChartSubContainer: {
+    ...styles.subContainer,
+    height: 230,
+    marginTop: -15,
+    justifyContent: "center",
   },
 });

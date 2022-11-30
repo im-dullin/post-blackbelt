@@ -20,7 +20,7 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
     // "max-depth": ["error", 2],
     // "max-lines-per-function": ["error", 10],
-    // "max-params": ["error", 3],
+    // "max-params":npm["error", 3],
   },
   plugins: ["import", "react"],
 };
