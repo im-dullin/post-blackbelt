@@ -5,6 +5,7 @@ import DiaryBrief from "../components/diary/DiaryBrief";
 import HomeProfile from "../components/user/HomeProfile";
 import DiaryCategory from "../components/diary/DiaryCategory";
 import DiaryCalendar from "../components/diary/DiaryCalendar";
+import AddDiaryBtn from "../components/diary/AddDiaryBtn";
 
 export default function Home({ navigation }) {
   return (
@@ -17,6 +18,7 @@ export default function Home({ navigation }) {
       </View>
       <View id="calendar" style={styles.calenderContainer}>
         <DiaryCalendar />
+        <AddDiaryBtn navigation={navigation} />
       </View>
       <View id="selected-diary" style={styles.diaryContainer}>
         <DiaryBrief />

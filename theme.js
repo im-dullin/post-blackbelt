@@ -2,6 +2,7 @@ export const theme = {
   black: "#303841",
   grey: "#596065",
   white: "#FFFFFF",
+  purpleLight: "#d6c6f2", //rgb(214, 198, 242)
   purple: "#AA96DA", // rgb(170,150,219)
   purpleDark: "#5E4B9C", // rgb(93,75,156)
   skyBlue: "#A8D8EA",
