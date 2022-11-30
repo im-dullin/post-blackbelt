@@ -2,11 +2,11 @@ import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import TabNavigation from "./components/utils/TabNavigation";
-import userStore from "./utils/user-store";
+import dateStore from "./utils/store";
 
 export default function App() {
   return (
-    <Provider store={userStore}>
+    <Provider store={dateStore}>
       <NavigationContainer>
         {/* ✉️ Need state management in status bar stlye */}
         <StatusBar style="dark" />

@@ -1,10 +1,13 @@
 import { Calendar } from "react-native-calendars";
 import { theme } from "../../theme";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { DIARY_CAT } from "../../constants/diary-category-constants";
 import moment from "moment";
+import { getFormattedToday } from "../../utils/date-fn";
+import dateStore, { updateSelectedDate } from "../../utils/store";
+import { useSelector } from "react-redux";
 const _format = "YYYY-MM-DD";
 const markedDays = {
   "2022-11-05": {
@@ -20,7 +23,7 @@ const markedDays = {
 export default function DiaryCalendar() {
   // {/* ✉️ react-native-calendars module: https://github.com/wix/react-native-calendars */}
 
-  const today = moment().format(_format);
+  const today = getFormattedToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [days, setDays] = useState({});
   const [reRender, setRerender] = useState(true);
@@ -34,6 +37,10 @@ export default function DiaryCalendar() {
       return () => {};
     }, [])
   );
+
+  useEffect(() => {
+    dateStore.dispatch(updateSelectedDate(selectedDay));
+  }, [selectedDay]);
 
   const checkToday = (compareDay, updateMark) => {
     if (compareDay === today) {

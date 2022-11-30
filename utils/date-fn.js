@@ -1,11 +1,21 @@
+const makeDoubleDigit = (number) => {
+  if (number >= 10) {
+    return number;
+  }
+  return `0${number}`;
+};
+
 export const dateFormatter = (date) => {
   let dateObj = date;
   if (typeof date === "string") {
     dateObj = new Date(date);
   }
-  return `${dateObj.getFullYear()}-${
-    dateObj.getMonth() + 1
-  }-${dateObj.getDate()}`;
+
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth() + 1;
+  const day = dateObj.getDate();
+
+  return `${year}-${makeDoubleDigit(month)}-${makeDoubleDigit(day)}`;
 };
 
 export const dateDiffInDays = (a, b) => {
@@ -15,4 +25,8 @@ export const dateDiffInDays = (a, b) => {
   const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
   return Math.floor((utc1 - utc2) / MS_PER_DAY);
+};
+
+export const getFormattedToday = () => {
+  return dateFormatter(new Date());
 };

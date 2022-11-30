@@ -1,18 +1,18 @@
 import { themeBelt } from "../theme";
 import profileImg from "../assets/images/user.png";
 import backgroundImg from "../assets/images/userBackground.jpg";
-import { dateFormatter } from "../utils/date-fn";
+import { getFormattedToday } from "../utils/date-fn";
 
 export const defaultUser = {
   NAME: "이름을 입력해주세요",
   TEAM: "소속을 입력해주세요",
   BACKGROUND_IMG: backgroundImg,
   PROFILE_IMG: profileImg,
-  START_DATE: dateFormatter(new Date()),
+  START_DATE: getFormattedToday(),
   BELT_COLOR: "WHITE",
   DDay: 0,
   BELT_GRAU: 0,
-  PROMOTION_DATE: dateFormatter(new Date()),
+  PROMOTION_DATE: getFormattedToday(),
   YEARLY_GOAL: "올해의 목표를 입력해주세요",
   MONTHLY_GOAL: "이 달의 목표를 입력해주세요",
 };
