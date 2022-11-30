@@ -86,7 +86,7 @@ export default function Home({ navigation }) {
         <View style={{ alignContent: "center" }}>
           <Text style={styles.profileUserName}>Rafael Mendes</Text>
           <Text style={{ color: theme.grey }}>
-            이번 달 00일 중 00일을 수련하셨습니다{" "}
+            이번 달 00일 중 00일을 수련하셨습니다
           </Text>
         </View>
       </View>

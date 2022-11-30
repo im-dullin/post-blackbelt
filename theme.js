@@ -23,6 +23,6 @@ export const themeBelt = {
   blue: "#004a9d",
   purple: "#74529e",
   brown: " #804b44",
-  black: "#00000",
+  black: "#303841",
   red: "#f70200",
 };

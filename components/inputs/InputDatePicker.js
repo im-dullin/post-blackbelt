@@ -12,7 +12,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { theme } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
-import { dateFormatter } from "../../constants/formatter";
+import { dateFormatter } from "../../utils/date-fn";
 
 export default function DatePicker({ type }) {
   const [user, setUser] = useState({});

@@ -57,3 +57,6 @@ export const getStorageUser = async () => {
   const user = await getStorageData(STORAGE_KEY.USER);
   return JSON.parse(user);
 };
+export const removeStorageUser = async () => {
+  await removeStorageData(STORAGE_KEY.USER);
+};

@@ -3,30 +3,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { removeStorageData, STORAGE_KEY } from "../utils/async-storage-fn";
 
-export default function Header({ headerInfo, navigation }) {
+export default function Header({ headerInfo }) {
   const { left } = headerInfo;
   const { right } = headerInfo;
-  const handleLeftOnPress = () => {
-    const { navigate } = left.onPress;
-    if (navigate) {
-      return navigation.navigate(navigate);
-    }
-  };
-  const handleRigthOnPress = () => {
-    const { navigate } = right.onPress;
-    if (navigate) {
-      return navigation.navigate(navigate);
-    }
-    if (right.onPress?.msg === "deleteUser") {
-      removeStorageData(STORAGE_KEY.USER); // test for delete userStorage
-    }
-  };
+
   return (
     <View id="mypage-header" style={styles.header}>
-      <TouchableOpacity
-        style={styles.touchableArea}
-        onPress={handleLeftOnPress}
-      >
+      <TouchableOpacity style={styles.touchableArea} onPress={left.onPress}>
         <MaterialIcons
           name={left.icon}
           size={24}
@@ -35,10 +18,7 @@ export default function Header({ headerInfo, navigation }) {
         />
       </TouchableOpacity>
       <Text style={styles.title}>{headerInfo.title}</Text>
-      <TouchableOpacity
-        style={styles.touchableArea}
-        onPress={handleRigthOnPress}
-      >
+      <TouchableOpacity style={styles.touchableArea} onPress={right.onPress}>
         <MaterialIcons
           name={right.icon}
           size={24}

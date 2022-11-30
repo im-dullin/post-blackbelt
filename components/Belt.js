@@ -1,23 +1,22 @@
 import { StyleSheet, Text, View } from "react-native";
+import { BELT_COLOR_MAP } from "../constants/inputs-constants";
 import { theme } from "../theme";
 
-export default function Belt() {
-  const belt = {
-    color: theme.black,
-    rankBar: theme.red,
-    grau: 3,
-    promotionDay: "2000.00.00",
-  };
-
-  const grauArr = Array(belt.grau).fill(0);
+export default function Belt({ beltColor, beltGrau, promotionDate }) {
+  const grauArr = Array(parseInt(beltGrau, 10)).fill(0);
 
   return (
     <>
-      <View style={{ ...styles.beltBackground, backgroundColor: belt.color }}>
+      <View
+        style={{
+          ...styles.beltBackground,
+          backgroundColor: BELT_COLOR_MAP[beltColor].BELT_COLOR,
+        }}
+      >
         <View
           style={{
             ...styles.rankBar,
-            backgroundColor: belt.rankBar,
+            backgroundColor: BELT_COLOR_MAP[beltColor].RANKBAR_COLOR,
           }}
         >
           {grauArr.map((v, i) => {
@@ -31,7 +30,7 @@ export default function Belt() {
           color: theme.grey,
         }}
       >
-        최근 승급일: {belt.promotionDay}
+        최근 승급일: {promotionDate}
       </Text>
     </>
   );

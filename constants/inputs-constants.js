@@ -1,5 +1,44 @@
 import { themeBelt } from "../theme";
+import profileImg from "../assets/images/user.png";
+import backgroundImg from "../assets/images/userBackground.jpg";
+import { dateFormatter } from "../utils/date-fn";
 
+export const defaultUser = {
+  NAME: "이름을 입력해주세요",
+  TEAM: "소속을 입력해주세요",
+  BACKGROUND_IMG: backgroundImg,
+  PROFILE_IMG: profileImg,
+  START_DATE: dateFormatter(new Date()),
+  BELT_COLOR: "WHITE",
+  DDay: 0,
+  BELT_GRAU: 1,
+  PROMOTION_DATE: dateFormatter(new Date()),
+  YEARLY_GOAL: "올해의 목표를 입력해주세요",
+  MONTHLY_GOAL: "이 달의 목표를 입력해주세요",
+};
+
+export const NAME = "NAME";
+export const TEAM = "TEAM";
+export const BACKGROUND_IMG = "BACKGROUND_IMG";
+export const PROFILE_IMG = "PROFILE_IMG";
+export const START_DATE = "START_DATE";
+export const BELT_COLOR = "BELT_COLOR";
+export const BELT_GRAU = "BELT_GRAU";
+export const PROMOTION_DATE = "PROMOTION_DATE";
+export const YEARLY_GOAL = "YEARLY_GOAL";
+export const MONTHLY_GOAL = "MONTHLY_GOAL";
+export const INPUT_TYPE = {
+  NAME: "NAME",
+  TEAM: "TEAM",
+  BACKGROUND_IMG: "BACKGROUND_IMG",
+  PROFILE_IMG: "PROFILE_IMG",
+  START_DATE: "START_DATE",
+  BELT_COLOR: "BELT_COLOR",
+  BELT_GRAU: "BELT_GRAU",
+  PROMOTION_DATE: "PROMOTION_DATE",
+  YEARLY_GOAL: "YEARLY_GOAL",
+  MONTHLY_GOAL: "MONTHLY_GOAL",
+};
 export const INPUT_TITLE = {
   NAME: "이름",
   TEAM: "소속",
@@ -11,18 +50,18 @@ export const INPUT_TITLE = {
   MONTHLY_GOAL: "이 달의 목표",
 };
 export const INPUT_ERROR_MSG = {
-  NAME: "공백 포함 1-20 자",
-  TEAM: "공백 포함 1-20 자",
+  NAME: "공백 포함 1-15 자",
+  TEAM: "공백 포함 1-15 자",
   START_DATE: "날짜를 선택하세요",
   BELT_COLOR: "색상을 선택하세요",
   BELT_GRAU: "숫자를 선택하세요",
   PROMOTION_DATE: "날짜를 선택하세요",
-  YEARLY_GOAL: "공백 포함 1-40 자",
-  MONTHLY_GOAL: "공백 포함 1-40 자",
+  YEARLY_GOAL: "공백 포함 1-20 자",
+  MONTHLY_GOAL: "공백 포함 1-20 자",
 };
 
 export const BELT_COLOR_KEY = ["WHITE", "BLUE", "PURPLE", "BROWN", "BLACK"];
-export const BELT_COLOR = {
+export const BELT_COLOR_MAP = {
   WHITE: {
     KOR: "화이트",
     BELT_COLOR: themeBelt.white,

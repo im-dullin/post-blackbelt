@@ -6,68 +6,62 @@ import Input from "../../components/inputs/Input";
 import InputPicker from "../../components/inputs/InputPicker";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import {
+  BELT_COLOR,
   BELT_COLOR_KEY,
+  BELT_GRAU,
   BELT_GRAU_KEY,
+  MONTHLY_GOAL,
+  NAME,
+  PROMOTION_DATE,
+  START_DATE,
+  TEAM,
+  YEARLY_GOAL,
 } from "../../constants/inputs-constants";
-import { getStorageUser } from "../../utils/async-storage-fn";
+import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
 
-const headerInfo = {
-  left: {
-    icon: "chevron-left",
-    iconColor: "black",
-    onPress: {
-      navigate: SCREEN_NAME.MY_PAGE,
-    },
-  },
-  title: `Edit ${SCREEN_NAME.MY_PAGE}`,
-  right: {
-    icon: "delete",
-    iconColor: "black",
-    onPress: {
-      // navigate: SCREEN_NAME.LOGIN,
-      msg: "deleteUser", // test for delete userStorage
-    },
-  },
-};
-const INPUT_TYPE = {
-  NAME: "NAME",
-  TEAM: "TEAM",
-  START_DATE: "START_DATE",
-  BELT_COLOR: "BELT_COLOR",
-  BELT_GRAU: "BELT_GRAU",
-  PROMOTION_DATE: "PROMOTION_DATE",
-  YEARLY_GOAL: "YEARLY_GOAL",
-  MONTHLY_GOAL: "MONTHLY_GOAL",
-};
 export default function EditMyPage({ navigation }) {
   const singleInputProp = {
-    maxLength: 20,
+    maxLength: 15,
     multiline: false,
   };
   const multiInputProp = {
-    maxLength: 40,
+    maxLength: 20,
     multiline: true,
+  };
+  const handleNavigateMyPage = () => {
+    navigation.navigate(SCREEN_NAME.MY_PAGE);
+  };
+  const handleRemoveDate = () => {
+    removeStorageData(STORAGE_KEY.USER);
+  };
+
+  const headerInfo = {
+    left: {
+      icon: "chevron-left",
+      iconColor: "black",
+      onPress: handleNavigateMyPage,
+    },
+    title: `Edit ${SCREEN_NAME.MY_PAGE}`,
+    right: {
+      icon: "delete",
+      iconColor: "black",
+      onPress: handleRemoveDate,
+    },
   };
 
   return (
     <View style={styles.container}>
-      <Header headerInfo={headerInfo} navigation={navigation} />
+      <Header headerInfo={headerInfo} />
       <View style={styles.inputs}>
         <KeyboardAwareScrollView>
-          <Input type={INPUT_TYPE.NAME} lineInputProp={singleInputProp} />
-          <Input type={INPUT_TYPE.TEAM} lineInputProp={singleInputProp} />
-          <DatePicker type={INPUT_TYPE.START_DATE} />
-          <InputPicker
-            type={INPUT_TYPE.BELT_COLOR}
-            pickerItem={BELT_COLOR_KEY}
-          />
-          <InputPicker type={INPUT_TYPE.BELT_GRAU} pickerItem={BELT_GRAU_KEY} />
-          <DatePicker type={INPUT_TYPE.PROMOTION_DATE} />
-          <Input type={INPUT_TYPE.YEARLY_GOAL} lineInputProp={multiInputProp} />
-          <Input
-            type={INPUT_TYPE.MONTHLY_GOAL}
-            lineInputProp={multiInputProp}
-          />
+          <Input type={NAME} lineInputProp={singleInputProp} />
+          <Input type={TEAM} lineInputProp={singleInputProp} />
+          <DatePicker type={START_DATE} />
+          <InputPicker type={BELT_COLOR} pickerItem={BELT_COLOR_KEY} />
+          <InputPicker type={BELT_GRAU} pickerItem={BELT_GRAU_KEY} />
+          <DatePicker type={PROMOTION_DATE} />
+          <Input type={YEARLY_GOAL} lineInputProp={multiInputProp} />
+          <Input type={MONTHLY_GOAL} lineInputProp={multiInputProp} />
         </KeyboardAwareScrollView>
       </View>
     </View>
