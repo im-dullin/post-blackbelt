@@ -1,6 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../theme";
 import { DIARY_CAT } from "../../constants/diary-category-constants";
+import dateStore from "../../utils/store";
+import { useEffect } from "react";
 
 const daily = {
   diary_day: "2022-09-20",
@@ -38,11 +40,11 @@ const daily = {
   ],
 };
 
-export default function DiaryBrief() {
+export default function DiaryBrief({ date }) {
   return (
     <View style={styles.diaryContainer}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>03 Sep 2022</Text>
+        <Text style={styles.title}>{date}</Text>
         <Image style={styles.diaryCategory} source={DIARY_CAT[3].IMG_SRC} />
       </View>
       <View style={styles.diaryRow}>

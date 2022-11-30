@@ -7,7 +7,11 @@ import DiaryCategory from "../components/diary/DiaryCategory";
 import DiaryCalendar from "../components/diary/DiaryCalendar";
 import AddDiaryBtn from "../components/diary/AddDiaryBtn";
 
+import { useSelector } from "react-redux";
+
 export default function Home({ navigation }) {
+  const storeDate = useSelector((state) => state.selectedDate);
+
   return (
     <View style={styles.container}>
       <View id="profile" style={styles.profileContainer}>
@@ -21,7 +25,7 @@ export default function Home({ navigation }) {
         <AddDiaryBtn navigation={navigation} />
       </View>
       <View id="selected-diary" style={styles.diaryContainer}>
-        <DiaryBrief />
+        <DiaryBrief date={storeDate} />
       </View>
     </View>
   );

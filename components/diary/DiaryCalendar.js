@@ -7,18 +7,18 @@ import { DIARY_CAT } from "../../constants/diary-category-constants";
 import moment from "moment";
 import { getFormattedToday } from "../../utils/date-fn";
 import dateStore, { updateSelectedDate } from "../../utils/store";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const _format = "YYYY-MM-DD";
 const markedDays = {
-  "2022-11-05": {
+  "2022-12-05": {
     diaryCategory: DIARY_CAT[0],
   },
-  "2022-11-20": {
+  "2022-12-20": {
     diaryCategory: DIARY_CAT[1],
   },
-  "2022-11-21": { diaryCategory: DIARY_CAT[2] },
-  "2022-11-24": { marked: true },
-  "2022-11-25": { diaryCategory: DIARY_CAT[3] },
+  "2022-12-21": { diaryCategory: DIARY_CAT[2] },
+  "2022-12-24": { marked: true },
+  "2022-12-25": { diaryCategory: DIARY_CAT[3] },
 };
 export default function DiaryCalendar() {
   // {/* ✉️ react-native-calendars module: https://github.com/wix/react-native-calendars */}
@@ -27,6 +27,7 @@ export default function DiaryCalendar() {
   const [selectedDay, setSelectedDay] = useState(today);
   const [days, setDays] = useState({});
   const [reRender, setRerender] = useState(true);
+  const dispatch = useDispatch();
 
   useFocusEffect(
     // useEffect hook in react-native Tab navigator
@@ -39,7 +40,8 @@ export default function DiaryCalendar() {
   );
 
   useEffect(() => {
-    dateStore.dispatch(updateSelectedDate(selectedDay));
+    dispatch(updateSelectedDate(selectedDay));
+    // dateStore.dispatch(updateSelectedDate(selectedDay));
   }, [selectedDay]);
 
   const checkToday = (compareDay, updateMark) => {

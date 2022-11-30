@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
-import dateStore from "../../utils/store";
 
+import { useSelector } from "react-redux";
 export default function WriteDiary() {
-  const selectedDate = dateStore.getState();
+  const storeDate = useSelector((state) => state.selectedDate);
 
-  console.log(selectedDate);
+  console.log(storeDate);
   return (
     <View>
       <Text>Hello</Text>
