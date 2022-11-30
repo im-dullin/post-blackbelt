@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { removeStorageData, STORAGE_KEY } from "../utils/async-storage-fn";
+import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
 
 export default function Header({ headerInfo }) {
   const { left } = headerInfo;

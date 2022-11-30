@@ -1,18 +1,18 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { theme } from "../theme";
-import TechTree from "../screens/TechTree";
-import TechDetail from "../screens/techTree/TechDetail";
-import Home from "../screens/Home";
-import MyPage from "../screens/MyPage";
-import Login from "../screens/myPage/Login";
+import { theme } from "../../theme";
+import TechTree from "../../screens/TechTree";
+import TechDetail from "../../screens/techTree/TechDetail";
+import Home from "../../screens/Home";
+import MyPage from "../../screens/MyPage";
+import Login from "../../screens/myPage/Login";
 import {
   NAV_ICON_MAP,
   SCREEN_NAME,
   TAB_NAME,
-} from "../constants/screen-constants";
-import EditMyPage from "../screens/myPage/EditMyPage";
+} from "../../constants/screen-constants";
+import EditMyPage from "../../screens/myPage/EditMyPage";
 
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();

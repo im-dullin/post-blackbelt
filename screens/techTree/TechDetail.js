@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import DiaryBrief from "../../components/DairyBrief";
+import DiaryBrief from "../../components/diary/DairyBrief";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import { theme } from "../../theme";
 

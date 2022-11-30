@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
-import TechProfile from "../components/TechProfile";
+import TechProfile from "../components/user/TechProfile";
 import { SCREEN_NAME } from "../constants/screen-constants";
 
 export default function TechTree({ navigation }) {

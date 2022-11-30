@@ -1,6 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Header from "../../components/Header";
+import { useEffect } from "react";
+import Header from "../../components/utils/Header";
 import DatePicker from "../../components/inputs/InputDatePicker";
 import Input from "../../components/inputs/Input";
 import InputPicker from "../../components/inputs/InputPicker";

@@ -7,7 +7,7 @@ import TechPieChart from "../components/TechPieChart";
 
 import { SCREEN_NAME } from "../constants/screen-constants";
 
-import { getStorageUser } from "../utils/async-storage-fn";
+import { getStorageUser, isIncludeKey } from "../utils/async-storage-fn";
 import {
   BACKGROUND_IMG,
   BELT_COLOR,
@@ -22,8 +22,8 @@ import {
   YEARLY_GOAL,
 } from "../constants/inputs-constants";
 import { dateDiffInDays, dateFormatter } from "../utils/date-fn";
-import Belt from "../components/Belt";
-import Header from "../components/Header";
+import Belt from "../components/user/Belt";
+import Header from "../components/utils/Header";
 
 export default function MyPage({ navigation }) {
   const [user, setUser] = useState(defaultUser);
@@ -53,10 +53,6 @@ export default function MyPage({ navigation }) {
     }, [])
   );
 
-  const isInclude = (userObject, key) => {
-    return Object.keys(userObject).includes(key);
-  };
-
   const setFormattedStartDate = async (startDate) => {
     const today = new Date();
     const DDay = dateDiffInDays(today, startDate);
@@ -85,11 +81,11 @@ export default function MyPage({ navigation }) {
     }
     await setFormattedDate(storedUser);
 
-    if (isInclude(storedUser, START_DATE)) {
+    if (isIncludeKey(storedUser, START_DATE)) {
       const startDate = new Date(storedUser[START_DATE]);
       await setFormattedStartDate(startDate);
     }
-    if (isInclude(storedUser, PROMOTION_DATE)) {
+    if (isIncludeKey(storedUser, PROMOTION_DATE)) {
       const promotionDate = storedUser[PROMOTION_DATE];
       await setFormattedpPromotionDate(promotionDate);
     }

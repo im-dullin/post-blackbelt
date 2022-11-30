@@ -1,4 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NAME, PROFILE_IMG } from "../constants/inputs-constants";
+import profileImg from "../assets/images/user.png";
 
 // Async Storage functions
 export const saveStorageData = async (key, value) => {
@@ -60,3 +62,24 @@ export const getStorageUser = async () => {
 export const removeStorageUser = async () => {
   await removeStorageData(STORAGE_KEY.USER);
 };
+
+export const isIncludeKey = (userObject, key) => {
+  return Object.keys(userObject).includes(key);
+};
+
+export const getUserProfileAndName = async () => {
+  const user = await getStorageUser();
+  let profile = profileImg;
+  let userName = USER_NAME_ERROR;
+  if (user) {
+    if (isIncludeKey(user, PROFILE_IMG)) {
+      profile = user[PROFILE_IMG];
+    }
+    if (isIncludeKey(user, NAME)) {
+      userName = user[NAME];
+    }
+  }
+  return { profile, userName };
+};
+
+export const USER_NAME_ERROR = "사용자 정보를 입력해주세요";

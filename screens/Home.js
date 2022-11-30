@@ -5,8 +5,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import profileImg from "../assets/images/profile.png";
 import { theme } from "../theme";
-import DiaryBrief from "../components/DairyBrief";
+import DiaryBrief from "../components/diary/DairyBrief";
 import { DIARY_CAT } from "../constants/diary-category-constants";
+import { getUserProfileAndName } from "../utils/async-storage-fn";
+import HomeProfile from "../components/user/HomeProfile";
 
 const _format = "YYYY-MM-DD";
 const markedDays = {
@@ -32,6 +34,7 @@ export default function Home({ navigation }) {
       setDays(markedDays); // Get ays from API
       handleToday();
       setSelectedDay(today);
+
       return () => {};
     }, [])
   );
@@ -81,15 +84,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View id="profile" style={styles.profileContainer}>
-        <Image style={styles.profileImg} source={profileImg} />
-        <View style={{ alignContent: "center" }}>
-          <Text style={styles.profileUserName}>Rafael Mendes</Text>
-          <Text style={{ color: theme.grey }}>
-            이번 달 00일 중 00일을 수련하셨습니다
-          </Text>
-        </View>
-      </View>
+      <HomeProfile />
       <View id="categories" style={styles.diaryCategoryContainer}>
         {DIARY_CAT.map((CAT) => {
           return (
