@@ -20,6 +20,9 @@ const date = createSlice({
     updateSelectedDate: (state, action) => {
       state.selectedDate = action.payload;
     },
+    initializeEditDiray: (state, action) => {
+      state.editDiary = editDiaryInital;
+    },
     updateDiaryCategory: (state, action) => {
       state.editDiary.diaryCategory = action.payload;
     },
@@ -30,7 +33,11 @@ const date = createSlice({
 });
 
 const dateStore = configureStore({ reducer: date.reducer });
-export const { updateSelectedDate, updateDiaryCategory, updateTechCategory } =
-  date.actions;
+export const {
+  updateSelectedDate,
+  initializeEditDiray,
+  updateDiaryCategory,
+  updateTechCategory,
+} = date.actions;
 
 export default dateStore;

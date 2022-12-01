@@ -1,17 +1,22 @@
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DiaryEditor from "../../components/diary/DiaryEditor";
 import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
 import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
 import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
 import { theme } from "../../theme";
+import { initializeEditDiray } from "../../utils/store";
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(initializeEditDiray());
+  }, []);
   console.log(storeDiary);
   const handleSaveBtn = () => {};
 
