@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
-import { TECH_CAT } from "../../constants/tech-category-constants";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  TECH_CAT,
+  TECH_CAT_IDX,
+} from "../../constants/tech-category-constants";
 import { theme } from "../../theme";
 import { updateTechCategory } from "../../utils/store";
 
@@ -10,18 +13,28 @@ const ICON_OPACITY = {
   ACTIVE: 1,
 };
 export default function TechCategoryPicker() {
-  let opacityArr = Array(TECH_CAT.length).fill(ICON_OPACITY.INACTIVE);
+  const opacityArr = Array(TECH_CAT.length).fill(ICON_OPACITY.INACTIVE);
   const [iconsOpacity, setIconOpacity] = useState(opacityArr);
+  const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const i = TECH_CAT_IDX[storeDiary.techCategory];
+    updateIconOpacity(i);
+  }, [storeDiary]);
 
   useEffect(() => {}, [iconsOpacity]);
 
-  const handlePressIcon = (CAT, i) => {
+  const updateIconOpacity = (i) => {
     setIconOpacity(() => {
-      let result = opacityArr;
+      const result = opacityArr;
       result[i] = ICON_OPACITY.ACTIVE;
       return result;
     });
+  };
+
+  const handlePressIcon = (CAT, i) => {
+    updateIconOpacity(i);
     dispatch(updateTechCategory(CAT.ID));
   };
   return (
@@ -60,16 +73,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategory: {
-    width: 70,
+    width: 65,
     height: 45,
-    marginHorizontal: 6,
+    marginHorizontal: 2,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.purpleLight,
     borderRadius: 10,
   },
   diaryCategoryEng: {
-    fontSize: 11,
+    fontSize: 10,
     color: theme.black,
     marginTop: 2,
     fontWeight: "600",

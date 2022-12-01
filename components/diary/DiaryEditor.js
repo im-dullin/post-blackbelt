@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { theme } from "../../theme";
 import { updateContent, updateTitle } from "../../utils/store";
 
 export default function DiaryEditor() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const storeDiary = useSelector((state) => state.editDiary);
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setTitle(storeDiary.title);
+    setContent(storeDiary.content);
+  }, [storeDiary]);
   useEffect(() => {
     const saveData = setTimeout(() => {
       dispatch(updateTitle(title));
@@ -48,7 +53,7 @@ export default function DiaryEditor() {
           value={title}
           maxLength={20}
           multiline={false}
-          placeholder={"제목을 입력하세요.(20 자 이내)"}
+          placeholder="제목을 입력하세요.(20 자 이내)"
           placeholderTextColor={theme.grey}
           style={styles.titleInput}
         />
@@ -58,8 +63,8 @@ export default function DiaryEditor() {
           onChangeText={onChangeContent}
           value={content}
           maxLength={500}
-          multiline={true}
-          placeholder={"일기를 입력하세요.(500 자 이내)"}
+          multiline
+          placeholder="일기를 입력하세요.(500 자 이내)"
           placeholderTextColor={theme.grey}
           style={styles.contentInput}
         />

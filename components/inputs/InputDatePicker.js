@@ -36,15 +36,15 @@ export default function DatePicker({ type }) {
   }, [user]);
 
   const loadUser = async () => {
-    const storedUser = await getStorageUser();
-    setUser(storedUser);
-    return storedUser;
+    const asyncStorageUser = await getStorageUser();
+    setUser(asyncStorageUser);
+    return asyncStorageUser;
   };
 
   const updateUser = async () => {
     setBackgroundColor(theme.white);
     setLoading(true);
-    const storedUser = await loadUser();
+    const asyncStorageUser = await loadUser();
     if (showingDate === "") {
       setLoading(false);
       Alert.alert(
@@ -55,7 +55,7 @@ export default function DatePicker({ type }) {
       return;
     }
     const newUser = {
-      ...storedUser,
+      ...asyncStorageUser,
       [type]: date,
     };
     setUser(newUser);

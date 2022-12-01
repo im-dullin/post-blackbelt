@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
-import { DIARY_CAT } from "../../constants/diary-category-constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  DIARY_CAT,
+  DIARY_CAT_IDX,
+} from "../../constants/diary-category-constants";
 import { theme } from "../../theme";
 import { updateDiaryCategory } from "../../utils/store";
 
@@ -10,19 +13,30 @@ const ICON_OPACITY = {
   [false]: 1,
   ACTIVE: 1,
 };
+
 export default function DiaryCategoryPicker({ isPicker }) {
-  let opacityArr = Array(DIARY_CAT.length).fill(ICON_OPACITY[isPicker]);
+  const opacityArr = Array(DIARY_CAT.length).fill(ICON_OPACITY[isPicker]);
   const [iconsOpacity, setIconOpacity] = useState(opacityArr);
+  const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const i = DIARY_CAT_IDX[storeDiary.diaryCategory];
+    updateIconOpacity(i);
+  }, [storeDiary]);
 
   useEffect(() => {}, [iconsOpacity]);
 
-  const handlePressIcon = (CAT, i) => {
+  const updateIconOpacity = (i) => {
     setIconOpacity(() => {
-      let result = opacityArr;
+      const result = opacityArr;
       result[i] = ICON_OPACITY.ACTIVE;
       return result;
     });
+  };
+
+  const handlePressIcon = (CAT, i) => {
+    updateIconOpacity(i);
     dispatch(updateDiaryCategory(CAT.ID));
   };
   return (

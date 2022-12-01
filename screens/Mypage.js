@@ -76,18 +76,19 @@ export default function MyPage({ navigation }) {
     });
   };
   const loadUser = async () => {
-    const storedUser = await getStorageUser();
-    if (storedUser === null) {
+    const asyncStorageUser = await getStorageUser();
+    // console.log(asyncStorageUser);
+    if (asyncStorageUser === null) {
       return setUser(defaultUser);
     }
-    await setFormattedDate(storedUser);
+    await setFormattedDate(asyncStorageUser);
 
-    if (isIncludeKey(storedUser, START_DATE)) {
-      const startDate = new Date(storedUser[START_DATE]);
+    if (isIncludeKey(asyncStorageUser, START_DATE)) {
+      const startDate = new Date(asyncStorageUser[START_DATE]);
       await setFormattedStartDate(startDate);
     }
-    if (isIncludeKey(storedUser, PROMOTION_DATE)) {
-      const promotionDate = storedUser[PROMOTION_DATE];
+    if (isIncludeKey(asyncStorageUser, PROMOTION_DATE)) {
+      const promotionDate = asyncStorageUser[PROMOTION_DATE];
       await setFormattedpPromotionDate(promotionDate);
     }
   };

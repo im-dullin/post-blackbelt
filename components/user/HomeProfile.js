@@ -21,11 +21,11 @@ export default function HomeProfile() {
     }, [])
   );
   const checkUser = async () => {
-    const storedUser = await getUserProfileAndName();
-    if (!storedUser) {
+    const asyncStorageUser = await getUserProfileAndName();
+    if (!asyncStorageUser) {
       return setUser(defaultUser);
     }
-    setUser(storedUser);
+    setUser(asyncStorageUser);
   };
 
   return (

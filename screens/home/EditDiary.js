@@ -1,26 +1,118 @@
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DiaryEditor from "../../components/diary/DiaryEditor";
 import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
 import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
 import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 import { theme } from "../../theme";
-import { initializeEditDiray } from "../../utils/store";
+import { initializeEditDiray, updateEditDiary } from "../../utils/store";
+import {
+  generateUniqueId,
+  getStorageDiary,
+  getStorageYearMonth,
+  getYearMonthStorageKey,
+  isIncludeKey,
+  removeStorageDiary,
+  removeStorageYearMonth,
+  saveStorageDiary,
+  saveStorageYearMonth,
+} from "../../utils/async-storage-fn";
+import { SCREEN_NAME } from "../../constants/screen-constants";
+
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
+  const dateStorageKey = getYearMonthStorageKey(storeDate);
+  const [diaryId, setDiaryId] = useState(null);
 
   useEffect(() => {
     dispatch(initializeEditDiray());
+    checkCurrentDiary();
+    // removeStorageYearMonth(dateStorageKey);
+    // removeStorageDiary();
   }, []);
-  console.log(storeDiary);
-  const handleSaveBtn = () => {};
+  // console.log(storeDiary);
+
+  const handleAlert = (alertMsg, btns) => {
+    Alert.alert(alertMsg, "", btns, {
+      cancelable: true,
+      onDismiss: () => {},
+    });
+  };
+  const checkCurrentDiary = async () => {
+    const asyncStorageYearMonth = await getStorageYearMonth(dateStorageKey);
+    const asyncStorageDiary = await getStorageDiary();
+    console.log(asyncStorageYearMonth);
+    console.log(asyncStorageDiary);
+
+    if (
+      asyncStorageYearMonth &&
+      isIncludeKey(asyncStorageYearMonth, storeDate)
+    ) {
+      const id = asyncStorageYearMonth[storeDate];
+      dispatch(updateEditDiary(asyncStorageDiary[id]));
+      setDiaryId(id);
+    }
+  };
+  // const handleEmptyValue = async (value, alrtMsg) => {
+  //   const isEmpty = value === ""
+  //   if (isEmpty) {
+  //     handleAlert(alrtMsg, [{ text: "확인" }]);
+  //   }
+  //   return isEmpty;
+  // };
+
+  const isDiaryEmpty = async () => {
+    if (storeDiary.diaryCategory === "") {
+      handleAlert("기록할 일정을 선택해주세요", [{ text: "확인" }]);
+      return true;
+    }
+    if (storeDiary.techCategory === "") {
+      handleAlert("기술 카테고리를 선택해주세요", [{ text: "확인" }]);
+      return true;
+    }
+    if (storeDiary.title === "") {
+      handleAlert("일기 제목을 작성해주세요", [{ text: "확인" }]);
+      return true;
+    }
+    if (storeDiary.content === "") {
+      handleAlert("일기 내용을 작성해주세요", [{ text: "확인" }]);
+      return true;
+    }
+    return false;
+  };
+
+  const handleSaveDiary = async () => {
+    const id = diaryId !== null ? diaryId : generateUniqueId();
+    console.log(id, diaryId);
+
+    const newDiary = {
+      [id]: { date: storeDate, ...storeDiary },
+    };
+    const newYMDiary = {
+      [storeDate]: id,
+    };
+    await saveStorageDiary(newDiary);
+    await saveStorageYearMonth(dateStorageKey, newYMDiary);
+
+    navigation.navigate(SCREEN_NAME.HOME);
+  };
+
+  const handleSaveBtn = async () => {
+    const isEmpty = await isDiaryEmpty();
+    if (isEmpty) {
+      return;
+    }
+    handleAlert("일기를 저장할까요?", [
+      { text: "취소" },
+      { text: "저장", onPress: handleSaveDiary },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -29,14 +121,14 @@ export default function EditDiary({ navigation }) {
         <KeyboardAwareScrollView>
           <View id="diary-category" style={styles.CategoryContainer}>
             <Text>어떤 일정을 기록하고 싶으신가요?</Text>
-            <DiaryCategoryPicker isPicker={true} />
+            <DiaryCategoryPicker isPicker />
           </View>
           <View id="tech-category" style={styles.CategoryContainer}>
             <Text>오늘 배운 내용을 기술 트리에 저장해보세요.</Text>
             <TechCategoryPicker />
           </View>
           <View id="edit-diary-container" style={styles.editDirayContainer}>
-            <DiaryEditor isSelecter={true} />
+            <DiaryEditor isSelecter />
           </View>
         </KeyboardAwareScrollView>
       </View>

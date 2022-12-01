@@ -14,12 +14,12 @@ export default function TechTree({ navigation }) {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate(SCREEN_NAME.TECH_DETAIL, {
-                  techTitle: v,
+                  techTitle: v.ID,
                 })
               }
               key={i}
             >
-              <Text style={styles.techTitle}>{v}</Text>
+              <Text style={styles.techTitle}>{v.ID}</Text>
             </TouchableOpacity>
           );
         })}

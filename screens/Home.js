@@ -8,6 +8,7 @@ import AddDiaryBtn from "../components/diary/AddDiaryBtn";
 
 import { useSelector } from "react-redux";
 import DiaryCategoryPicker from "../components/pickers/DiaryCategoryPicker";
+import { removeStorageUser } from "../utils/async-storage-fn";
 
 export default function Home({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);

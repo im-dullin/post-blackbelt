@@ -30,15 +30,15 @@ export default function InputPicker({ type, pickerItem }) {
   }, [user]);
 
   const loadUser = async () => {
-    const storedUser = await getStorageUser();
-    setUser(storedUser);
-    return storedUser;
+    const asyncStorageUser = await getStorageUser();
+    setUser(asyncStorageUser);
+    return asyncStorageUser;
   };
 
   const updateUser = async () => {
     setBackgroundColor(theme.white);
     setLoading(true);
-    const storedUser = await loadUser();
+    const asyncStorageUser = await loadUser();
     if (selectedData === "") {
       setLoading(false);
       Alert.alert(
@@ -49,7 +49,7 @@ export default function InputPicker({ type, pickerItem }) {
       return;
     }
     const newUser = {
-      ...storedUser,
+      ...asyncStorageUser,
       [type]: selectedData,
     };
     setUser(newUser);

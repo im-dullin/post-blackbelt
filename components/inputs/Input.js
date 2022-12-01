@@ -26,9 +26,9 @@ export default function Input({ type, lineInputProp }) {
     }
   }, [user]);
   const loadUser = async () => {
-    const storedUser = await getStorageUser();
-    setUser(storedUser);
-    return storedUser;
+    const asyncStorageUser = await getStorageUser();
+    setUser(asyncStorageUser);
+    return asyncStorageUser;
   };
 
   const onChangeText = (payload) => {
@@ -39,7 +39,7 @@ export default function Input({ type, lineInputProp }) {
   const updateUser = async () => {
     setBackgroundColor(theme.white);
     setLoading(true);
-    const storedUser = await loadUser();
+    const asyncStorageUser = await loadUser();
     if (text === "") {
       setLoading(false);
       Alert.alert(
@@ -50,7 +50,7 @@ export default function Input({ type, lineInputProp }) {
       return;
     }
     const newUser = {
-      ...storedUser,
+      ...asyncStorageUser,
       [type]: text,
     };
     setUser(newUser);
