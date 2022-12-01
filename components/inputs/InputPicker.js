@@ -10,7 +10,7 @@ import {
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 import { theme, themeBelt } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
-import ValuePicker from "../utils/ValuePicker";
+import DropdownPicker from "../pickers/DropdownPicker";
 
 export default function InputPicker({ type, pickerItem }) {
   const [user, setUser] = useState({});
@@ -65,7 +65,7 @@ export default function InputPicker({ type, pickerItem }) {
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
       <SafeAreaView style={{ ...styles.input, backgroundColor }}>
-        <ValuePicker
+        <DropdownPicker
           pickerItem={pickerItem}
           selectedData={selectedData}
           onValueChange={handleOnValueChange}

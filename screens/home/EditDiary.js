@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useSelector } from "react-redux";
-import DiaryCategory from "../../components/diary/DiaryCategory";
 import DiaryEditor from "../../components/diary/DiaryEditor";
+import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
+import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
 import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
 import { theme } from "../../theme";
@@ -11,6 +12,7 @@ export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
 
+  console.log(storeDiary);
   const handleSaveBtn = () => {};
 
   return (
@@ -18,11 +20,11 @@ export default function EditDiary({ navigation }) {
       <EditDiaryHeader handleSaveBtn={handleSaveBtn} navigation={navigation} />
       <View id="diary-category" style={styles.CategoryContainer}>
         <Text>어떤 일정을 기록하고 싶으신가요?</Text>
-        <DiaryCategory isSelecter={true} />
+        <DiaryCategoryPicker isPicker={true} />
       </View>
       <View id="tech-category" style={styles.CategoryContainer}>
         <Text>오늘 배운 내용을 기술 트리에 저장해보세요.</Text>
-        {/* picker component 따로 뺴기 */}
+        <TechCategoryPicker />
       </View>
       <View id="edit-diary-container" style={styles.editDirayContainer}>
         <DiaryEditor isSelecter={true} />

@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import { DIARY_CAT } from "../../constants/diary-category-constants";
+import { TECH_CAT } from "../../constants/tech-category-constants";
 import { theme } from "../../theme";
-import { updateDiaryCategory } from "../../utils/store";
+import { updateTechCategory } from "../../utils/store";
 
 const ICON_OPACITY = {
-  [true]: 0.3,
-  [false]: 1,
+  INACTIVE: 0.7,
   ACTIVE: 1,
 };
-export default function DiaryCategory({ isSelecter }) {
-  let opacityArr = Array(DIARY_CAT.length).fill(ICON_OPACITY[isSelecter]);
+export default function TechCategoryPicker() {
+  let opacityArr = Array(TECH_CAT.length).fill(ICON_OPACITY.INACTIVE);
   const [iconsOpacity, setIconOpacity] = useState(opacityArr);
   const dispatch = useDispatch();
 
@@ -24,25 +22,19 @@ export default function DiaryCategory({ isSelecter }) {
       result[i] = ICON_OPACITY.ACTIVE;
       return result;
     });
-    dispatch(updateDiaryCategory(CAT.ID));
+    dispatch(updateTechCategory(CAT.ID));
   };
   return (
     <View style={styles.container}>
-      {DIARY_CAT.map((CAT, i) => {
+      {TECH_CAT.map((CAT, i) => {
         return (
           <Pressable
             key={CAT.KOR}
-            style={styles.diaryCategory}
+            style={{ ...styles.diaryCategory, opacity: iconsOpacity[i] }}
             onPress={handlePressIcon.bind(this, CAT, i)}
           >
-            <Image
-              style={{
-                ...styles.diaryCategoryImg,
-                opacity: iconsOpacity[i],
-              }}
-              source={CAT.IMG_SRC}
-            />
-            <Text style={styles.diaryCategoryTitle}>{CAT.KOR}</Text>
+            <Text style={styles.diaryCategoryEng}>{CAT.ENG}</Text>
+            <Text style={styles.diaryCategoryKor}>{CAT.KOR}</Text>
           </Pressable>
         );
       })}
@@ -55,6 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10,
   },
   diaryCategoryContainer: {
     flex: 0.85,
@@ -67,16 +60,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategory: {
-    width: 60,
-    height: 60,
-    marginHorizontal: 4,
+    width: 70,
+    height: 45,
+    marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: theme.skyBlue,
+    borderRadius: 10,
   },
-  diaryCategoryImg: {
-    width: 25,
-    height: 25,
-    borderRadius: 12.5,
+  diaryCategoryEng: {
+    fontSize: 11,
+    color: theme.black,
+    marginTop: 2,
+    fontWeight: "600",
   },
-  diaryCategoryTitle: { fontSize: 10, color: theme.grey, marginTop: 2 },
+  diaryCategoryKor: { fontSize: 10, color: theme.black, marginTop: 2 },
 });

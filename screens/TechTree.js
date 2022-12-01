@@ -2,14 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 import TechProfile from "../components/user/TechProfile";
 import { SCREEN_NAME } from "../constants/screen-constants";
+import { TECH_CAT } from "../constants/tech-category-constants";
 
 export default function TechTree({ navigation }) {
-  const techs = ["STANDING", "GUARD", "GUARD PASS", "AFTER PASS"];
   return (
     <View style={styles.container}>
       <TechProfile />
       <View style={styles.techContainer}>
-        {techs.map((v, i) => {
+        {TECH_CAT.map((v, i) => {
           return (
             <TouchableOpacity
               onPress={() =>

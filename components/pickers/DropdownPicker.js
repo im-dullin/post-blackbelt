@@ -1,9 +1,8 @@
 import { Picker } from "@react-native-picker/picker";
 import { StyleSheet } from "react-native";
-import { theme } from "../../theme";
 
 // Wrap with SafeAreaView
-export default function ValuePicker({
+export default function DropdownPicker({
   pickerItem,
   selectedData,
   onValueChange,
@@ -27,7 +26,6 @@ export default function ValuePicker({
 const styles = StyleSheet.create({
   picker: {
     width: 160,
-    // postion: "absolute",
     fontSize: 14,
     height: 45,
     justifyContent: "center",

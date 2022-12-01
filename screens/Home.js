@@ -3,11 +3,11 @@ import { View, StyleSheet } from "react-native";
 import { theme } from "../theme";
 import DiaryBrief from "../components/diary/DiaryBrief";
 import HomeProfile from "../components/user/HomeProfile";
-import DiaryCategory from "../components/diary/DiaryCategory";
 import DiaryCalendar from "../components/diary/DiaryCalendar";
 import AddDiaryBtn from "../components/diary/AddDiaryBtn";
 
 import { useSelector } from "react-redux";
+import DiaryCategoryPicker from "../components/pickers/DiaryCategoryPicker";
 
 export default function Home({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
@@ -18,7 +18,7 @@ export default function Home({ navigation }) {
         <HomeProfile />
       </View>
       <View id="categories" style={styles.diaryCategoryContainer}>
-        <DiaryCategory isSelecter={false} />
+        <DiaryCategoryPicker isPicker={false} />
       </View>
       <View id="calendar" style={styles.calenderContainer}>
         <DiaryCalendar />
