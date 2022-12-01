@@ -18,7 +18,7 @@ export default function Home({ navigation }) {
         <HomeProfile />
       </View>
       <View id="categories" style={styles.diaryCategoryContainer}>
-        <DiaryCategory />
+        <DiaryCategory isSelecter={false} />
       </View>
       <View id="calendar" style={styles.calenderContainer}>
         <DiaryCalendar />
@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
   diaryCategoryContainer: {
     flex: 0.85,
     backgroundColor: theme.white,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
     marginHorizontal: theme.marginHorizontal,
     marginBottom: 10,
     borderRadius: 10,

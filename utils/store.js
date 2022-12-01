@@ -3,9 +3,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { getFormattedToday } from "./date-fn";
 
 // selected date in calendar
-
+const editDiaryInital = {
+  diaryCategory: "",
+  techCategory: "",
+  title: "",
+  content: "",
+};
 const initialState = {
   selectedDate: getFormattedToday(),
+  editDiary: editDiaryInital,
 };
 const date = createSlice({
   name: "dateReducer",
@@ -14,10 +20,13 @@ const date = createSlice({
     updateSelectedDate: (state, action) => {
       state.selectedDate = action.payload;
     },
+    updateDiaryCategory: (state, action) => {
+      state.editDiary.diaryCategory = action.payload;
+    },
   },
 });
 
 const dateStore = configureStore({ reducer: date.reducer });
-export const { updateSelectedDate } = date.actions;
+export const { updateSelectedDate, updateDiaryCategory } = date.actions;
 
 export default dateStore;
