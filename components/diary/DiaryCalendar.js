@@ -41,7 +41,6 @@ export default function DiaryCalendar() {
 
   useEffect(() => {
     dispatch(updateSelectedDate(selectedDay));
-    // dateStore.dispatch(updateSelectedDate(selectedDay));
   }, [selectedDay]);
 
   const checkToday = (compareDay, updateMark) => {

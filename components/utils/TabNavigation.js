@@ -13,7 +13,7 @@ import {
   TAB_NAME,
 } from "../../constants/screen-constants";
 import EditMyPage from "../../screens/myPage/EditMyPage";
-import WriteDiary from "../../screens/home/WriteDiary";
+import EditDiary from "../../screens/home/EditDiary";
 
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();
@@ -71,7 +71,7 @@ export default function TabNavigation() {
             <HomeStack.Screen name={SCREEN_NAME.HOME} component={Home} />
             <HomeStack.Screen
               name={SCREEN_NAME.WRITE_DIARY}
-              component={WriteDiary}
+              component={EditDiary}
             />
           </HomeStack.Navigator>
         )}

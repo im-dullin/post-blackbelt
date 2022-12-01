@@ -10,21 +10,11 @@ export default function Header({ headerInfo }) {
   return (
     <View id="mypage-header" style={styles.header}>
       <TouchableOpacity style={styles.touchableArea} onPress={left.onPress}>
-        <MaterialIcons
-          name={left.icon}
-          size={24}
-          color={left.iconColor}
-          // onPress={() => navigation.navigate(left.navigate)}
-        />
+        <MaterialIcons name={left.icon} size={24} color={left.iconColor} />
       </TouchableOpacity>
       <Text style={styles.title}>{headerInfo.title}</Text>
       <TouchableOpacity style={styles.touchableArea} onPress={right.onPress}>
-        <MaterialIcons
-          name={right.icon}
-          size={24}
-          color={right.iconColor}
-          // onPress={() => navigation.navigate(right.navigate)}
-        />
+        <MaterialIcons name={right.icon} size={24} color={right.iconColor} />
       </TouchableOpacity>
     </View>
   );
