@@ -6,7 +6,7 @@ import { theme } from "../../theme";
 import { updateTechCategory } from "../../utils/store";
 
 const ICON_OPACITY = {
-  INACTIVE: 0.7,
+  INACTIVE: 0.5,
   ACTIVE: 1,
 };
 export default function TechCategoryPicker() {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.skyBlue,
+    backgroundColor: theme.purpleLight,
     borderRadius: 10,
   },
   diaryCategoryEng: {

@@ -7,6 +7,8 @@ import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
 import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
 import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import { theme } from "../../theme";
 import { initializeEditDiray } from "../../utils/store";
 export default function EditDiary({ navigation }) {
@@ -23,16 +25,20 @@ export default function EditDiary({ navigation }) {
   return (
     <View style={styles.container}>
       <EditDiaryHeader handleSaveBtn={handleSaveBtn} navigation={navigation} />
-      <View id="diary-category" style={styles.CategoryContainer}>
-        <Text>어떤 일정을 기록하고 싶으신가요?</Text>
-        <DiaryCategoryPicker isPicker={true} />
-      </View>
-      <View id="tech-category" style={styles.CategoryContainer}>
-        <Text>오늘 배운 내용을 기술 트리에 저장해보세요.</Text>
-        <TechCategoryPicker />
-      </View>
-      <View id="edit-diary-container" style={styles.editDirayContainer}>
-        <DiaryEditor isSelecter={true} />
+      <View style={{ flex: 4.8 }}>
+        <KeyboardAwareScrollView>
+          <View id="diary-category" style={styles.CategoryContainer}>
+            <Text>어떤 일정을 기록하고 싶으신가요?</Text>
+            <DiaryCategoryPicker isPicker={true} />
+          </View>
+          <View id="tech-category" style={styles.CategoryContainer}>
+            <Text>오늘 배운 내용을 기술 트리에 저장해보세요.</Text>
+            <TechCategoryPicker />
+          </View>
+          <View id="edit-diary-container" style={styles.editDirayContainer}>
+            <DiaryEditor isSelecter={true} />
+          </View>
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   CategoryContainer: {
-    flex: 0.8,
+    height: 90,
     backgroundColor: theme.white,
     margin: 15,
     marginBottom: 0,
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   editDirayContainer: {
-    flex: 3,
+    height: 420,
     backgroundColor: theme.white,
     margin: 15,
     borderRadius: 15,

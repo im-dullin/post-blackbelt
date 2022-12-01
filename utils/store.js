@@ -29,6 +29,12 @@ const date = createSlice({
     updateTechCategory: (state, action) => {
       state.editDiary.techCategory = action.payload;
     },
+    updateTitle: (state, action) => {
+      state.editDiary.title = action.payload;
+    },
+    updateContent: (state, action) => {
+      state.editDiary.content = action.payload;
+    },
   },
 });
 
@@ -38,6 +44,8 @@ export const {
   initializeEditDiray,
   updateDiaryCategory,
   updateTechCategory,
+  updateTitle,
+  updateContent,
 } = date.actions;
 
 export default dateStore;
