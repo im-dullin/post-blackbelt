@@ -1,4 +1,5 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import { Alert, BackHandler, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import { theme } from "../../theme";
@@ -6,6 +7,19 @@ import Header from "./Header";
 
 export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
+
+  useEffect(() => {
+    const backAction = () => {
+      handleCancelBtn();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const HeaderTitle = (
     <View style={styles.headerTitleContainer}>
@@ -17,7 +31,7 @@ export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
   const handleCancelBtn = () => {
     Alert.alert(
       "변경사항을 저장할까요?",
-      "정말로 삭제하시겠습니까?",
+      "",
       [
         { text: "취소", onPress: () => {} },
         {
@@ -34,17 +48,6 @@ export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
         onDismiss: () => {},
       }
     );
-
-    // Alert.alert("변경사항을 저장할까요?", [
-    //   {
-    //     text: "취소",
-    //   },
-    //   {
-    //     text: "저장 안 함",
-    //     // onPress: () => navigation.navigate(SCREEN_NAME.HOME),
-    //   },
-    //   //   { text: "저장" },
-    // ]);
   };
 
   const headerInfo = {
