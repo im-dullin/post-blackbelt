@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useSelector } from "react-redux";
@@ -10,7 +11,6 @@ export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
 
-  console.log(storeDiary);
   const handleSaveBtn = () => {};
 
   return (

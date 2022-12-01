@@ -70,7 +70,7 @@ export default function TabNavigation() {
           >
             <HomeStack.Screen name={SCREEN_NAME.HOME} component={Home} />
             <HomeStack.Screen
-              name={SCREEN_NAME.WRITE_DIARY}
+              name={SCREEN_NAME.EDIT_DIARY}
               component={EditDiary}
             />
           </HomeStack.Navigator>

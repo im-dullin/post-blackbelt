@@ -1,4 +1,3 @@
-import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -11,6 +10,7 @@ import {
 import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
 import { theme, themeBelt } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
+import ValuePicker from "../utils/ValuePicker";
 
 export default function InputPicker({ type, pickerItem }) {
   const [user, setUser] = useState({});
@@ -57,28 +57,19 @@ export default function InputPicker({ type, pickerItem }) {
     setLoading(false);
   };
 
+  const handleOnValueChange = (itemValue) => {
+    setBackgroundColor(theme.lightred);
+    setSelectedData(itemValue);
+  };
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputTitle}>{INPUT_TITLE[type]}</Text>
       <SafeAreaView style={{ ...styles.input, backgroundColor }}>
-        <Picker
-          selectedValue={selectedData}
-          style={styles.picker}
-          itemStyle={{
-            height: 40,
-            transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
-          }}
-          mode="dropdown"
-          onValueChange={(itemValue) => {
-            setBackgroundColor(theme.lightred);
-            setSelectedData(itemValue);
-          }}
-        >
-          <Picker.Item label="" value="" />
-          {pickerItem.map((item) => {
-            return <Picker.Item key={item} label={item} value={item} />;
-          })}
-        </Picker>
+        <ValuePicker
+          pickerItem={pickerItem}
+          selectedData={selectedData}
+          onValueChange={handleOnValueChange}
+        />
         {loading && (
           <View style={styles.loading}>
             <Text>저장중입니다.. 기다려주세요..</Text>

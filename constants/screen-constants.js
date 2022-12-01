@@ -11,7 +11,7 @@ export const SCREEN_NAME = {
   TECH_DETAIL: "Tech Detail",
   LOGIN: "Login",
   EDIT_MY_PAGE: "Edit My Page",
-  WRITE_DIARY: "Write Diary",
+  EDIT_DIARY: "Write Diary",
 };
 
 export const NAV_ICON_MAP = {

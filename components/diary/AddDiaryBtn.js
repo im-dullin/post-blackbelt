@@ -4,7 +4,7 @@ import { theme } from "../../theme";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 export default function AddDiaryBtn({ navigation }) {
   const handleOnPress = () => {
-    navigation.navigate(SCREEN_NAME.WRITE_DIARY);
+    navigation.navigate(SCREEN_NAME.EDIT_DIARY);
   };
   return (
     <TouchableOpacity style={styles.btn} onPress={handleOnPress}>
