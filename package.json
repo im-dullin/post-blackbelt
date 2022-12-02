@@ -24,7 +24,7 @@
     "cocoapods": "^0.0.0",
     "expo": "^47.0.0",
     "expo-application": "~5.0.1",
-    "expo-auth-session": "~3.7.2",
+    "expo-auth-session": "~3.7.3",
     "expo-random": "~13.0.0",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
@@ -44,11 +44,15 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.7",
     "react-redux": "^8.0.5",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "expo-sqlite": "~11.0.0",
+    "expo-file-system": "~15.1.1",
+    "expo-asset": "~8.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@types/react-native-sqlite-storage": "^5.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.28.0",
     "eslint-config": "^0.3.0",

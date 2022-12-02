@@ -30,3 +30,7 @@ export const dateDiffInDays = (a, b) => {
 export const getFormattedToday = () => {
   return dateFormatter(new Date());
 };
+export const getYearAndMonth = (date) => {
+  const fullDate = dateFormatter(date);
+  return fullDate.slice(0, 7);
+};

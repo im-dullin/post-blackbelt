@@ -10,31 +10,17 @@ import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
 import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
-import {
-  generateUniqueId,
-  getStorageDiary,
-  getStorageYearMonth,
-  getYearMonthStorageKey,
-  isIncludeKey,
-  removeStorageDiary,
-  removeStorageYearMonth,
-  saveStorageDiary,
-  saveStorageYearMonth,
-} from "../../utils/async-storage-fn";
+
 import { SCREEN_NAME } from "../../constants/screen-constants";
+import { db, saveData, saveNewDiary } from "../../utils/sql-db";
 
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
-  const dateStorageKey = getYearMonthStorageKey(storeDate);
-  const [diaryId, setDiaryId] = useState(null);
 
   useEffect(() => {
     dispatch(initializeEditDiray());
-    checkCurrentDiary();
-    // removeStorageYearMonth(dateStorageKey);
-    // removeStorageDiary();
   }, []);
   // console.log(storeDiary);
 
@@ -44,21 +30,27 @@ export default function EditDiary({ navigation }) {
       onDismiss: () => {},
     });
   };
-  const checkCurrentDiary = async () => {
-    const asyncStorageYearMonth = await getStorageYearMonth(dateStorageKey);
-    const asyncStorageDiary = await getStorageDiary();
-    console.log(asyncStorageYearMonth);
-    console.log(asyncStorageDiary);
+  // const checkCurrentDiary = async () => {
+  //   const asyncStorageYearMonth = await getStorageYearMonth(dateStorageKey);
+  //   const asyncStorageDiary = await getStorageDiary();
+  //   const asyncStorageDiaryCat = await getStorageDiaryCat();
+  //   const asyncStorageTechCat = await getStorageTechCat();
+  //   console.log(asyncStorageYearMonth);
+  //   console.log(asyncStorageDiary);
+  //   console.log(asyncStorageDiaryCat);
+  //   console.log(asyncStorageTechCat);
 
-    if (
-      asyncStorageYearMonth &&
-      isIncludeKey(asyncStorageYearMonth, storeDate)
-    ) {
-      const id = asyncStorageYearMonth[storeDate];
-      dispatch(updateEditDiary(asyncStorageDiary[id]));
-      setDiaryId(id);
-    }
-  };
+  //   if (
+  //     asyncStorageYearMonth &&
+  //     isIncludeKey(asyncStorageYearMonth, storeDate)
+  //   ) {
+  //     const id = asyncStorageYearMonth[storeDate];
+  //     dispatch(updateEditDiary(asyncStorageDiary[id]));
+  //     setDiaryId(id);
+  //   }
+  // };
+
+  // 살려
   // const handleEmptyValue = async (value, alrtMsg) => {
   //   const isEmpty = value === ""
   //   if (isEmpty) {
@@ -87,18 +79,16 @@ export default function EditDiary({ navigation }) {
     return false;
   };
 
+  const handleResult = (txObj, result) => {
+    console.log(result);
+  };
   const handleSaveDiary = async () => {
-    const id = diaryId !== null ? diaryId : generateUniqueId();
-    console.log(id, diaryId);
-
     const newDiary = {
-      [id]: { date: storeDate, ...storeDiary },
+      date: storeDate,
+      ...storeDiary,
     };
-    const newYMDiary = {
-      [storeDate]: id,
-    };
-    await saveStorageDiary(newDiary);
-    await saveStorageYearMonth(dateStorageKey, newYMDiary);
+
+    saveNewDiary(newDiary, handleResult);
 
     navigation.navigate(SCREEN_NAME.HOME);
   };

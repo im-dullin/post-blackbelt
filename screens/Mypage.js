@@ -6,7 +6,8 @@ import { theme } from "../theme";
 import TechPieChart from "../components/TechPieChart";
 
 import { SCREEN_NAME } from "../constants/screen-constants";
-
+import profileImg from "../assets/images/user.png";
+import backgroundImg from "../assets/images/userBackground2.jpg";
 import { getStorageUser, isIncludeKey } from "../utils/async-storage-fn";
 import {
   BACKGROUND_IMG,
@@ -97,13 +98,15 @@ export default function MyPage({ navigation }) {
     <View style={styles.container}>
       <Header headerInfo={headerInfo} />
       <View id="mypage-background" style={styles.backgroundContainer}>
-        <Image style={styles.backgroundImg} source={user[BACKGROUND_IMG]} />
+        <Image style={styles.backgroundImg} source={backgroundImg} />
+        {/* <Image style={styles.backgroundImg} source={user[BACKGROUND_IMG]} /> */}
       </View>
       <View id="mypage-main" style={styles.mainContainer}>
         <Image
           id="mypage-profile-img"
           style={styles.profileImg}
-          source={user[PROFILE_IMG]}
+          source={profileImg}
+          // source={user[PROFILE_IMG]}
         />
         <View id="mypage-profile-container" style={styles.profileContainer}>
           <MyPageProfile user={user} />
