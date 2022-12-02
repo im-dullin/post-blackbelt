@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategory: {
-    width: 65,
+    width: 60,
     height: 45,
     marginHorizontal: 2,
     justifyContent: "center",
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategoryEng: {
-    fontSize: 10,
+    fontSize: 9,
     color: theme.black,
     marginTop: 2,
     fontWeight: "600",

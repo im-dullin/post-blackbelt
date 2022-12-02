@@ -91,8 +91,7 @@ const styles = StyleSheet.create({
     flex: 5,
     width: "100%",
     backgroundColor: "rgb(245,241,249)",
-    // opacity: 0.25,
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
   },
   titleInput: {
@@ -100,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(245,241,249)",
     padding: 10,
     width: "70%",
+    borderRadius: 10,
   },
   contentInput: {},
 });
