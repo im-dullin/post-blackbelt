@@ -1,17 +1,25 @@
 import { Calendar } from "react-native-calendars";
-import { theme } from "../../theme";
 import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { DIARY_CAT } from "../../constants/diary-category-constants";
-import moment from "moment";
-import { getFormattedToday } from "../../utils/date-fn";
-import dateStore, { updateSelectedDate } from "../../utils/store";
 import { useDispatch } from "react-redux";
+import {
+  DIARY_CAT,
+  DIARY_CAT_IMG_SRC,
+} from "../../constants/diary-category-constants";
+import {
+  getFormattedToday,
+  getYearMonthByDate,
+  getYearMonthByString,
+} from "../../utils/date-fn";
+import dateStore, { updateSelectedDate } from "../../utils/store";
+import { theme } from "../../theme";
+import { getMonthlyDiarys } from "../../utils/sql-db";
+
 const _format = "YYYY-MM-DD";
 const markedDays = {
   "2022-12-05": {
-    diaryCategory: DIARY_CAT[0],
+    diaryCategory: DIARY_CAT[0].ID,
   },
   "2022-12-20": {
     diaryCategory: DIARY_CAT[1],
@@ -25,16 +33,16 @@ export default function DiaryCalendar() {
 
   const today = getFormattedToday();
   const [selectedDay, setSelectedDay] = useState(today);
+  const [selectedYearMonth, setSelectedYearMonth] = useState(
+    getYearMonthByDate(today)
+  );
   const [days, setDays] = useState({});
   const [reRender, setRerender] = useState(true);
   const dispatch = useDispatch();
 
   useFocusEffect(
-    // useEffect hook in react-native Tab navigator
     useCallback(() => {
-      setDays(markedDays); // Get ays from API
-      handleToday();
-      setSelectedDay(today);
+      handelDays();
       return () => {};
     }, [])
   );
@@ -42,6 +50,26 @@ export default function DiaryCalendar() {
   useEffect(() => {
     dispatch(updateSelectedDate(selectedDay));
   }, [selectedDay]);
+
+  useEffect(() => {
+    handelDays();
+  }, [selectedYearMonth]);
+
+  useEffect(() => {}, [days]);
+
+  const handelDays = () => {
+    getMonthlyDiarys(selectedYearMonth, handleMonthyDiarys);
+  };
+
+  const handleMonthyDiarys = (tx, result) => {
+    const resultArr = result.rows._array;
+    const monthlyDays = resultArr.reduce((accum, v) => {
+      return { ...accum, [v.date]: { diaryCategory: v.diaryCategory } };
+    }, {});
+    setDays(monthlyDays);
+    handleToday();
+    setSelectedDay(today);
+  };
 
   const checkToday = (compareDay, updateMark) => {
     if (compareDay === today) {
@@ -85,7 +113,10 @@ export default function DiaryCalendar() {
 
     setSelectedDay(currSelectedDay);
   };
-
+  const handleOnMonthChange = ({ year, month }) => {
+    const yearMonth = getYearMonthByString(year, month);
+    setSelectedYearMonth(yearMonth);
+  };
   const createCalendar = ({ date, state, marking }) => {
     return (
       <TouchableOpacity
@@ -109,7 +140,7 @@ export default function DiaryCalendar() {
         {marking?.diaryCategory && (
           <Image
             style={styles.calDateImg}
-            source={marking?.diaryCategory?.IMG_SRC}
+            source={DIARY_CAT_IMG_SRC[marking?.diaryCategory]}
           />
         )}
 
@@ -134,6 +165,7 @@ export default function DiaryCalendar() {
       disableAllTouchEventsForDisabledDays
       markedDates={days}
       dayComponent={createCalendar}
+      onMonthChange={handleOnMonthChange}
     />
   );
 }

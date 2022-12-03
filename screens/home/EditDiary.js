@@ -12,7 +12,7 @@ import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
 
 import { SCREEN_NAME } from "../../constants/screen-constants";
-import { db, saveData, saveNewDiary } from "../../utils/sql-db";
+import { saveNewDiary } from "../../utils/sql-db";
 
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
@@ -22,7 +22,6 @@ export default function EditDiary({ navigation }) {
   useEffect(() => {
     dispatch(initializeEditDiray());
   }, []);
-  // console.log(storeDiary);
 
   const handleAlert = (alertMsg, btns) => {
     Alert.alert(alertMsg, "", btns, {
@@ -30,27 +29,7 @@ export default function EditDiary({ navigation }) {
       onDismiss: () => {},
     });
   };
-  // const checkCurrentDiary = async () => {
-  //   const asyncStorageYearMonth = await getStorageYearMonth(dateStorageKey);
-  //   const asyncStorageDiary = await getStorageDiary();
-  //   const asyncStorageDiaryCat = await getStorageDiaryCat();
-  //   const asyncStorageTechCat = await getStorageTechCat();
-  //   console.log(asyncStorageYearMonth);
-  //   console.log(asyncStorageDiary);
-  //   console.log(asyncStorageDiaryCat);
-  //   console.log(asyncStorageTechCat);
 
-  //   if (
-  //     asyncStorageYearMonth &&
-  //     isIncludeKey(asyncStorageYearMonth, storeDate)
-  //   ) {
-  //     const id = asyncStorageYearMonth[storeDate];
-  //     dispatch(updateEditDiary(asyncStorageDiary[id]));
-  //     setDiaryId(id);
-  //   }
-  // };
-
-  // 살려
   // const handleEmptyValue = async (value, alrtMsg) => {
   //   const isEmpty = value === ""
   //   if (isEmpty) {
@@ -79,17 +58,12 @@ export default function EditDiary({ navigation }) {
     return false;
   };
 
-  const handleResult = (txObj, result) => {
-    console.log(result);
-  };
   const handleSaveDiary = async () => {
     const newDiary = {
       date: storeDate,
       ...storeDiary,
     };
-
-    saveNewDiary(newDiary, handleResult);
-
+    saveNewDiary(newDiary);
     navigation.navigate(SCREEN_NAME.HOME);
   };
 

@@ -25,7 +25,7 @@ const DIARY_CAT_NAME = {
     OPEN_MAT: "오픈 매트",
   },
 };
-const DIARY_CAT_IMG_SRC = {
+export const DIARY_CAT_IMG_SRC = {
   LESSON_DAY: lessonDayImg,
   SPARRING_DAY: sparringDayImg,
   COMPETITON: competitionImg,

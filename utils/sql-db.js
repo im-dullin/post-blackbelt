@@ -1,5 +1,4 @@
 import * as SQLite from "expo-sqlite";
-import { Platform } from "react-native";
 
 export const db = SQLite.openDatabase("MainDB"); // returns Database object
 
@@ -56,14 +55,14 @@ export const getSQLData = (queryKey, handleSuccess = printResult) => {
 
 /**
  *
- * @param {string} month - YYYY-MM
+ * @param {string} yearMonth - YYYY-MM
  * @param {(tx, result)=>{}} handleSuccess - {id,date,diaryCatehory}[] = result.rows._array
  */
-export const getMonthlyDiarys = (month, handleSuccess = printResult) => {
+export const getMonthlyDiarys = (yearMonth, handleSuccess = printResult) => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT ${TB.ID}, ${TB.DATE}, ${TB.DIARY_CAT} FROM ${TB_NAME} WHERE ${TB.DATE} > ${month}-00 & ${TB.DATE} < ${month}-32`,
+        `SELECT ${TB.ID}, ${TB.DATE}, ${TB.DIARY_CAT} FROM ${TB_NAME} WHERE ${TB.DATE} LIKE '%${yearMonth}%'`,
         [],
         handleSuccess,
         handleError
@@ -84,6 +83,25 @@ export const getDiaryById = (id, handleSuccess = printResult) => {
       tx.executeSql(
         `SELECT ${TB.ALL} FROM ${TB_NAME} WHERE ${TB.ID} = ?`,
         [id],
+        handleSuccess,
+        handleError
+      );
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+/**
+ *
+ * @param {number} - YYYY-MM-DD
+ * @param {(tx, result)=>{}} handleSuccess - {all}[] = result.rows._array
+ */
+export const getDiaryByDate = (date, handleSuccess = printResult) => {
+  try {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT ${TB.ALL} FROM ${TB_NAME} WHERE ${TB.DATE} = ?`,
+        [date],
         handleSuccess,
         handleError
       );
