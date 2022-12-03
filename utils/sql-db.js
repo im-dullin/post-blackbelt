@@ -116,20 +116,6 @@ export const getDiaryByDate = (date, handleSuccess = printResult) => {
  * @param {string} - YYYY-MM-DD
  * @param {(tx, result)=>{}} handleSuccess - {all}[] = result.rows._array
  */
-export const getEditDiaryByDate = (date, handleSuccess = printResult) => {
-  try {
-    db.transaction((tx) => {
-      tx.executeSql(
-        `SELECT ${TB.DIARY_CAT}, ${TB.TECH_CAT}, ${TB.TITLE}, ${TB.CONTENT} FROM ${TB_NAME} WHERE ${TB.DATE} = ?`,
-        [date],
-        handleSuccess,
-        handleError
-      );
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 /**
  *
@@ -187,7 +173,7 @@ export const updateDiaryById = (id, data, handleSuccess = printResult) => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
-        `UPDATE ${TB_NAME} SET (${TB.DATE}, ${TB.DIARY_CAT}, ${TB.TECH_CAT}, ${TB.TITLE}, ${TB.CONTENT}) values (?, ?, ?, ?, ?) WHERE ${TB.ID} = ${id}`,
+        `UPDATE ${TB_NAME} SET ${TB.DATE} = ?, ${TB.DIARY_CAT}= ?, ${TB.TECH_CAT} = ?, ${TB.TITLE} = ?, ${TB.CONTENT} =? WHERE ${TB.ID} = ${id}`,
         [
           data.date,
           data.diaryCategory,

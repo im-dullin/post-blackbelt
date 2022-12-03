@@ -1,5 +1,11 @@
 import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import {
+  AFTER_PASS,
+  GUARD,
+  GUARD_PASS,
+  STANDING,
+} from "../constants/tech-category-constants";
 import { theme } from "../theme";
 
 export default function TechPieChart() {
@@ -19,28 +25,28 @@ export default function TechPieChart() {
     {
       name: "standing",
       diaryCount: 3,
-      color: theme.standing,
+      color: theme[STANDING],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "guard",
       diaryCount: 10,
-      color: theme.guard,
+      color: theme[GUARD],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "guard pass",
       diaryCount: 21,
-      color: theme["guard pass"],
+      color: theme[GUARD_PASS],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },
     {
       name: "after pass",
       diaryCount: 5,
-      color: theme["after pass"],
+      color: theme[AFTER_PASS],
       legendFontColor: theme.grey,
       legendFontSize: 15,
     },

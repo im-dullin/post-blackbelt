@@ -1,68 +1,67 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
 import { theme } from "../../theme";
-import { DIARY_CAT } from "../../constants/diary-category-constants";
-
-const daily = {
-  diary_day: "2022-09-20",
-  diary_title: "웨이터스윕, 오모플라타 스파링데이",
-  diary_time: "19:30 - 20:30",
-  diary_content:
-    "오늘은 이런저런 연습을 했다... 이거는 이렇게 하는거구나 깨달았다. 웨이터스윕은 .. 베림보로는 ...",
-  diary_cal_cat: [
-    {
-      name: "기술연습",
-    },
-    {
-      name: "스파링",
-    },
-  ],
-  techtag: [
-    {
-      category1: "standing",
-      category2: "take down",
-      category3: "",
-      tech_title: "싱글렉 테이크 다운",
-    },
-    {
-      category1: "guard",
-      category2: "deep half guard",
-      category3: "sweep",
-      tech_title: "웨이터스윕",
-    },
-    {
-      category1: "guard",
-      category2: "open guard",
-      category3: "sweep",
-      tech_title: "오픈가드 벡테이크",
-    },
-  ],
-};
+import {
+  DIARY_CAT,
+  DIARY_CAT_IMG_SRC,
+} from "../../constants/diary-category-constants";
+import { getDiaryByDate } from "../../utils/sql-db";
+import {
+  TECH_CAT,
+  TECH_CAT_MAP,
+} from "../../constants/tech-category-constants";
 
 export default function DiaryBrief({ date }) {
+  const [diary, setDiary] = useState({});
+
+  useEffect(() => {
+    getDiaryByDate(date, handleDiary);
+  }, [date]);
+
+  const handleDiary = (tx, result) => {
+    setDiary(result.rows._array[0]);
+  };
+
   return (
     <View style={styles.diaryContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{date}</Text>
-        <Image style={styles.diaryCategory} source={DIARY_CAT[3].IMG_SRC} />
-      </View>
-      <View style={styles.diaryRow}>
-        <Text style={styles.diaryRowTitle}>기술</Text>
-        <Text style={styles.diaryRowContent}>
-          {daily.techtag[0].tech_title}
+      <Text style={styles.date}>{date}</Text>
+      {!diary ? (
+        <Text style={styles.noDiaryText}>
+          일기가 없습니다. 운동을 기록해보세요.
         </Text>
-      </View>
-      {[
-        // ["시간", daily.diary_time],
-        ["제목", daily.diary_title],
-        ["내용", daily.diary_content],
-      ].map((v, i) => {
-        return (
-          <View key={i} style={styles.diaryRow}>
-            <Text style={styles.diaryRowTitle}>{v[0]}</Text>
-            <Text style={styles.diaryRowContent}>{v[1]}</Text>
+      ) : (
+        <>
+          <View style={styles.diaryRow}>
+            <Text style={styles.diaryRowTitle}>카테고리</Text>
+            {diary?.diaryCategory && (
+              <Image
+                style={styles.diaryCategory}
+                source={DIARY_CAT_IMG_SRC[diary?.diaryCategory]}
+              />
+            )}
+            {diary?.techCategory && (
+              <View
+                style={{
+                  ...styles.techCategory,
+                  backgroundColor: theme[diary?.techCategory],
+                }}
+              >
+                <Text style={styles.techCategoryTitle}>
+                  {TECH_CAT_MAP[diary?.techCategory].ENG}
+                </Text>
+              </View>
+            )}
           </View>
-        );
-      })}
+          <View style={styles.diaryRow}>
+            <Text style={styles.diaryRowTitle}>제목</Text>
+            <Text style={styles.diaryRowContent}>{diary?.title}</Text>
+          </View>
+          <View style={styles.content}>
+            <Text style={styles.diaryRowTitle}>내용</Text>
+            <Text style={styles.diaryRowContent}>{diary?.content}</Text>
+          </View>
+        </>
+      )}
     </View>
   );
 }
@@ -71,40 +70,56 @@ const styles = StyleSheet.create({
   diaryContainer: {
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
-    marginVertical: 7,
-    borderRadius: 10,
-    padding: 10,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignContent: "center",
     marginVertical: 10,
+    borderRadius: 10,
+    padding: 15,
   },
-  title: {
+  date: {
     color: theme.purpleDark,
     fontSize: 16,
     fontWeight: "500",
-    marginRight: 5,
+    marginBottom: 5,
+  },
+  techCategory: {
+    padding: 5,
+    alignContent: "center",
+    borderRadius: 3,
+  },
+  techCategoryTitle: {
+    fontSize: 12,
+  },
+  noDiaryText: {
+    color: theme.grey,
   },
   diaryCategory: {
     width: 20,
     height: 20,
     borderRadius: 10,
+    marginRight: 15,
   },
   diaryRow: {
     flexDirection: "row",
-    alignContent: "center",
-    overflow: "hidden",
-    marginBottom: 3,
-    height: 17,
+    alignItems: "center",
+    marginBottom: 10,
+    // height: 17,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    // overflow: "hidden",
+    width: "90%",
+    marginBottom: 10,
+    height: 34,
+    lineHeight: 20,
   },
   diaryRowTitle: {
     color: theme.grey,
-    width: 45,
     fontSize: 13,
+    marginRight: 10,
   },
   diaryRowContent: {
     fontSize: 13,
-    alignSelf: "stretch",
+    lineHeight: 17,
+    // alignSelf: "stretch",
   },
 });

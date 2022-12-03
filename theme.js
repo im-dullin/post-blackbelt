@@ -1,8 +1,15 @@
+import {
+  AFTER_PASS,
+  GUARD,
+  GUARD_PASS,
+  STANDING,
+} from "./constants/tech-category-constants";
+
 export const theme = {
   black: "#303841",
   grey: "#596065",
   white: "#FFFFFF",
-  purpleLight: "#d6c6f2", //rgb(214, 198, 242)
+  purpleLight: "#d6c6f2", // rgb(214, 198, 242)
   purple: "#AA96DA", // rgb(170,150,219)
   purpleDark: "#5E4B9C", // rgb(93,75,156)
   skyBlue: "#A8D8EA",
@@ -12,10 +19,10 @@ export const theme = {
   lightred: "#FFCCCB",
   background: "#F9F9F9",
   techBackground: "#0D1018",
-  standing: "#A8D8EA",
-  guard: "#FCBAD3",
-  "guard pass": "#B7E5DD",
-  "after pass": "#F1F0C0",
+  [STANDING]: "#A8D8EA",
+  [GUARD]: "#FCBAD3",
+  [GUARD_PASS]: "#B7E5DD",
+  [AFTER_PASS]: "#F1F0C0",
   marginHorizontal: 12,
 };
 

@@ -19,7 +19,7 @@ export default function TechTree({ navigation }) {
               }}
               key={v.ID}
             >
-              <Text style={styles.techTitle}>{v.ID}</Text>
+              <Text style={styles.techTitle}>{v.TITLE}</Text>
             </TouchableOpacity>
           );
         })}

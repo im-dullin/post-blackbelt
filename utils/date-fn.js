@@ -38,3 +38,10 @@ export const getYearMonthByString = (year, month) => {
   const doubleDigitMonth = makeDoubleDigit(parseInt(month, 10));
   return `${year}-${doubleDigitMonth}`;
 };
+
+export const daysInMonth = (yearMonth) => {
+  const year = parseInt(yearMonth.slice(0, 4), 10);
+  const month = parseInt(yearMonth.slice(5, 7), 10);
+
+  return new Date(year, month, 0).getDate();
+};

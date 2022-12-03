@@ -1,8 +1,9 @@
-import { theme } from "../../theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { theme } from "../../theme";
 import { SCREEN_NAME } from "../../constants/screen-constants";
+import { TECH_CAT_MAP } from "../../constants/tech-category-constants";
 
 export default function TechHeader({ navigation }) {
   const { techTitle } = navigation.getState().routes[1].params;
@@ -15,11 +16,11 @@ export default function TechHeader({ navigation }) {
       <MaterialCommunityIcons
         name="chevron-left"
         size={50}
-        color={theme[techTitle.toLowerCase()]}
+        color={theme[techTitle]}
         style={styles.backIcon}
       />
-      <Text style={{ ...styles.title, color: theme[techTitle.toLowerCase()] }}>
-        {techTitle}
+      <Text style={{ ...styles.title, color: theme[techTitle] }}>
+        {TECH_CAT_MAP[techTitle].TITLE}
       </Text>
     </TouchableOpacity>
   );

@@ -22,7 +22,6 @@ export default function DiaryCalendar(props) {
 
   const dispatch = useDispatch();
 
-  console.log(selectedDay);
   useFocusEffect(
     useCallback(() => {
       loadMonthlyDays();
@@ -90,10 +89,6 @@ export default function DiaryCalendar(props) {
     }
     await updateMarkingDays(days[today], today, { today: true });
     await updateMarkingDays(days[selectedDay], selectedDay, { selected: true });
-    // const marking = checkMarkingToday(selectedDay, { selected: true });
-  };
-  const handleMarkingSelectedDay = () => {
-    updateMarkingDays(days[selectedDay], selectedDay, { selected: true });
   };
 
   const handleMarkingSelected = (props) => {

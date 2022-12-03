@@ -13,7 +13,12 @@ import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
 
 import { SCREEN_NAME } from "../../constants/screen-constants";
-import { getEditDiaryByDate, saveNewDiary } from "../../utils/sql-db";
+import {
+  getDiaryByDate,
+  saveNewDiary,
+  updateDiaryByDate,
+  updateDiaryById,
+} from "../../utils/sql-db";
 import { DIARY_INPUT, DIARY_KEYS } from "../../constants/edit-diary-constants";
 import { handleAlert } from "../../utils/react-native-utils";
 
@@ -21,11 +26,11 @@ export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
-  const [currDiary, setCurrDiary] = useState({});
+  const [currDiary, setCurrDiary] = useState({ none: true });
 
   useFocusEffect(
     useCallback(() => {
-      getEditDiaryByDate(storeDate, handleLoading);
+      getDiaryByDate(storeDate, handleLoading);
       return () => {
         dispatch(initializeEditDiray());
       };
@@ -41,7 +46,7 @@ export default function EditDiary({ navigation }) {
     if (loadedDiary) {
       return setCurrDiary(loadedDiary);
     }
-    setCurrDiary({});
+    setCurrDiary({ none: true });
   };
 
   const isDiaryEmpty = async () => {
@@ -64,6 +69,11 @@ export default function EditDiary({ navigation }) {
       date: storeDate,
       ...storeDiary,
     };
+    if (!currDiary.none) {
+      updateDiaryById(currDiary.id, newDiary);
+      navigation.navigate(SCREEN_NAME.HOME);
+      return;
+    }
     saveNewDiary(newDiary);
     navigation.navigate(SCREEN_NAME.HOME);
   };
@@ -73,7 +83,8 @@ export default function EditDiary({ navigation }) {
     if (isEmpty) {
       return;
     }
-    handleAlert("일기를 저장할까요?", [
+
+    handleAlert("일기를 저장할까요?", "", [
       { text: "취소" },
       { text: "저장", onPress: handleSaveDiary },
     ]);

@@ -8,7 +8,7 @@ import {
   USER_NAME_ERROR,
 } from "../../utils/async-storage-fn";
 
-export default function HomeProfile() {
+export default function HomeProfile({ daysInMonth, countDiary }) {
   const defaultUser = {
     profile: profileImg,
     userName: USER_NAME_ERROR,
@@ -34,7 +34,7 @@ export default function HomeProfile() {
       <View style={{ alignContent: "center" }}>
         <Text style={styles.profileUserName}>{user.userName}</Text>
         <Text style={{ color: theme.grey }}>
-          이번 달 00일 중 00일을 수련하셨습니다
+          이번 달 {daysInMonth} 일 중 {countDiary} 일을 운동하셨습니다
         </Text>
       </View>
     </>
