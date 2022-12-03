@@ -12,22 +12,35 @@ import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
 
 import { SCREEN_NAME } from "../../constants/screen-constants";
-import { saveNewDiary } from "../../utils/sql-db";
+import { getEditDiaryByDate, saveNewDiary } from "../../utils/sql-db";
 
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
+  const [currDiary, setCurrDiary] = useState({});
 
   useEffect(() => {
     dispatch(initializeEditDiray());
+    getEditDiaryByDate(storeDate, handleLoading);
   }, []);
+  useEffect(() => {
+    dispatch(updateEditDiary(currDiary));
+  }, [currDiary]);
 
   const handleAlert = (alertMsg, btns) => {
     Alert.alert(alertMsg, "", btns, {
       cancelable: true,
       onDismiss: () => {},
     });
+  };
+
+  const handleLoading = (tx, result) => {
+    const loadedDiary = result.rows._array[0];
+    if (loadedDiary) {
+      return setCurrDiary(loadedDiary);
+    }
+    setCurrDiary({});
   };
 
   // const handleEmptyValue = async (value, alrtMsg) => {

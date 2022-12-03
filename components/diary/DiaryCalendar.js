@@ -12,25 +12,11 @@ import {
   getYearMonthByDate,
   getYearMonthByString,
 } from "../../utils/date-fn";
-import dateStore, { updateSelectedDate } from "../../utils/store";
+import { updateSelectedDate } from "../../utils/store";
 import { theme } from "../../theme";
 import { getMonthlyDiarys } from "../../utils/sql-db";
 
-const _format = "YYYY-MM-DD";
-const markedDays = {
-  "2022-12-05": {
-    diaryCategory: DIARY_CAT[0].ID,
-  },
-  "2022-12-20": {
-    diaryCategory: DIARY_CAT[1],
-  },
-  "2022-12-21": { diaryCategory: DIARY_CAT[2] },
-  "2022-12-24": { marked: true },
-  "2022-12-25": { diaryCategory: DIARY_CAT[3] },
-};
 export default function DiaryCalendar() {
-  // {/* ✉️ react-native-calendars module: https://github.com/wix/react-native-calendars */}
-
   const today = getFormattedToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedYearMonth, setSelectedYearMonth] = useState(
