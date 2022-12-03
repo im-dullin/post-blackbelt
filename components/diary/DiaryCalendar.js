@@ -29,6 +29,7 @@ export default function DiaryCalendar() {
   useFocusEffect(
     useCallback(() => {
       handelDays();
+      console.log("focused");
       return () => {};
     }, [])
   );
@@ -146,7 +147,7 @@ export default function DiaryCalendar() {
         textMonthFontSize: 20,
         textMonthFontWeight: "400",
       }}
-      initialDate={today}
+      initialDate={selectedDay}
       enableSwipeMonths
       disableAllTouchEventsForDisabledDays
       markedDates={days}
