@@ -29,7 +29,6 @@ export default function DiaryCalendar() {
   useFocusEffect(
     useCallback(() => {
       handelDays();
-      console.log("focused");
       return () => {};
     }, [])
   );

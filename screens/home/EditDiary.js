@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useFocusEffect } from "@react-navigation/native";
 import DiaryEditor from "../../components/diary/DiaryEditor";
 import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
 import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
@@ -20,10 +21,15 @@ export default function EditDiary({ navigation }) {
   const dispatch = useDispatch();
   const [currDiary, setCurrDiary] = useState({});
 
-  useEffect(() => {
-    dispatch(initializeEditDiray());
-    getEditDiaryByDate(storeDate, handleLoading);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getEditDiaryByDate(storeDate, handleLoading);
+      return () => {
+        dispatch(initializeEditDiray());
+      };
+    }, [])
+  );
+
   useEffect(() => {
     dispatch(updateEditDiary(currDiary));
   }, [currDiary]);
@@ -105,7 +111,7 @@ export default function EditDiary({ navigation }) {
             <TechCategoryPicker />
           </View>
           <View id="edit-diary-container" style={styles.editDirayContainer}>
-            <DiaryEditor isSelecter />
+            <DiaryEditor />
           </View>
         </KeyboardAwareScrollView>
       </View>

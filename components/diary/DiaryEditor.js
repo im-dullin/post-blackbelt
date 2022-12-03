@@ -6,8 +6,8 @@ import { updateContent, updateTitle } from "../../utils/store";
 
 export default function DiaryEditor() {
   const storeDiary = useSelector((state) => state.editDiary);
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
