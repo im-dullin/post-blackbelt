@@ -8,7 +8,7 @@ import {
   USER_NAME_ERROR,
 } from "../../utils/async-storage-fn";
 
-export default function TechProfile({ navigation }) {
+export default function TechProfile() {
   const defaultUser = {
     profile: profileImg,
     userName: USER_NAME_ERROR,

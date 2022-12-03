@@ -44,6 +44,7 @@ export default function TechCategoryPicker() {
           <Pressable
             key={CAT.KOR}
             style={{ ...styles.diaryCategory, opacity: iconsOpacity[i] }}
+            // eslint-disable-next-line react/jsx-no-bind
             onPress={handlePressIcon.bind(this, CAT, i)}
           >
             <Text style={styles.diaryCategoryEng}>{CAT.ENG}</Text>

@@ -2,10 +2,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { theme } from "../../theme";
-import TechTree from "../../screens/TechTree";
+import TechTree from "../../screens/techTree/TechTree";
 import TechDetail from "../../screens/techTree/TechDetail";
-import Home from "../../screens/Home";
-import MyPage from "../../screens/MyPage";
+import Home from "../../screens/home/Home";
+import MyPage from "../../screens/myPage/MyPage";
 import Login from "../../screens/myPage/Login";
 import {
   NAV_ICON_MAP,

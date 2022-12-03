@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { theme } from "../theme";
-import TechProfile from "../components/user/TechProfile";
-import { SCREEN_NAME } from "../constants/screen-constants";
-import { TECH_CAT } from "../constants/tech-category-constants";
+import { theme } from "../../theme";
+import TechProfile from "../../components/user/TechProfile";
+import { SCREEN_NAME } from "../../constants/screen-constants";
+import { TECH_CAT } from "../../constants/tech-category-constants";
 
 export default function TechTree({ navigation }) {
   return (
@@ -12,12 +12,12 @@ export default function TechTree({ navigation }) {
         {TECH_CAT.map((v, i) => {
           return (
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
                 navigation.navigate(SCREEN_NAME.TECH_DETAIL, {
                   techTitle: v.ID,
-                })
-              }
-              key={i}
+                });
+              }}
+              key={v.ID}
             >
               <Text style={styles.techTitle}>{v.ID}</Text>
             </TouchableOpacity>

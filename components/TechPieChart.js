@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { theme } from "../theme";
 
@@ -52,13 +52,11 @@ export default function TechPieChart() {
       width={screenWidth * 0.8}
       height={200}
       chartConfig={chartConfig}
-      accessor={"diaryCount"}
-      backgroundColor={"transparent"}
-      paddingLeft={"5"}
+      accessor="diaryCount"
+      backgroundColor="transparent"
+      paddingLeft="5"
       center={[5, 0]}
       absolute
     />
   );
 }
-
-const styles = StyleSheet.create({});

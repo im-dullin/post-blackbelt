@@ -14,15 +14,17 @@ export default function DiaryEditor() {
     setTitle(storeDiary.title);
     setContent(storeDiary.content);
   }, [storeDiary]);
-  useEffect(() => {
-    const saveData = setTimeout(() => {
-      dispatch(updateTitle(title));
-    }, 500);
 
-    // cleanup function
-    return () => {
-      clearTimeout(saveData);
-    };
+  useEffect(() => {
+    // save inputs globally 500 ms after user stops typing
+    if (title) {
+      const saveData = setTimeout(() => {
+        dispatch(updateTitle(title));
+      }, 500);
+      return () => {
+        clearTimeout(saveData);
+      };
+    }
   }, [title]);
 
   const onChangeTitle = (payload) => {
@@ -30,14 +32,14 @@ export default function DiaryEditor() {
   };
 
   useEffect(() => {
-    const saveData = setTimeout(() => {
-      dispatch(updateContent(content));
-    }, 500);
-
-    // cleanup function
-    return () => {
-      clearTimeout(saveData);
-    };
+    if (content) {
+      const saveData = setTimeout(() => {
+        dispatch(updateContent(content));
+      }, 500);
+      return () => {
+        clearTimeout(saveData);
+      };
+    }
   }, [content]);
 
   const onChangeContent = (payload) => {

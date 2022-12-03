@@ -1,7 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-import { useEffect } from "react";
 import Header from "../../components/utils/Header";
 import DatePicker from "../../components/inputs/InputDatePicker";
 import Input from "../../components/inputs/Input";
@@ -18,7 +16,7 @@ import {
   START_DATE,
   TEAM,
   YEARLY_GOAL,
-} from "../../constants/inputs-constants";
+} from "../../constants/user-inputs-constants";
 import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
 
 export default function EditMyPage({ navigation }) {

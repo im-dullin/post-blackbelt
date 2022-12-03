@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { NAME, START_DATE, TEAM } from "../../constants/inputs-constants";
+import { NAME, START_DATE, TEAM } from "../../constants/user-inputs-constants";
 import { theme } from "../../theme";
 
 export default function MyPageProfile({ user }) {

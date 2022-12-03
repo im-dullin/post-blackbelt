@@ -2,30 +2,23 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 
-import { theme } from "../theme";
-import TechPieChart from "../components/TechPieChart";
+import { theme } from "../../theme";
+import TechPieChart from "../../components/TechPieChart";
 
-import { SCREEN_NAME } from "../constants/screen-constants";
-import profileImg from "../assets/images/user.png";
-import backgroundImg from "../assets/images/userBackground2.jpg";
-import { getStorageUser, isIncludeKey } from "../utils/async-storage-fn";
+import { SCREEN_NAME } from "../../constants/screen-constants";
+import profileImg from "../../assets/images/user.png";
+import backgroundImg from "../../assets/images/userBackground2.jpg";
+import { getStorageUser, isIncludeKey } from "../../utils/async-storage-fn";
 import {
-  BACKGROUND_IMG,
-  BELT_COLOR,
-  BELT_GRAU,
   defaultUser,
-  MONTHLY_GOAL,
-  NAME,
-  PROFILE_IMG,
   PROMOTION_DATE,
   START_DATE,
-  TEAM,
-} from "../constants/inputs-constants";
-import { dateDiffInDays, dateFormatter } from "../utils/date-fn";
-import Belt from "../components/user/Belt";
-import Header from "../components/utils/Header";
-import MyPageProfile from "../components/user/MyPageProfile";
-import MyPageGoals from "../components/user/MyPageGoals";
+} from "../../constants/user-inputs-constants";
+import { dateDiffInDays, dateFormatter } from "../../utils/date-fn";
+import Belt from "../../components/user/Belt";
+import Header from "../../components/utils/Header";
+import MyPageProfile from "../../components/user/MyPageProfile";
+import MyPageGoals from "../../components/user/MyPageGoals";
 
 export default function MyPage({ navigation }) {
   const [user, setUser] = useState(defaultUser);

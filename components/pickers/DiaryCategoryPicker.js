@@ -46,6 +46,7 @@ export default function DiaryCategoryPicker({ isPicker }) {
           <Pressable
             key={CAT.KOR}
             style={styles.diaryCategory}
+            // eslint-disable-next-line react/jsx-no-bind
             onPress={handlePressIcon.bind(this, CAT, i)}
           >
             <Image

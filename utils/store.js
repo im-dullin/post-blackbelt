@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { getFormattedToday } from "./date-fn";
 
@@ -19,7 +20,7 @@ const date = createSlice({
     updateSelectedDate: (state, action) => {
       state.selectedDate = action.payload;
     },
-    initializeEditDiray: (state, action) => {
+    initializeEditDiray: (state) => {
       state.editDiary = editDiaryInital;
     },
     updateEditDiary: (state, action) => {

@@ -2,7 +2,7 @@ export const STANDING = "STANDING";
 export const GUARD = "GUARD";
 export const GUARD_PASS = "GUARD_PASS";
 export const AFTER_PASS = "AFTER_PASS";
-export const NONE = "NONE ";
+export const NONE = "NONE";
 
 export const TECH_CAT = [
   { ID: NONE, KOR: "구분 없음", ENG: "None" },

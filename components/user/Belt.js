@@ -4,7 +4,7 @@ import {
   BELT_COLOR_MAP,
   BELT_GRAU,
   PROMOTION_DATE,
-} from "../../constants/inputs-constants";
+} from "../../constants/user-inputs-constants";
 import { theme } from "../../theme";
 
 export default function Belt({ user }) {
@@ -29,6 +29,7 @@ export default function Belt({ user }) {
           }}
         >
           {grauArr.map((v, i) => {
+            // eslint-disable-next-line react/no-array-index-key
             return <View key={i} style={styles.grau} />;
           })}
         </View>

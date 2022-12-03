@@ -24,6 +24,7 @@ export const createTable = () => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
+        // eslint-disable-next-line operator-linebreak
         `CREATE TABLE IF NOT EXISTS ${TB_NAME} ` +
           `(${TB.ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${TB.DATE} TEXT, ${TB.DIARY_CAT} TEXT, ${TB.TECH_CAT} TEXT, ${TB.TITLE} TEXT, ${TB.CONTENT} TEXT)`
       );

@@ -1,5 +1,8 @@
 import { StyleSheet, View, Text } from "react-native";
-import { MONTHLY_GOAL, YEARLY_GOAL } from "../../constants/inputs-constants";
+import {
+  MONTHLY_GOAL,
+  YEARLY_GOAL,
+} from "../../constants/user-inputs-constants";
 
 export default function MyPageGoals({ user }) {
   return (

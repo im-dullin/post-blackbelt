@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -9,7 +8,8 @@ import {
 } from "react-native";
 import { theme } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
-import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
+import { INPUT_TITLE } from "../../constants/user-inputs-constants";
+import { handleInputAlert } from "../../utils/react-native-utils";
 
 export default function Input({ type, lineInputProp }) {
   const [text, setText] = useState("");
@@ -42,11 +42,7 @@ export default function Input({ type, lineInputProp }) {
     const asyncStorageUser = await loadUser();
     if (text === "") {
       setLoading(false);
-      Alert.alert(
-        `${INPUT_TITLE[type]}(을/를) 입력하세요`,
-        INPUT_ERROR_MSG[type],
-        [{ text: "OK" }]
-      );
+      handleInputAlert(type);
       return;
     }
     const newUser = {

@@ -2,6 +2,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { theme } from "../../theme";
 import { SCREEN_NAME } from "../../constants/screen-constants";
+
 export default function AddDiaryBtn({ navigation }) {
   const handleOnPress = () => {
     navigation.navigate(SCREEN_NAME.EDIT_DIARY);

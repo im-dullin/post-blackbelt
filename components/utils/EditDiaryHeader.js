@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Alert, BackHandler, StyleSheet, Text, View } from "react-native";
+import { BackHandler, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import { theme } from "../../theme";
+import { handleAlert } from "../../utils/react-native-utils";
 import Header from "./Header";
 
 export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
@@ -29,25 +30,17 @@ export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
   );
 
   const handleCancelBtn = () => {
-    Alert.alert(
-      "변경사항을 저장할까요?",
-      "",
-      [
-        { text: "취소", onPress: () => {} },
-        {
-          text: "저장 안 함",
-          onPress: () => navigation.navigate(SCREEN_NAME.HOME),
-        },
-        {
-          text: "저장",
-          onPress: handleSaveBtn,
-        },
-      ],
+    handleAlert("변경사항을 저장할까요?", "", [
+      { text: "취소", onPress: () => {} },
       {
-        cancelable: true,
-        onDismiss: () => {},
-      }
-    );
+        text: "저장 안 함",
+        onPress: () => navigation.navigate(SCREEN_NAME.HOME),
+      },
+      {
+        text: "저장",
+        onPress: handleSaveBtn,
+      },
+    ]);
   };
 
   const headerInfo = {

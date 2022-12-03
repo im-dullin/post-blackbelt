@@ -1,13 +1,13 @@
 import { View, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { theme } from "../theme";
-import DiaryBrief from "../components/diary/DiaryBrief";
-import HomeProfile from "../components/user/HomeProfile";
-import DiaryCalendar from "../components/diary/DiaryCalendar";
-import AddDiaryBtn from "../components/diary/AddDiaryBtn";
-import DiaryCategoryPicker from "../components/pickers/DiaryCategoryPicker";
-import { createTable } from "../utils/sql-db";
+import { theme } from "../../theme";
+import DiaryBrief from "../../components/diary/DiaryBrief";
+import HomeProfile from "../../components/user/HomeProfile";
+import DiaryCalendar from "../../components/diary/DiaryCalendar";
+import AddDiaryBtn from "../../components/diary/AddDiaryBtn";
+import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
+import { createTable } from "../../utils/sql-db";
 
 export default function Home({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);

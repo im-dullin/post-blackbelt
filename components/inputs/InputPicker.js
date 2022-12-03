@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import {
-  Alert,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
+import { INPUT_TITLE } from "../../constants/user-inputs-constants";
 import { theme, themeBelt } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
+import { handleInputAlert } from "../../utils/react-native-utils";
 import DropdownPicker from "../pickers/DropdownPicker";
 
 export default function InputPicker({ type, pickerItem }) {
@@ -41,11 +41,7 @@ export default function InputPicker({ type, pickerItem }) {
     const asyncStorageUser = await loadUser();
     if (selectedData === "") {
       setLoading(false);
-      Alert.alert(
-        `${INPUT_TITLE[type]}(을/를) 선택하세요`,
-        INPUT_ERROR_MSG[type],
-        [{ text: "OK" }]
-      );
+      handleInputAlert(type);
       return;
     }
     const newUser = {

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NAME, PROFILE_IMG } from "../constants/inputs-constants";
+import { NAME, PROFILE_IMG } from "../constants/user-inputs-constants";
 import profileImg from "../assets/images/user.png";
 
 // utils

@@ -18,6 +18,11 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
+    "comma-dangle": "off",
+    "object-curly-newline": "off",
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+
     // "max-depth": ["error", 2],
     // "max-lines-per-function": ["error", 10],
     // "max-params":npm["error", 3],

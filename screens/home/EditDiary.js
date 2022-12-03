@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -14,6 +14,8 @@ import { initializeEditDiray, updateEditDiary } from "../../utils/store";
 
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import { getEditDiaryByDate, saveNewDiary } from "../../utils/sql-db";
+import { DIARY_INPUT, DIARY_KEYS } from "../../constants/edit-diary-constants";
+import { handleAlert } from "../../utils/react-native-utils";
 
 export default function EditDiary({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
@@ -34,13 +36,6 @@ export default function EditDiary({ navigation }) {
     dispatch(updateEditDiary(currDiary));
   }, [currDiary]);
 
-  const handleAlert = (alertMsg, btns) => {
-    Alert.alert(alertMsg, "", btns, {
-      cancelable: true,
-      onDismiss: () => {},
-    });
-  };
-
   const handleLoading = (tx, result) => {
     const loadedDiary = result.rows._array[0];
     if (loadedDiary) {
@@ -49,29 +44,16 @@ export default function EditDiary({ navigation }) {
     setCurrDiary({});
   };
 
-  // const handleEmptyValue = async (value, alrtMsg) => {
-  //   const isEmpty = value === ""
-  //   if (isEmpty) {
-  //     handleAlert(alrtMsg, [{ text: "확인" }]);
-  //   }
-  //   return isEmpty;
-  // };
-
   const isDiaryEmpty = async () => {
-    if (storeDiary.diaryCategory === "") {
-      handleAlert("기록할 일정을 선택해주세요", [{ text: "확인" }]);
-      return true;
-    }
-    if (storeDiary.techCategory === "") {
-      handleAlert("기술 카테고리를 선택해주세요", [{ text: "확인" }]);
-      return true;
-    }
-    if (storeDiary.title === "") {
-      handleAlert("일기 제목을 작성해주세요", [{ text: "확인" }]);
-      return true;
-    }
-    if (storeDiary.content === "") {
-      handleAlert("일기 내용을 작성해주세요", [{ text: "확인" }]);
+    const areEmpty = DIARY_KEYS.filter((key) => {
+      return !storeDiary[key];
+    });
+    if (areEmpty.length !== 0) {
+      const errorMsg = areEmpty.reduce(
+        (acc, currValue) => `${acc}${DIARY_INPUT[currValue]}\n`,
+        ""
+      );
+      handleAlert("다음의 항목을 입력해주세요", errorMsg, [{ text: "확인" }]);
       return true;
     }
     return false;

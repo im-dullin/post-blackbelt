@@ -3,10 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
-import {
-  DIARY_CAT,
-  DIARY_CAT_IMG_SRC,
-} from "../../constants/diary-category-constants";
+import { DIARY_CAT_IMG_SRC } from "../../constants/diary-category-constants";
 import {
   getFormattedToday,
   getYearMonthByDate,
@@ -18,17 +15,16 @@ import { getMonthlyDiarys } from "../../utils/sql-db";
 
 export default function DiaryCalendar() {
   const today = getFormattedToday();
+  const yearMonth = getYearMonthByDate(today);
   const [selectedDay, setSelectedDay] = useState(today);
-  const [selectedYearMonth, setSelectedYearMonth] = useState(
-    getYearMonthByDate(today)
-  );
+  const [selectedYearMonth, setSelectedYearMonth] = useState(yearMonth);
   const [days, setDays] = useState({});
-  const [reRender, setRerender] = useState(true);
   const dispatch = useDispatch();
 
   useFocusEffect(
     useCallback(() => {
-      handelDays();
+      loadMonthlyDays();
+      setSelectedDay(today);
       return () => {
         setSelectedDay("");
       };
@@ -42,12 +38,10 @@ export default function DiaryCalendar() {
   }, [selectedDay]);
 
   useEffect(() => {
-    handelDays();
+    loadMonthlyDays();
   }, [selectedYearMonth]);
 
-  useEffect(() => {}, [days]);
-
-  const handelDays = () => {
+  const loadMonthlyDays = () => {
     getMonthlyDiarys(selectedYearMonth, handleMonthyDiarys);
   };
 
@@ -57,17 +51,16 @@ export default function DiaryCalendar() {
       return { ...accum, [v.date]: { diaryCategory: v.diaryCategory } };
     }, {});
     setDays(monthlyDays);
-    handleToday();
-    setSelectedDay(today);
+    handleMarkingToday();
   };
 
-  const checkToday = (compareDay, updateMark) => {
+  const checkMarkingToday = (compareDay, updateMark) => {
     if (compareDay === today) {
       return { today: true, ...updateMark };
     }
     return updateMark;
   };
-  const updateSetDays = (isDaysContain, updateDay, updateMark) => {
+  const updateMarkingDays = (isDaysContain, updateDay, updateMark) => {
     if (isDaysContain) {
       return setDays((prevState) => {
         return {
@@ -84,34 +77,34 @@ export default function DiaryCalendar() {
     });
   };
 
-  const handleToday = () => {
-    updateSetDays(days[today], today, { today: true, selected: true });
+  const handleMarkingToday = () => {
+    updateMarkingDays(days[today], today, { today: true, selected: true });
   };
 
-  // handle selected day
-  const handleDaySelected = (props) => {
+  const handleMarkingSelected = (props) => {
     const { dateString: currSelectedDay } = props;
-    const prevSelected = days[selectedDay];
-    const currSelected = days[currSelectedDay];
+
     // delete previous selected mark
-    const prevUpdateMark = checkToday(selectedDay, { selected: false });
-    updateSetDays(prevSelected, selectedDay, prevUpdateMark);
+    const prevMarking = checkMarkingToday(selectedDay, { selected: false });
+    updateMarkingDays(days[selectedDay], selectedDay, prevMarking);
 
     // create or add selected object to markedDays
-    const currUpdateMark = checkToday(currSelectedDay, { selected: true });
-    updateSetDays(currSelected, currSelectedDay, currUpdateMark);
+    const currMarking = checkMarkingToday(currSelectedDay, { selected: true });
+    updateMarkingDays(days[currSelectedDay], currSelectedDay, currMarking);
 
     setSelectedDay(currSelectedDay);
   };
   const handleOnMonthChange = ({ year, month }) => {
-    const yearMonth = getYearMonthByString(year, month);
-    setSelectedYearMonth(yearMonth);
+    const newyearMonth = getYearMonthByString(year, month);
+    setSelectedYearMonth(newyearMonth);
   };
+
   const createCalendar = ({ date, state, marking }) => {
     return (
       <TouchableOpacity
         key={date.dateString}
-        onPress={handleDaySelected.bind(this, date)}
+        // eslint-disable-next-line react/jsx-no-bind
+        onPress={handleMarkingSelected.bind(this, date)}
         style={{
           ...styles.calDate,
           backgroundColor: marking?.today && "rgba(168, 216, 235, 0.4)",

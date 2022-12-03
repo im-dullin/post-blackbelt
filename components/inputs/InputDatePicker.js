@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -11,8 +10,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { theme } from "../../theme";
 import { getStorageUser, saveStorageUser } from "../../utils/async-storage-fn";
-import { INPUT_ERROR_MSG, INPUT_TITLE } from "../../constants/inputs-constants";
+import { INPUT_TITLE } from "../../constants/user-inputs-constants";
 import { dateFormatter } from "../../utils/date-fn";
+import { handleInputAlert } from "../../utils/react-native-utils";
 
 export default function DatePicker({ type }) {
   const [user, setUser] = useState({});
@@ -47,11 +47,7 @@ export default function DatePicker({ type }) {
     const asyncStorageUser = await loadUser();
     if (showingDate === "") {
       setLoading(false);
-      Alert.alert(
-        `${INPUT_TITLE[type]}(을/를) 입력하세요`,
-        INPUT_ERROR_MSG[type],
-        [{ text: "OK" }]
-      );
+      handleInputAlert(type);
       return;
     }
     const newUser = {

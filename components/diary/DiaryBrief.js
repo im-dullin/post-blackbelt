@@ -1,8 +1,6 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../theme";
 import { DIARY_CAT } from "../../constants/diary-category-constants";
-import dateStore from "../../utils/store";
-import { useEffect } from "react";
 
 const daily = {
   diary_day: "2022-09-20",

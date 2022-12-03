@@ -1,6 +1,4 @@
-import { useNavigationState } from "@react-navigation/native";
 import { Button, StyleSheet, View } from "react-native";
-import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import { useEffect, useState } from "react";
@@ -60,7 +58,7 @@ export default function Login({ navigation }) {
         style={{ flex: 1 }}
         onPress={() => navigation.navigate(SCREEN_NAME.MY_PAGE)}
         title="To Mypage"
-      ></Button>
+      />
       {showUserInfo()}
       <Button
         title={accessToken ? "" : "Login"}
