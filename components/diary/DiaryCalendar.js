@@ -29,12 +29,16 @@ export default function DiaryCalendar() {
   useFocusEffect(
     useCallback(() => {
       handelDays();
-      return () => {};
+      return () => {
+        setSelectedDay("");
+      };
     }, [])
   );
 
   useEffect(() => {
-    dispatch(updateSelectedDate(selectedDay));
+    if (selectedDay !== "") {
+      dispatch(updateSelectedDate(selectedDay));
+    }
   }, [selectedDay]);
 
   useEffect(() => {
