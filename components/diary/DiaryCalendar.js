@@ -13,14 +13,16 @@ import { updateSelectedDate } from "../../utils/store";
 import { theme } from "../../theme";
 import { getMonthlyDiarys } from "../../utils/sql-db";
 
-export default function DiaryCalendar() {
+export default function DiaryCalendar(props) {
   const today = getFormattedToday();
   const yearMonth = getYearMonthByDate(today);
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedYearMonth, setSelectedYearMonth] = useState(yearMonth);
   const [days, setDays] = useState({});
+
   const dispatch = useDispatch();
 
+  console.log(selectedDay);
   useFocusEffect(
     useCallback(() => {
       loadMonthlyDays();
@@ -39,6 +41,7 @@ export default function DiaryCalendar() {
 
   useEffect(() => {
     loadMonthlyDays();
+    props.setCurrYearMonth(selectedYearMonth);
   }, [selectedYearMonth]);
 
   const loadMonthlyDays = () => {
@@ -50,8 +53,9 @@ export default function DiaryCalendar() {
     const monthlyDays = resultArr.reduce((accum, v) => {
       return { ...accum, [v.date]: { diaryCategory: v.diaryCategory } };
     }, {});
+    props.setCountDiary(resultArr.length);
     setDays(monthlyDays);
-    handleMarkingToday();
+    handleMarkingDays();
   };
 
   const checkMarkingToday = (compareDay, updateMark) => {
@@ -60,7 +64,7 @@ export default function DiaryCalendar() {
     }
     return updateMark;
   };
-  const updateMarkingDays = (isDaysContain, updateDay, updateMark) => {
+  const updateMarkingDays = async (isDaysContain, updateDay, updateMark) => {
     if (isDaysContain) {
       return setDays((prevState) => {
         return {
@@ -77,8 +81,19 @@ export default function DiaryCalendar() {
     });
   };
 
-  const handleMarkingToday = () => {
-    updateMarkingDays(days[today], today, { today: true, selected: true });
+  const handleMarkingDays = async () => {
+    if (today === selectedDay) {
+      return updateMarkingDays(days[today], today, {
+        today: true,
+        selected: true,
+      });
+    }
+    await updateMarkingDays(days[today], today, { today: true });
+    await updateMarkingDays(days[selectedDay], selectedDay, { selected: true });
+    // const marking = checkMarkingToday(selectedDay, { selected: true });
+  };
+  const handleMarkingSelectedDay = () => {
+    updateMarkingDays(days[selectedDay], selectedDay, { selected: true });
   };
 
   const handleMarkingSelected = (props) => {
@@ -164,15 +179,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
     borderRadius: 10,
-    // backgroundColor: "orange",
   },
   calendar: {
     borderRadius: 10,
-    // borderBottomColor: "black",
-    // borderBottomWidth: 3,
   },
   calDate: {
-    // padding: 5,
     height: 50,
     width: 45,
     alignItems: "center",
