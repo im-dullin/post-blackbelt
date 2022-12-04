@@ -3,7 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 
 import { theme } from "../../theme";
-import TechPieChart from "../../components/TechPieChart";
+import TechPieChart from "../../components/user/TechPieChart";
 
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import profileImg from "../../assets/images/user.png";

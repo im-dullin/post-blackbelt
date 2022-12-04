@@ -126,7 +126,7 @@ export const getDiaryByTechCategory = (techCat, handleSuccess) => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT ${TB.ALL} FROM ${TB_NAME} WHERE ${TB.TECH_CAT} = ?`,
+        `SELECT ${TB.ID} FROM ${TB_NAME} WHERE ${TB.TECH_CAT} = ?`,
         [techCat],
         handleSuccess,
         handleError

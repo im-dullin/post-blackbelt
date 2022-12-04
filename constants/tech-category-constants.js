@@ -2,10 +2,9 @@ export const STANDING = "STANDING";
 export const GUARD = "GUARD";
 export const GUARD_PASS = "GUARD_PASS";
 export const AFTER_PASS = "AFTER_PASS";
-export const NONE = "NONE";
+export const ETC = "ETC";
 
 export const TECH_CAT = [
-  { ID: NONE, KOR: "구분 없음", ENG: "None", TITLE: "NONE" },
   {
     ID: STANDING,
     KOR: "스탠딩",
@@ -25,10 +24,11 @@ export const TECH_CAT = [
     ENG: "After Pass",
     TITLE: "AFTER PASS",
   },
+  { ID: ETC, KOR: "기타", ENG: "Etc.", TITLE: "Etc." },
 ];
 
 export const TECH_CAT_IDX = {
-  [NONE]: 0,
+  [ETC]: 0,
   [STANDING]: 1,
   [GUARD]: 2,
   [GUARD_PASS]: 3,
@@ -36,7 +36,6 @@ export const TECH_CAT_IDX = {
 };
 
 export const TECH_CAT_MAP = {
-  [NONE]: { ID: NONE, KOR: "구분 없음", ENG: "None", TITLE: "NONE" },
   [STANDING]: {
     ID: STANDING,
     KOR: "스탠딩",
@@ -56,4 +55,5 @@ export const TECH_CAT_MAP = {
     ENG: "After Pass",
     TITLE: "AFTER PASS",
   },
+  [ETC]: { ID: ETC, KOR: "기타", ENG: "Etc.", TITLE: "Etc." },
 };

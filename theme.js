@@ -2,6 +2,7 @@ import {
   AFTER_PASS,
   GUARD,
   GUARD_PASS,
+  ETC,
   STANDING,
 } from "./constants/tech-category-constants";
 
@@ -19,6 +20,7 @@ export const theme = {
   lightred: "#FFCCCB",
   background: "#F9F9F9",
   techBackground: "#0D1018",
+  [ETC]: "#AA96DA",
   [STANDING]: "#A8D8EA",
   [GUARD]: "#FCBAD3",
   [GUARD_PASS]: "#B7E5DD",
