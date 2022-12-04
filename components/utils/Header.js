@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
 
 export default function Header({ headerInfo }) {
   const { left } = headerInfo;
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 0.6,
     backgroundColor: "rgba(255, 255, 255, 1)",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "flex-end",
     paddingBottom: 13,
   },

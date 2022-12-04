@@ -6,9 +6,9 @@ import { theme } from "../../theme";
 import { handleAlert } from "../../utils/react-native-utils";
 import Header from "./Header";
 
-export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
-  const storeDate = useSelector((state) => state.selectedDate);
-
+export default function EditDiaryHeader({ date, handleSaveBtn, navigation }) {
+  // const storeDate = useSelector((state) => state.selectedDate);
+  // const { date } = route?.params;
   useEffect(() => {
     const backAction = () => {
       handleCancelBtn();
@@ -24,7 +24,7 @@ export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
 
   const HeaderTitle = (
     <View style={styles.headerTitleContainer}>
-      <Text style={styles.headerTitle}>{storeDate}</Text>
+      <Text style={styles.headerTitle}>{date}</Text>
       <View style={styles.headerTitleBar} />
     </View>
   );
@@ -34,7 +34,7 @@ export default function EditDiaryHeader({ handleSaveBtn, navigation }) {
       { text: "취소", onPress: () => {} },
       {
         text: "저장 안 함",
-        onPress: () => navigation.navigate(SCREEN_NAME.HOME),
+        onPress: () => navigation.goBack(),
       },
       {
         text: "저장",

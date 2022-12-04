@@ -16,21 +16,22 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 import {
   getDiaryByDate,
   saveNewDiary,
-  updateDiaryByDate,
   updateDiaryById,
 } from "../../utils/sql-db";
 import { DIARY_INPUT, DIARY_KEYS } from "../../constants/edit-diary-constants";
 import { handleAlert } from "../../utils/react-native-utils";
 
-export default function EditDiary({ navigation }) {
-  const storeDate = useSelector((state) => state.selectedDate);
+export default function EditDiary({ route, navigation }) {
+  // const storeDate = useSelector((state) => state.selectedDate);
+  // const { date } = route?.params;
+  const { date } = route.params;
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
   const [currDiary, setCurrDiary] = useState({ none: true });
 
   useFocusEffect(
     useCallback(() => {
-      getDiaryByDate(storeDate, handleLoading);
+      getDiaryByDate(date, handleLoading);
       return () => {
         dispatch(initializeEditDiray());
       };
@@ -43,6 +44,7 @@ export default function EditDiary({ navigation }) {
 
   const handleLoading = (tx, result) => {
     const loadedDiary = result.rows._array[0];
+
     if (loadedDiary) {
       return setCurrDiary(loadedDiary);
     }
@@ -66,16 +68,16 @@ export default function EditDiary({ navigation }) {
 
   const handleSaveDiary = async () => {
     const newDiary = {
-      date: storeDate,
+      date,
       ...storeDiary,
     };
     if (!currDiary.none) {
       updateDiaryById(currDiary.id, newDiary);
-      navigation.navigate(SCREEN_NAME.HOME);
+      navigation.goBack();
       return;
     }
     saveNewDiary(newDiary);
-    navigation.navigate(SCREEN_NAME.HOME);
+    navigation.goBack();
   };
 
   const handleSaveBtn = async () => {
@@ -92,7 +94,11 @@ export default function EditDiary({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <EditDiaryHeader handleSaveBtn={handleSaveBtn} navigation={navigation} />
+      <EditDiaryHeader
+        date={date}
+        handleSaveBtn={handleSaveBtn}
+        navigation={navigation}
+      />
       <View style={{ flex: 4.8 }}>
         <KeyboardAwareScrollView>
           <View id="diary-category" style={styles.CategoryContainer}>

@@ -1,11 +1,14 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 import { theme } from "../../theme";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 
 export default function AddDiaryBtn({ navigation }) {
+  const storeDate = useSelector((state) => state.selectedDate);
+
   const handleOnPress = () => {
-    navigation.navigate(SCREEN_NAME.EDIT_DIARY);
+    navigation.navigate(SCREEN_NAME.EDIT_DIARY, { date: storeDate });
   };
   return (
     <TouchableOpacity style={styles.btn} onPress={handleOnPress}>

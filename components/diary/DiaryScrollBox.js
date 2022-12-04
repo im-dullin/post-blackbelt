@@ -18,7 +18,6 @@ export default function DiaryScrollBox({ navigation }) {
       };
     }, [])
   );
-  console.log(diarys);
 
   const handleData = async (tx, result) => {
     setDiarys(result.rows._array);
@@ -47,7 +46,7 @@ export default function DiaryScrollBox({ navigation }) {
           contentContainerStyle={styles.diarysContainer}
         >
           {diarys?.map((v) => {
-            return <DiaryBrief key={v.id} style={styles.diary} id={v.id} />;
+            return <DiaryBrief key={v.id} id={v.id} navigation={navigation} />;
           })}
         </ScrollView>
       )}
@@ -60,7 +59,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   diarysContainer: {},
-  diary: {
-    paddingBottom: 20,
-  },
 });

@@ -1,19 +1,17 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import { theme } from "../../theme";
-import {
-  DIARY_CAT,
-  DIARY_CAT_IMG_SRC,
-} from "../../constants/diary-category-constants";
+import { DIARY_CAT_IMG_SRC } from "../../constants/diary-category-constants";
 import { getDiaryByDate, getDiaryById } from "../../utils/sql-db";
-import {
-  TECH_CAT,
-  TECH_CAT_MAP,
-} from "../../constants/tech-category-constants";
+import { TECH_CAT_MAP } from "../../constants/tech-category-constants";
+import { SCREEN_NAME } from "../../constants/screen-constants";
 
-export default function DiaryBrief({ date, id }) {
+export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
-
+  const route = useRoute();
+  // console.log(route.name);
+  // navigation.goBack()
   useEffect(() => {
     if (date) {
       return getDiaryByDate(date, handleDiary);
@@ -26,9 +24,17 @@ export default function DiaryBrief({ date, id }) {
   const handleDiary = (tx, result) => {
     setDiary(result.rows._array[0]);
   };
+  const handleOnPress = () => {
+    if (diary) {
+      navigation.navigate(SCREEN_NAME.READ_DIARY, {
+        diary,
+        prevScreen: route.name,
+      });
+    }
+  };
 
   return (
-    <View style={styles.diaryContainer}>
+    <TouchableOpacity style={styles.diaryContainer} onPress={handleOnPress}>
       {!diary ? (
         <Text style={styles.noDiaryText}>
           일기가 없습니다. 운동을 기록해보세요.
@@ -67,7 +73,7 @@ export default function DiaryBrief({ date, id }) {
           </View>
         </>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
 

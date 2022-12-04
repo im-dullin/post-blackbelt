@@ -45,7 +45,7 @@ export default function Home({ navigation }) {
         <AddDiaryBtn navigation={navigation} />
       </View>
       <View id="selected-diary" style={styles.diaryContainer}>
-        <DiaryBrief date={storeDate} />
+        <DiaryBrief date={storeDate} navigation={navigation} />
       </View>
     </View>
   );

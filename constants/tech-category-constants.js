@@ -28,11 +28,11 @@ export const TECH_CAT = [
 ];
 
 export const TECH_CAT_IDX = {
-  [ETC]: 0,
-  [STANDING]: 1,
-  [GUARD]: 2,
-  [GUARD_PASS]: 3,
-  [AFTER_PASS]: 4,
+  [STANDING]: 0,
+  [GUARD]: 1,
+  [GUARD_PASS]: 2,
+  [AFTER_PASS]: 3,
+  [ETC]: 4,
 };
 
 export const TECH_CAT_MAP = {
