@@ -5,17 +5,22 @@ import {
   DIARY_CAT,
   DIARY_CAT_IMG_SRC,
 } from "../../constants/diary-category-constants";
-import { getDiaryByDate } from "../../utils/sql-db";
+import { getDiaryByDate, getDiaryById } from "../../utils/sql-db";
 import {
   TECH_CAT,
   TECH_CAT_MAP,
 } from "../../constants/tech-category-constants";
 
-export default function DiaryBrief({ date }) {
+export default function DiaryBrief({ date, id }) {
   const [diary, setDiary] = useState({});
 
   useEffect(() => {
-    getDiaryByDate(date, handleDiary);
+    if (date) {
+      return getDiaryByDate(date, handleDiary);
+    }
+    if (id) {
+      return getDiaryById(id, handleDiary);
+    }
   }, [date]);
 
   const handleDiary = (tx, result) => {
@@ -24,13 +29,13 @@ export default function DiaryBrief({ date }) {
 
   return (
     <View style={styles.diaryContainer}>
-      <Text style={styles.date}>{date}</Text>
       {!diary ? (
         <Text style={styles.noDiaryText}>
           일기가 없습니다. 운동을 기록해보세요.
         </Text>
       ) : (
         <>
+          <Text style={styles.date}>{diary.date}</Text>
           <View style={styles.diaryRow}>
             <Text style={styles.diaryRowTitle}>카테고리</Text>
             {diary?.diaryCategory && (
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
   diaryContainer: {
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
-    marginVertical: 10,
+    marginVertical: 5,
     borderRadius: 10,
     padding: 15,
   },
@@ -101,14 +106,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    // height: 17,
   },
   content: {
     flexDirection: "row",
     alignItems: "center",
     // overflow: "hidden",
     width: "90%",
-    marginBottom: 10,
     height: 34,
     lineHeight: 20,
   },

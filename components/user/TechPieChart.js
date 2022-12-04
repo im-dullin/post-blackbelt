@@ -4,7 +4,7 @@ import { Dimensions, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { TECH_CAT } from "../../constants/tech-category-constants";
 import { theme } from "../../theme";
-import { getDiaryByTechCategory } from "../../utils/sql-db";
+import { getDiaryIdByTechCategory } from "../../utils/sql-db";
 
 export default function TechPieChart() {
   const [dataArr, setDataArr] = useState([]);
@@ -61,7 +61,7 @@ export default function TechPieChart() {
 
   const loadData = async () => {
     TECH_CAT.map(async (tech) => {
-      getDiaryByTechCategory(tech.ID, handleData.bind(this, tech));
+      getDiaryIdByTechCategory(tech.ID, handleData.bind(this, tech));
     });
   };
 

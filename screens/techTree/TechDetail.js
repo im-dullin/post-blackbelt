@@ -11,7 +11,7 @@ export default function TechDetail({ navigation }) {
       </View>
 
       <SafeAreaView style={styles.scrollContainer}>
-        <DiaryScrollBox />
+        <DiaryScrollBox navigation={navigation} />
       </SafeAreaView>
     </View>
   );
@@ -29,5 +29,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  scrollContainer: { flex: 12 },
+  scrollContainer: { flex: 12, width: "100%" },
 });

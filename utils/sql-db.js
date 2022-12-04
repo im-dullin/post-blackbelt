@@ -122,11 +122,30 @@ export const getDiaryByDate = (date, handleSuccess = printResult) => {
  * @param {string} techCat
  * @param {(tx, result)=>{}} handleSuccess - {all}[] = result.rows._array
  */
-export const getDiaryByTechCategory = (techCat, handleSuccess) => {
+export const getDiaryIdByTechCategory = (techCat, handleSuccess) => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
         `SELECT ${TB.ID} FROM ${TB_NAME} WHERE ${TB.TECH_CAT} = ?`,
+        [techCat],
+        handleSuccess,
+        handleError
+      );
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+/**
+ *
+ * @param {string} techCat
+ * @param {(tx, result)=>{}} handleSuccess - {all}[] = result.rows._array
+ */
+export const getDiaryByTechCategory = (techCat, handleSuccess) => {
+  try {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT ${TB.ALL} FROM ${TB_NAME} WHERE ${TB.TECH_CAT} = ?`,
         [techCat],
         handleSuccess,
         handleError

@@ -78,5 +78,6 @@ const styles = StyleSheet.create({
   },
   diaryContainer: {
     flex: 2.8, // with diaryCategoryContainer: 2.5
+    marginTop: 10,
   },
 });
