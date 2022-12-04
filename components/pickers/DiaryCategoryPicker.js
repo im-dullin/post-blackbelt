@@ -92,5 +92,5 @@ const styles = StyleSheet.create({
     height: 25,
     borderRadius: 12.5,
   },
-  diaryCategoryTitle: { fontSize: 10, color: theme.grey, marginTop: 2 },
+  diaryCategoryTitle: { fontSize: 12, color: theme.grey, marginTop: 4 },
 });

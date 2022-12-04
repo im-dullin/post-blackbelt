@@ -21,11 +21,11 @@ export const NAV_ICON_MAP = {
     [false]: "home-outline",
   },
   [TAB_NAME.TECH_TREE]: {
-    [true]: "graph",
-    [false]: "graph-outline",
+    [true]: "albums",
+    [false]: "albums-outline",
   },
   [TAB_NAME.MY_PAGE]: {
-    [true]: "account",
-    [false]: "account-outline",
+    [true]: "person",
+    [false]: "person-outline",
   },
 };

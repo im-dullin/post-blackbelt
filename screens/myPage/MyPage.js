@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 
@@ -22,31 +22,29 @@ import MyPageGoals from "../../components/user/MyPageGoals";
 
 export default function MyPage({ navigation }) {
   const [user, setUser] = useState(defaultUser);
-  const handleNavigateEditMyPage = () => {
-    navigation.navigate(SCREEN_NAME.EDIT_MY_PAGE);
-  };
-  const handleRightOnPress = () => {
-    // navigation.navigate(SCREEN_NAME.EDIT_MY_PAGE);
-  };
-  const headerInfo = {
-    left: {
-      icon: "edit",
-      iconColor: "black",
-      onPress: handleNavigateEditMyPage,
-    },
-    title: SCREEN_NAME.MY_PAGE,
-    right: {
-      icon: "settings",
-      iconColor: "white",
-      onPress: handleRightOnPress,
-    },
-  };
   useFocusEffect(
     useCallback(() => {
       loadUser();
       return () => {};
     }, [])
   );
+  const handleNavigateEditMyPage = () => {
+    navigation.navigate(SCREEN_NAME.EDIT_MY_PAGE);
+  };
+
+  const headerInfo = {
+    left: {
+      icon: "edit",
+      iconColor: "white",
+      onPress: () => {},
+    },
+    title: SCREEN_NAME.MY_PAGE,
+    right: {
+      icon: "settings",
+      iconColor: "white",
+      onPress: () => {},
+    },
+  };
 
   const setFormattedStartDate = async (startDate) => {
     const today = new Date();
@@ -91,10 +89,15 @@ export default function MyPage({ navigation }) {
     <View style={styles.container}>
       <Header headerInfo={headerInfo} />
       <View id="mypage-background" style={styles.backgroundContainer}>
-        <Image style={styles.backgroundImg} source={backgroundImg} />
         {/* <Image style={styles.backgroundImg} source={user[BACKGROUND_IMG]} /> */}
       </View>
       <View id="mypage-main" style={styles.mainContainer}>
+        <TouchableOpacity
+          style={styles.editBtn}
+          onPress={handleNavigateEditMyPage}
+        >
+          <Text style={styles.editBtnText}>수정하기</Text>
+        </TouchableOpacity>
         <Image
           id="mypage-profile-img"
           style={styles.profileImg}
@@ -126,24 +129,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  loading: {
-    flex: 5,
-    justifyContent: "center",
-    alignItems: "center",
+  editBtn: {
+    padding: 8,
+    backgroundColor: theme.purpleLight,
+    position: "absolute",
+    right: 20,
+    top: -10,
+    borderRadius: 10,
   },
-  loadingBtn: {
-    padding: 20,
-    backgroundColor: theme.skyBlue,
-    fontSize: 16,
+  editBtnText: {
+    fontSize: 12,
+    textAlign: "center",
   },
+
   backgroundContainer: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    flex: 0.5,
+    // backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
   mainContainer: {
     flex: 4,
     alignItems: "center",
     justifyContent: "space-around",
+    position: "relative",
   },
   subContainer: {
     backgroundColor: theme.white,
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
 const inheritStyles = StyleSheet.create({
   goalsSubContainer: {
     ...styles.subContainer,
-    height: 90,
+    paddingTop: 10,
     justifyContent: "space-around",
   },
 

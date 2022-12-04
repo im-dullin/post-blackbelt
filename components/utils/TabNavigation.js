@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { theme } from "../../theme";
 import TechTree from "../../screens/techTree/TechTree";
@@ -25,19 +25,16 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
   return (
     <Tab.Navigator
+      style={{ padding: 30 }}
       initialRouteName={TAB_NAME.HOME}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           const screen = route.name;
           const iconName = NAV_ICON_MAP[screen][focused];
-          return (
-            <MaterialCommunityIcons
-              name={iconName}
-              size={40}
-              color={theme.black}
-            />
-          );
+          return <Ionicons name={iconName} size={30} color={theme.black} />;
         },
+
+        tabBarStyle: { height: 70 },
         tabBarActiveTintColor: theme.black,
         tabBarShowLabel: false,
         headerShown: false,

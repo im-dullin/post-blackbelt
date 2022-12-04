@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   diaryCategoryContainer: {
     flex: 0.85,
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategory: {
-    width: 60,
-    height: 45,
+    width: 63,
+    height: 55,
     marginHorizontal: 2,
     justifyContent: "center",
     alignItems: "center",
@@ -83,9 +83,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategoryEng: {
-    fontSize: 9,
+    fontSize: 12,
     color: theme.black,
-    marginTop: 2,
+    // marginTop: 2,
+    textAlign: "center",
     fontWeight: "600",
   },
   diaryCategoryKor: { fontSize: 10, color: theme.black, marginTop: 2 },

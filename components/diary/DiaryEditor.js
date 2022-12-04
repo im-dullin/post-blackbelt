@@ -47,7 +47,7 @@ export default function DiaryEditor() {
   };
   return (
     <View style={styles.container}>
-      <Text>일기 내용을 작성하세요</Text>
+      <Text style={styles.title}>일기 내용을 작성하세요</Text>
       <View id="input-title" style={styles.titleContainer}>
         <Text>Title</Text>
         <TextInput
@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+  },
+  title: {
+    // clolor: theme.grey,
+    fontSize: 14,
+    marginBottom: 5,
   },
   titleContainer: {
     flex: 1,

@@ -102,11 +102,15 @@ export default function EditDiary({ route, navigation }) {
       <View style={{ flex: 4.8 }}>
         <KeyboardAwareScrollView>
           <View id="diary-category" style={styles.CategoryContainer}>
-            <Text>어떤 일정을 기록하고 싶으신가요?</Text>
+            <Text style={styles.catTitle}>
+              어떤 일정을 기록하고 싶으신가요?
+            </Text>
             <DiaryCategoryPicker isPicker />
           </View>
           <View id="tech-category" style={styles.CategoryContainer}>
-            <Text>오늘 배운 내용을 기술 트리에 저장해보세요.</Text>
+            <Text style={styles.catTitle}>
+              오늘 배운 내용을 기술 트리에 저장해보세요.
+            </Text>
             <TechCategoryPicker />
           </View>
           <View id="edit-diary-container" style={styles.editDirayContainer}>
@@ -122,10 +126,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  catTitle: {
+    fontSize: 11,
+  },
   CategoryContainer: {
     height: 90,
     backgroundColor: theme.white,
-    margin: 15,
+    margin: 10,
     marginBottom: 0,
     borderRadius: 15,
     justifyContent: "center",
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
   editDirayContainer: {
     height: 420,
     backgroundColor: theme.white,
-    margin: 15,
+    margin: 10,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
