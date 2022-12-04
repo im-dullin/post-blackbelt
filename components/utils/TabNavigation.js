@@ -15,6 +15,7 @@ import {
 import EditMyPage from "../../screens/myPage/EditMyPage";
 import EditDiary from "../../screens/home/EditDiary";
 import ReadDiary from "../../screens/home/ReadDiary";
+import Admin from "../../screens/myPage/Admin";
 
 const HomeStack = createNativeStackNavigator();
 const TechTreeStack = createNativeStackNavigator();
@@ -91,6 +92,7 @@ export default function TabNavigation() {
               name={SCREEN_NAME.EDIT_MY_PAGE}
               component={EditMyPage}
             />
+            <MyPageStack.Screen name={SCREEN_NAME.ADMIN} component={Admin} />
           </MyPageStack.Navigator>
         )}
       </Tab.Screen>

@@ -11,7 +11,7 @@ export default function App() {
       <NavigationContainer>
         <StatusBar
           StatusBarStyle="light-content"
-          backgroundColor={theme.purple}
+          backgroundColor={theme.purpleDark}
         />
         <TabNavigation />
       </NavigationContainer>

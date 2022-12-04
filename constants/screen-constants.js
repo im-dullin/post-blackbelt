@@ -13,6 +13,7 @@ export const SCREEN_NAME = {
   EDIT_MY_PAGE: "Edit My Page",
   EDIT_DIARY: "Write Diary",
   READ_DIARY: "Read Diary",
+  ADMIN: "Admin",
 };
 
 export const NAV_ICON_MAP = {

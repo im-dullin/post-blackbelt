@@ -7,7 +7,7 @@ import HomeProfile from "../../components/user/HomeProfile";
 import DiaryCalendar from "../../components/diary/DiaryCalendar";
 import AddDiaryBtn from "../../components/diary/AddDiaryBtn";
 import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
-import { createTable, deleteAllSQLData } from "../../utils/sql-db";
+import { createTable } from "../../utils/sql-db";
 import {
   daysInMonth,
   getFormattedToday,

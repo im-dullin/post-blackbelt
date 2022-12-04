@@ -18,6 +18,7 @@ import {
   YEARLY_GOAL,
 } from "../../constants/user-inputs-constants";
 import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
+import { handleAlert } from "../../utils/react-native-utils";
 
 export default function EditMyPage({ navigation }) {
   const singleInputProp = {
@@ -28,24 +29,32 @@ export default function EditMyPage({ navigation }) {
     maxLength: 20,
     multiline: true,
   };
-  const handleNavigateMyPage = () => {
-    navigation.navigate(SCREEN_NAME.MY_PAGE);
-  };
-  const handleRemoveDate = () => {
-    removeStorageData(STORAGE_KEY.USER);
+
+  const handleNavigateAdmin = () => {
+    handleAlert("모든 데이터를 삭제합니다", "개발자 모드", [
+      { text: "취소" },
+      {
+        text: "이동",
+        onPress: () => {
+          navigation.navigate(SCREEN_NAME.ADMIN);
+        },
+      },
+    ]);
   };
 
   const headerInfo = {
     left: {
       icon: "chevron-left",
       iconColor: "black",
-      onPress: handleNavigateMyPage,
+      onPress: () => {
+        navigation.navigate(SCREEN_NAME.MY_PAGE);
+      },
     },
     title: `Edit ${SCREEN_NAME.MY_PAGE}`,
     right: {
       icon: "delete",
-      iconColor: "black",
-      onPress: handleRemoveDate,
+      iconColor: "white",
+      onPress: handleNavigateAdmin,
     },
   };
 
