@@ -141,9 +141,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
   },
-
   backgroundContainer: {
-    flex: 0.5,
+    flex: 0.4,
     // backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
   mainContainer: {
@@ -186,7 +185,7 @@ const inheritStyles = StyleSheet.create({
   pieChartSubContainer: {
     ...styles.subContainer,
     height: 230,
-    marginTop: -15,
-    justifyContent: "center",
+    paddingTop: 10,
+    // justifyContent: "center",
   },
 });

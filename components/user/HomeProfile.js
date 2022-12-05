@@ -29,7 +29,7 @@ export default function HomeProfile({ daysInMonth, countDiary }) {
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <Image style={styles.profileImg} source={user.profile} />
       <View style={{ alignContent: "center" }}>
         <Text style={styles.profileUserName}>{user.userName}</Text>
@@ -37,11 +37,17 @@ export default function HomeProfile({ daysInMonth, countDiary }) {
           이번 달 {daysInMonth} 일 중 {countDiary} 일을 운동하셨습니다
         </Text>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    paddingHorizontal: 15,
+    position: "absolute",
+    bottom: 10,
+  },
   profileImg: {
     width: 50,
     height: 50,

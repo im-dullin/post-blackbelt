@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { TECH_CAT } from "../../constants/tech-category-constants";
 import { theme } from "../../theme";
@@ -30,6 +30,7 @@ export default function TechPieChart() {
       return () => {
         setDataObj({});
         setDataArr([]);
+        setLoading(false);
       };
     }, [])
   );
@@ -37,10 +38,17 @@ export default function TechPieChart() {
   useEffect(() => {
     if (Object.keys(dataObj).length === 5) {
       setDataArr(Object.values(dataObj));
-      setLoading(true);
+      handleCountDiary();
     }
   }, [dataObj]);
 
+  const handleCountDiary = () => {
+    Object.keys(dataObj).map((tech) => {
+      if (dataObj[tech].diaryCount) {
+        setLoading(true);
+      }
+    });
+  };
   const handleData = async (tech, tx, result) => {
     const diaryCount = result.rows._array.length;
     const techData = {
@@ -68,7 +76,11 @@ export default function TechPieChart() {
   return (
     <View>
       {!loading ? (
-        <Text>Loading...</Text>
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>
+            작성된 일기가 없습니다. 운동을 기록해보세요.
+          </Text>
+        </View>
       ) : (
         <PieChart
           data={dataArr}
@@ -85,3 +97,12 @@ export default function TechPieChart() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    marginTop: 10,
+  },
+  loadingText: {
+    color: theme.grey,
+  },
+});

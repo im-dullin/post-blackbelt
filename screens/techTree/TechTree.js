@@ -7,7 +7,7 @@ import { TECH_CAT } from "../../constants/tech-category-constants";
 export default function TechTree({ navigation }) {
   return (
     <View style={styles.container}>
-      <TechProfile />
+      <TechProfile style={styles.profileContainer} />
       <View style={styles.techContainer}>
         {TECH_CAT.map((v, i) => {
           return (
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: theme.black,
   },
+
   techContainer: {
     flex: 4,
     backgroundColor: theme.background,

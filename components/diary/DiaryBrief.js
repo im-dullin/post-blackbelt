@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
 import { theme } from "../../theme";
 import { DIARY_CAT_IMG_SRC } from "../../constants/diary-category-constants";
 import { getDiaryByDate, getDiaryById } from "../../utils/sql-db";
@@ -9,7 +8,6 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 
 export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
-  const route = useRoute();
 
   useEffect(() => {
     if (date) {

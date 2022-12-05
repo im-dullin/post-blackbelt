@@ -29,7 +29,7 @@ export default function ReadDiary({ route, navigation }) {
 
   const handleDeleteDiary = () => {
     deleteDiaryById(diary.id);
-    handleGoBack();
+    navigation.goBack();
   };
   const handleDelete = () => {
     handleAlert(

@@ -29,12 +29,14 @@ export default function TechProfile() {
   };
   return (
     <View style={styles.profileContainer}>
-      <Image style={styles.profileImg} source={user.profile} />
-      <Text style={styles.title}>
-        {user.userName === USER_NAME_ERROR
-          ? user.userName
-          : `${user.userName}'s Technique Tree`}
-      </Text>
+      <View style={styles.positioner}>
+        <Image style={styles.profileImg} source={user.profile} />
+        <Text style={styles.title}>
+          {user.userName === USER_NAME_ERROR
+            ? user.userName
+            : `${user.userName} 's technique tree`}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -43,15 +45,20 @@ const styles = StyleSheet.create({
   profileContainer: {
     flex: 1,
     alignItems: "center",
+    position: "relative",
+  },
+  positioner: {
+    position: "absolute",
+    alignItems: "center",
+    bottom: 0,
   },
   profileImg: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginTop: 50,
   },
   title: {
-    marginTop: 5,
+    marginVertical: 13,
     color: theme.white,
     fontSize: 18,
     fontWeight: "500",

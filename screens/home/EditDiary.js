@@ -11,8 +11,6 @@ import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
 import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
-
-import { SCREEN_NAME } from "../../constants/screen-constants";
 import {
   getDiaryByDate,
   saveNewDiary,

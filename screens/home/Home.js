@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { theme } from "../../theme";
 import DiaryBrief from "../../components/diary/DiaryBrief";
 import HomeProfile from "../../components/user/HomeProfile";
@@ -20,11 +21,11 @@ export default function Home({ navigation }) {
   const [currYearMonth, setCurrYearMonth] = useState(
     getYearMonthByDate(getFormattedToday())
   );
-
-  useEffect(() => {
-    createTable();
-    // deleteAllSQLData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      createTable();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -56,11 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.background,
   },
   profileContainer: {
-    flex: 1, // with diaryCategoryContainer: 0.9
-    flexDirection: "row",
-    marginTop: 50,
-    paddingHorizontal: 15,
-    marginBottom: 5,
+    flex: 1.6, // with diaryCategoryContainer: 0.9
+    position: "relative",
   },
   diaryCategoryContainer: {
     flex: 0.85,
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   calenderContainer: {
-    flex: 7, // with diaryCategoryContainer: 7.5
+    flex: 7.3, // with diaryCategoryContainer: 7.5
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
     borderRadius: 10,
