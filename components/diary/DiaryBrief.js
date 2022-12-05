@@ -10,8 +10,7 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
   const route = useRoute();
-  // console.log(route.name);
-  // navigation.goBack()
+
   useEffect(() => {
     if (date) {
       return getDiaryByDate(date, handleDiary);
@@ -26,10 +25,7 @@ export default function DiaryBrief({ date, id, navigation }) {
   };
   const handleOnPress = () => {
     if (diary) {
-      navigation.navigate(SCREEN_NAME.READ_DIARY, {
-        diary,
-        prevScreen: route.name,
-      });
+      navigation.navigate(SCREEN_NAME.READ_DIARY, { diary });
     }
   };
 

@@ -9,18 +9,11 @@ import { deleteDiaryById } from "../../utils/sql-db";
 export default function ReadDiary({ route, navigation }) {
   const { diary } = route.params;
 
-  const handleGoBack = () => {
-    if (route.params.prevScreen === SCREEN_NAME.TECH_DETAIL) {
-      return navigation.navigate(TAB_NAME.TECH_TREE);
-    }
-    navigation.goBack();
-  };
-
   const headerInfo = {
     left: {
       icon: "chevron-left",
       iconColor: "black",
-      onPress: handleGoBack,
+      onPress: () => navigation.goBack(),
     },
     title: "Diary",
     right: {

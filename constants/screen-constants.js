@@ -17,15 +17,15 @@ export const SCREEN_NAME = {
 };
 
 export const NAV_ICON_MAP = {
-  [TAB_NAME.HOME]: {
+  [SCREEN_NAME.HOME]: {
     [true]: "home",
     [false]: "home-outline",
   },
-  [TAB_NAME.TECH_TREE]: {
+  [SCREEN_NAME.TECH_TREE]: {
     [true]: "albums",
     [false]: "albums-outline",
   },
-  [TAB_NAME.MY_PAGE]: {
+  [SCREEN_NAME.MY_PAGE]: {
     [true]: "person",
     [false]: "person-outline",
   },

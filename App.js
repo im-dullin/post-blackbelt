@@ -1,9 +1,10 @@
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "react-native";
-import TabNavigation from "./components/utils/TabNavigation";
+import TabNavigation from "./components/navigation/TabNavigation";
 import dateStore from "./utils/store";
 import { theme } from "./theme";
+import StackNavigation from "./components/navigation/StackNavigation";
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
           StatusBarStyle="light-content"
           backgroundColor={theme.purpleDark}
         />
-        <TabNavigation />
+        <StackNavigation />
       </NavigationContainer>
     </Provider>
   );
