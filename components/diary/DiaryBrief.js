@@ -9,7 +9,9 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 
 export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
+  const [techCat, setTechCat] = useState("STANDING");
 
+  console.log(techCat);
   useFocusEffect(
     useCallback(() => {
       loadDiary();
@@ -30,6 +32,10 @@ export default function DiaryBrief({ date, id, navigation }) {
 
   const handleDiary = (tx, result) => {
     setDiary(result.rows._array[0]);
+    if (result.rows.length !== 0) {
+      return setTechCat(result.rows._array[0].techCategory);
+    }
+    setTechCat("STANDING");
   };
   const handleOnPress = () => {
     if (diary) {
@@ -54,7 +60,7 @@ export default function DiaryBrief({ date, id, navigation }) {
                 source={DIARY_CAT_IMG_SRC[diary?.diaryCategory]}
               />
             )}
-            {diary?.techCategory && (
+            {techCat && (
               <View
                 style={{
                   ...styles.techCategory,
@@ -62,7 +68,7 @@ export default function DiaryBrief({ date, id, navigation }) {
                 }}
               >
                 <Text style={styles.techCategoryTitle}>
-                  {TECH_CAT_MAP[diary?.techCategory].ENG}
+                  {TECH_CAT_MAP[techCat].ENG}
                 </Text>
               </View>
             )}

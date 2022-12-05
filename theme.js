@@ -4,6 +4,10 @@ import {
   GUARD_PASS,
   ETC,
   STANDING,
+  SIDE,
+  MOUNT,
+  BACK,
+  SUBMISSON,
 } from "./constants/tech-category-constants";
 
 export const theme = {
@@ -20,11 +24,15 @@ export const theme = {
   lightred: "#FFCCCB",
   background: "#F9F9F9",
   techBackground: "#0D1018",
-  [ETC]: "#AA96DA",
   [STANDING]: "#A8D8EA",
   [GUARD]: "#FCBAD3",
   [GUARD_PASS]: "#B7E5DD",
-  [AFTER_PASS]: "#F1F0C0",
+  // [AFTER_PASS]: "#F1F0C0",
+  [SIDE]: "#F1F0C0",
+  [MOUNT]: "#AA96DA",
+  [BACK]: "#FFBC56",
+  [SUBMISSON]: "#FFA5A4",
+  [ETC]: "#D2E0EB",
   marginHorizontal: 12,
 };
 

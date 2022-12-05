@@ -59,9 +59,11 @@ export default function TechCategoryPicker() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 5,
+    numRows: 3,
   },
   diaryCategoryContainer: {
     flex: 0.85,
@@ -74,13 +76,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   diaryCategory: {
-    width: 63,
+    width: 80,
     height: 55,
     marginHorizontal: 2,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.purpleLight,
     borderRadius: 10,
+    marginBottom: 10,
   },
   diaryCategoryEng: {
     fontSize: 12,

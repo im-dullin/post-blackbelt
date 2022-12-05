@@ -36,7 +36,7 @@ export default function TechPieChart() {
   );
 
   useEffect(() => {
-    if (Object.keys(dataObj).length === 5) {
+    if (Object.keys(dataObj).length === 8) {
       setDataArr(Object.values(dataObj));
       handleCountDiary();
     }
