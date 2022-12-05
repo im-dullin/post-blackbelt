@@ -32,7 +32,7 @@
    - 1.1 Home / My page / Tech tree 간 이동 ✅
    - 1.2 페이지에 따라 아이콘 색깔 변경 ✅
    - package: react-navigation
-2. 앱 시작 로고(splash)
+2. 앱 시작 로고(splash) ✅
 
 #### Home(Diary Calendar)
 

@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: theme.black,
   },
-
   techContainer: {
     flex: 4,
     backgroundColor: theme.background,
