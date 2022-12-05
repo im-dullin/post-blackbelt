@@ -10,8 +10,6 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
   const [techCat, setTechCat] = useState("STANDING");
-
-  console.log(techCat);
   useFocusEffect(
     useCallback(() => {
       loadDiary();

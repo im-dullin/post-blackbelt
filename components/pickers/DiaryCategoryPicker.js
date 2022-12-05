@@ -9,7 +9,7 @@ import { theme } from "../../theme";
 import { updateDiaryCategory } from "../../utils/store";
 
 const ICON_OPACITY = {
-  [true]: 0.3,
+  [true]: 0.2,
   [false]: 1,
   ACTIVE: 1,
 };

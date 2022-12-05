@@ -9,7 +9,7 @@ import { theme } from "../../theme";
 import { updateTechCategory } from "../../utils/store";
 
 const ICON_OPACITY = {
-  INACTIVE: 0.5,
+  INACTIVE: 0.3,
   ACTIVE: 1,
 };
 export default function TechCategoryPicker() {
@@ -92,5 +92,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
   },
-  diaryCategoryKor: { fontSize: 10, color: theme.black, marginTop: 2 },
+  diaryCategoryKor: { fontSize: 12, color: theme.black, marginTop: 2 },
 });

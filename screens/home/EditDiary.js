@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   catTitle: {
-    fontSize: 11,
+    fontSize: 12,
   },
   diaryCategoryContainer: {
     height: 90,
