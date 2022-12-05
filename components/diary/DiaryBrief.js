@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { theme } from "../../theme";
 import { DIARY_CAT_IMG_SRC } from "../../constants/diary-category-constants";
 import { getDiaryByDate, getDiaryById } from "../../utils/sql-db";
@@ -9,14 +10,23 @@ import { SCREEN_NAME } from "../../constants/screen-constants";
 export default function DiaryBrief({ date, id, navigation }) {
   const [diary, setDiary] = useState({});
 
+  useFocusEffect(
+    useCallback(() => {
+      loadDiary();
+    }, [])
+  );
   useEffect(() => {
+    loadDiary();
+  }, [date]);
+
+  const loadDiary = () => {
     if (date) {
       return getDiaryByDate(date, handleDiary);
     }
     if (id) {
       return getDiaryById(id, handleDiary);
     }
-  }, [date]);
+  };
 
   const handleDiary = (tx, result) => {
     setDiary(result.rows._array[0]);

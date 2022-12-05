@@ -1,13 +1,11 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import { theme } from "../../theme";
 import DiaryBrief from "../../components/diary/DiaryBrief";
 import HomeProfile from "../../components/user/HomeProfile";
 import DiaryCalendar from "../../components/diary/DiaryCalendar";
 import AddDiaryBtn from "../../components/diary/AddDiaryBtn";
-import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
 import { createTable } from "../../utils/sql-db";
 import {
   daysInMonth,
@@ -21,7 +19,7 @@ export default function Home({ navigation }) {
   const [currYearMonth, setCurrYearMonth] = useState(
     getYearMonthByDate(getFormattedToday())
   );
-  useFocusEffect(
+  useEffect(
     useCallback(() => {
       createTable();
     }, [])
@@ -72,7 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.white,
     marginHorizontal: theme.marginHorizontal,
     borderRadius: 10,
-    // backgroundColor: "orange",
   },
   diaryContainer: {
     flex: 2.8, // with diaryCategoryContainer: 2.5
