@@ -1,14 +1,23 @@
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useState } from "react";
 import Header from "../../components/utils/Header";
 import { SCREEN_NAME, TAB_NAME } from "../../constants/screen-constants";
 import DiaryFull from "../../components/diary/DiaryFull";
 import { theme } from "../../theme";
 import { handleAlert } from "../../utils/react-native-utils";
-import { deleteDiaryById } from "../../utils/sql-db";
+import { deleteDiaryById, getDiaryById } from "../../utils/sql-db";
 
 export default function ReadDiary({ route, navigation }) {
-  const { diary } = route.params;
+  const diaryId = route.params.diary.id;
+  const [diary, setDiary] = useState();
 
+  useFocusEffect(
+    useCallback(() => {
+      loadDiary();
+      return () => {};
+    }, [])
+  );
   const headerInfo = {
     left: {
       icon: "chevron-left",
@@ -21,6 +30,14 @@ export default function ReadDiary({ route, navigation }) {
       iconColor: "white",
       onPress: () => {},
     },
+  };
+
+  const loadDiary = () => {
+    getDiaryById(diaryId, handleDiary);
+  };
+
+  const handleDiary = (tx, result) => {
+    setDiary(result.rows._array[0]);
   };
 
   const handleUpdate = () => {
@@ -50,7 +67,7 @@ export default function ReadDiary({ route, navigation }) {
     <View style={styles.container}>
       <Header headerInfo={headerInfo} />
       <View style={styles.diaryContainer}>
-        <DiaryFull diary={diary} />
+        {diary && <DiaryFull diary={diary} />}
       </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
