@@ -19,7 +19,6 @@ export default function DiaryCalendar(props) {
   const [selectedDay, setSelectedDay] = useState(today);
   const [selectedYearMonth, setSelectedYearMonth] = useState(yearMonth);
   const [days, setDays] = useState({});
-
   const dispatch = useDispatch();
 
   useFocusEffect(
@@ -47,14 +46,14 @@ export default function DiaryCalendar(props) {
     getMonthlyDiarys(selectedYearMonth, handleMonthyDiarys);
   };
 
-  const handleMonthyDiarys = (tx, result) => {
+  const handleMonthyDiarys = async (tx, result) => {
     const resultArr = result.rows._array;
-    const monthlyDays = resultArr.reduce((accum, v) => {
+    const monthlyDays = await resultArr.reduce((accum, v) => {
       return { ...accum, [v.date]: { diaryCategory: v.diaryCategory } };
     }, {});
     props.setCountDiary(resultArr.length);
     setDays(monthlyDays);
-    handleMarkingDays();
+    await handleMarkingDays();
   };
 
   const checkMarkingToday = (compareDay, updateMark) => {
@@ -63,44 +62,38 @@ export default function DiaryCalendar(props) {
     }
     return updateMark;
   };
-  const updateMarkingDays = async (isDaysContain, updateDay, updateMark) => {
-    if (isDaysContain) {
-      return setDays((prevState) => {
-        return {
-          ...prevState,
-          [updateDay]: { ...prevState[updateDay], ...updateMark },
-        };
-      });
-    }
+
+  const setMarkingDays = async (day, newMarking) => {
     setDays((prevState) => {
+      const prevMarking = prevState[day];
       return {
         ...prevState,
-        [updateDay]: updateMark,
+        [day]: { ...prevMarking, ...newMarking },
       };
     });
   };
 
   const handleMarkingDays = async () => {
     if (today === selectedDay) {
-      return updateMarkingDays(days[today], today, {
+      return setMarkingDays(today, {
         today: true,
         selected: true,
       });
     }
-    await updateMarkingDays(days[today], today, { today: true });
-    await updateMarkingDays(days[selectedDay], selectedDay, { selected: true });
+    await setMarkingDays(today, { today: true });
+    await setMarkingDays(selectedDay, { selected: true });
   };
 
-  const handleMarkingSelected = (props) => {
-    const { dateString: currSelectedDay } = props;
+  const handleMarkingSelected = (date) => {
+    const { dateString: currSelectedDay } = date;
 
     // delete previous selected mark
     const prevMarking = checkMarkingToday(selectedDay, { selected: false });
-    updateMarkingDays(days[selectedDay], selectedDay, prevMarking);
+    setMarkingDays(selectedDay, prevMarking);
 
     // create or add selected object to markedDays
     const currMarking = checkMarkingToday(currSelectedDay, { selected: true });
-    updateMarkingDays(days[currSelectedDay], currSelectedDay, currMarking);
+    setMarkingDays(currSelectedDay, currMarking);
 
     setSelectedDay(currSelectedDay);
   };
