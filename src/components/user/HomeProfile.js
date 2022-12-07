@@ -1,14 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import profileImg from "../../assets/images/profile.png";
+import profileImg from "../../../assets/images/user.png";
 import { theme } from "../../theme";
 import {
   getUserProfileAndName,
   USER_NAME_ERROR,
 } from "../../utils/async-storage-fn";
 
-export default function TechProfile() {
+export default function HomeProfile({ daysInMonth, countDiary }) {
   const defaultUser = {
     profile: profileImg,
     userName: USER_NAME_ERROR,
@@ -27,14 +27,14 @@ export default function TechProfile() {
     }
     setUser(asyncStorageUser);
   };
+
   return (
-    <View style={styles.profileContainer}>
-      <View style={styles.positioner}>
-        <Image style={styles.profileImg} source={user.profile} />
-        <Text style={styles.title}>
-          {user.userName === USER_NAME_ERROR
-            ? user.userName
-            : `${user.userName} 's technique tree`}
+    <View style={styles.container}>
+      <Image style={styles.profileImg} source={user.profile} />
+      <View style={{ alignContent: "center" }}>
+        <Text style={styles.profileUserName}>{user.userName}</Text>
+        <Text style={{ color: theme.grey }}>
+          이번 달 {daysInMonth} 일 중 {countDiary} 일을 운동하셨습니다
         </Text>
       </View>
     </View>
@@ -42,25 +42,22 @@ export default function TechProfile() {
 }
 
 const styles = StyleSheet.create({
-  profileContainer: {
-    flex: 1,
-    alignItems: "center",
-    position: "relative",
-  },
-  positioner: {
+  container: {
+    flexDirection: "row",
+    paddingHorizontal: 15,
     position: "absolute",
-    alignItems: "center",
-    bottom: 0,
+    bottom: 10,
   },
   profileImg: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 15,
   },
-  title: {
-    marginVertical: 13,
-    color: theme.white,
-    fontSize: 18,
-    fontWeight: "500",
+  profileUserName: {
+    color: theme.black,
+    fontSize: 22,
+    fontWeight: "400",
+    marginBottom: 5,
   },
 });

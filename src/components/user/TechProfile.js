@@ -1,14 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import profileImg from "../../assets/images/user.png";
+import profileImg from "../../../assets/images/profile.png";
 import { theme } from "../../theme";
 import {
   getUserProfileAndName,
   USER_NAME_ERROR,
 } from "../../utils/async-storage-fn";
 
-export default function HomeProfile({ daysInMonth, countDiary }) {
+export default function TechProfile() {
   const defaultUser = {
     profile: profileImg,
     userName: USER_NAME_ERROR,
@@ -27,14 +27,14 @@ export default function HomeProfile({ daysInMonth, countDiary }) {
     }
     setUser(asyncStorageUser);
   };
-
   return (
-    <View style={styles.container}>
-      <Image style={styles.profileImg} source={user.profile} />
-      <View style={{ alignContent: "center" }}>
-        <Text style={styles.profileUserName}>{user.userName}</Text>
-        <Text style={{ color: theme.grey }}>
-          이번 달 {daysInMonth} 일 중 {countDiary} 일을 운동하셨습니다
+    <View style={styles.profileContainer}>
+      <View style={styles.positioner}>
+        <Image style={styles.profileImg} source={user.profile} />
+        <Text style={styles.title}>
+          {user.userName === USER_NAME_ERROR
+            ? user.userName
+            : `${user.userName} 's technique tree`}
         </Text>
       </View>
     </View>
@@ -42,22 +42,25 @@ export default function HomeProfile({ daysInMonth, countDiary }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    paddingHorizontal: 15,
+  profileContainer: {
+    flex: 1,
+    alignItems: "center",
+    position: "relative",
+  },
+  positioner: {
     position: "absolute",
-    bottom: 10,
+    alignItems: "center",
+    bottom: 0,
   },
   profileImg: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
-  profileUserName: {
-    color: theme.black,
-    fontSize: 22,
-    fontWeight: "400",
-    marginBottom: 5,
+  title: {
+    marginVertical: 13,
+    color: theme.white,
+    fontSize: 18,
+    fontWeight: "500",
   },
 });

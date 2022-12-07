@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { theme } from "../../theme";
-import TechTree from "../../screens/techTree/TechTree";
-import Home from "../../screens/home/Home";
-import MyPage from "../../screens/myPage/MyPage";
-import { NAV_ICON_MAP, SCREEN_NAME } from "../../constants/screen-constants";
+import { theme } from "../theme";
+import TechTree from "../screens/techTree/TechTree";
+import Home from "../screens/home/Home";
+import MyPage from "../screens/myPage/MyPage";
+import { NAV_ICON_MAP, SCREEN_NAME } from "../constants/screen-constants";
 
 const Tab = createBottomTabNavigator();
 

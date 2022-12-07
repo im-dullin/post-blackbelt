@@ -1,8 +1,8 @@
-import lessonDayImg from "../assets/icons/lessonDay.png";
-import sparringDayImg from "../assets/icons/sparringDay.png";
-import competitionImg from "../assets/icons/competition.png";
-import promotionImg from "../assets/icons/promotion.png";
-import openMatImg from "../assets/icons/openMat.png";
+import lessonDayImg from "../../assets/icons/lessonDay.png";
+import sparringDayImg from "../../assets/icons/sparringDay.png";
+import competitionImg from "../../assets/icons/competition.png";
+import promotionImg from "../../assets/icons/promotion.png";
+import openMatImg from "../../assets/icons/openMat.png";
 
 const LESSON_DAY = "LESSON_DAY";
 const SPARRING_DAY = "SPARRING_DAY";

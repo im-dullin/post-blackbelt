@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SCREEN_NAME } from "../../constants/screen-constants";
-import EditDiary from "../../screens/home/EditDiary";
-import ReadDiary from "../../screens/home/ReadDiary";
-import Admin from "../../screens/myPage/Admin";
-import EditMyPage from "../../screens/myPage/EditMyPage";
-import Login from "../../screens/myPage/Login";
-import TechDetail from "../../screens/techTree/TechDetail";
+import { SCREEN_NAME } from "../constants/screen-constants";
+import EditDiary from "../screens/home/EditDiary";
+import ReadDiary from "../screens/home/ReadDiary";
+import Admin from "../screens/myPage/Admin";
+import EditMyPage from "../screens/myPage/EditMyPage";
+import Login from "../screens/myPage/Login";
+import TechDetail from "../screens/techTree/TechDetail";
 import TabNavigation from "./TabNavigation";
 
 const Stack = createNativeStackNavigator();

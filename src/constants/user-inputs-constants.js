@@ -1,6 +1,6 @@
 import { themeBelt } from "../theme";
-import profileImg from "../assets/images/user.png";
-import backgroundImg from "../assets/images/userBackground.jpg";
+import profileImg from "../../assets/images/user.png";
+import backgroundImg from "../../assets/images/userBackground.jpg";
 import { getFormattedToday } from "../utils/date-fn";
 
 export const defaultUser = {

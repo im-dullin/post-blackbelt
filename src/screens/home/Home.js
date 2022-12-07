@@ -15,7 +15,6 @@ import {
 
 export default function Home({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
-
   const [countDiary, setCountDiary] = useState(0);
   const [currYearMonth, setCurrYearMonth] = useState(
     getYearMonthByDate(getFormattedToday())
