@@ -4,6 +4,7 @@ import competitionImg from "../../assets/icons/competition.png";
 import promotionImg from "../../assets/icons/promotion.png";
 import openMatImg from "../../assets/icons/openMat.png";
 
+export const DIARY_CAT_KEY = "diaryCategory";
 const LESSON_DAY = "LESSON_DAY";
 const SPARRING_DAY = "SPARRING_DAY";
 const COMPETITON = "COMPETITON";

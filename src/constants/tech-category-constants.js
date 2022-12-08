@@ -1,3 +1,4 @@
+export const TECH_CAT_KEY = "techCategory";
 export const STANDING = "STANDING";
 export const GUARD = "GUARD";
 export const GUARD_PASS = "GUARD_PASS";

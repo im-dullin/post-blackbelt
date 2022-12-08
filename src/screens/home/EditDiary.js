@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useFocusEffect } from "@react-navigation/native";
 import DiaryEditor from "../../components/diary/DiaryEditor";
-import DiaryCategoryPicker from "../../components/pickers/DiaryCategoryPicker";
-import TechCategoryPicker from "../../components/pickers/TechCategoryPicker";
 import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
 
 import { theme } from "../../theme";
@@ -18,10 +16,10 @@ import {
 } from "../../utils/sql-db";
 import { DIARY_INPUT, DIARY_KEYS } from "../../constants/edit-diary-constants";
 import { handleAlert } from "../../utils/react-native-utils";
+import DiaryCatListPicker from "../../components/pickers/DiaryCatListPicker";
+import TechCatListPicker from "../../components/pickers/TechCatListPicker";
 
 export default function EditDiary({ route, navigation }) {
-  // const storeDate = useSelector((state) => state.selectedDate);
-  // const { date } = route?.params;
   const { date } = route.params;
   const storeDiary = useSelector((state) => state.editDiary);
   const dispatch = useDispatch();
@@ -101,13 +99,13 @@ export default function EditDiary({ route, navigation }) {
         <KeyboardAwareScrollView>
           <View id="diary-category" style={styles.diaryCategoryContainer}>
             <Text style={styles.catTitle}>기록할 일정을 선택해주세요.</Text>
-            <DiaryCategoryPicker isPicker />
+            <DiaryCatListPicker />
           </View>
           <View id="tech-category" style={styles.techCategoryContainer}>
             <Text style={styles.catTitle}>
               오늘 배운 내용을 기술 트리에 저장해보세요.
             </Text>
-            <TechCategoryPicker />
+            <TechCatListPicker />
           </View>
           <View id="edit-diary-container" style={styles.editDirayContainer}>
             <DiaryEditor />
