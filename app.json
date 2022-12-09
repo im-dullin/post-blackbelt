@@ -2,7 +2,7 @@
   "expo": {
     "name": "post-blackbelt",
     "slug": "post-blackbelt",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,6 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "versionCode": 2,
       "package": "com.quartz_u.postblackbelt"
     },
     "web": {
