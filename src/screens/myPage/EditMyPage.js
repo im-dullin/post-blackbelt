@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Header from "../../components/utils/Header";
 import DatePicker from "../../components/inputs/InputDatePicker";
@@ -19,6 +19,7 @@ import {
 } from "../../constants/user-inputs-constants";
 import { removeStorageData, STORAGE_KEY } from "../../utils/async-storage-fn";
 import { handleAlert } from "../../utils/react-native-utils";
+import { theme } from "../../theme";
 
 export default function EditMyPage({ navigation }) {
   const singleInputProp = {
@@ -62,6 +63,9 @@ export default function EditMyPage({ navigation }) {
     <View style={styles.container}>
       <Header headerInfo={headerInfo} />
       <View style={styles.inputs}>
+        <Text style={styles.title}>
+          정보를 입력하고 저장 버튼을 눌러주세요.
+        </Text>
         <KeyboardAwareScrollView>
           <Input type={NAME} lineInputProp={singleInputProp} />
           <Input type={TEAM} lineInputProp={singleInputProp} />
@@ -82,5 +86,10 @@ const styles = StyleSheet.create({
   },
   inputs: {
     flex: 5,
+    alignItems: "center",
+  },
+  title: {
+    marginTop: 10,
+    color: theme.grey,
   },
 });

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { theme } from "../../theme";
@@ -12,6 +12,7 @@ import {
   getFormattedToday,
   getYearMonthByDate,
 } from "../../utils/date-fn";
+import { SCREEN_NAME } from "../../constants/screen-constants";
 
 export default function Home({ navigation }) {
   const storeDate = useSelector((state) => state.selectedDate);
@@ -25,14 +26,22 @@ export default function Home({ navigation }) {
     }, [])
   );
 
+  const handleProfilePress = () => {
+    navigation.navigate(SCREEN_NAME.MY_PAGE);
+  };
+
   return (
     <View style={styles.container}>
-      <View id="profile" style={styles.profileContainer}>
+      <TouchableOpacity
+        id="profile"
+        style={styles.profileContainer}
+        onPress={handleProfilePress}
+      >
         <HomeProfile
           daysInMonth={daysInMonth(currYearMonth)}
           countDiary={countDiary}
         />
-      </View>
+      </TouchableOpacity>
       {/* <View id="categories" style={styles.diaryCategoryContainer}>
         <DiaryCategoryPicker isPicker={false} />
       </View> */}
