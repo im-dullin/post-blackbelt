@@ -1,6 +1,8 @@
 # Post Black Belt
-
+[구글 플레이스토어 출시 링크](https://play.google.com/store/apps/details?id=com.quartz_u.postblackbelt)
 ## 서비스 소개
+
+
 
 > **주짓수 수련자**를 위한 모바일 수련 기록 일기장 앱입니다.
 
@@ -11,7 +13,11 @@
 1. **날짜와 일기 카테고리**를 기준으로 **달력 형식** 일기 확인
 2. **기술 카테고리**를 기준으로 분류된 **기술 트리 형식**의 일기 확인
 
-모든 일기는 사용자의 디바이스에 저장되어 프리아빗하게 관리됩니다.
+모든 일기는 사용자의 디바이스에 저장되어 프라이빗하게 관리됩니다.
+
+![Dec-09-2022 16-55-21](https://user-images.githubusercontent.com/79842380/206652921-04f90cc4-f136-40ae-8475-7b105cfc78b0.gif)
+
+![Dec-09-2022 16-55-15](https://user-images.githubusercontent.com/79842380/206652935-25dc2cdf-bcc2-4c2f-852f-25334179642b.gif)
 
 ## 사용 기술
 
