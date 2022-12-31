@@ -6,7 +6,7 @@ import { theme } from "../../theme";
 import {
   getUserProfileAndName,
   USER_NAME_ERROR,
-} from "../../utils/async-storage-fn";
+} from "../../utils/local-storage-fn/diary-async";
 
 export default function TechProfile() {
   const defaultUser = {

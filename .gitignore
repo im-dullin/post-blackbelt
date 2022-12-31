@@ -9,6 +9,14 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+environment.js
+not_implemented
+
+
+# 앱출시: version, versionCode ++ & comment 처리
+credentials.json
+env.js
+
 
 # macOS
 .DS_Store

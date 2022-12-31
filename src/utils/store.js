@@ -41,7 +41,7 @@ const date = createSlice({
   },
 });
 
-const dateStore = configureStore({ reducer: date.reducer });
+const reduxStore = configureStore({ reducer: date.reducer });
 export const {
   updateSelectedDate,
   initializeEditDiray,
@@ -52,4 +52,4 @@ export const {
   updateContent,
 } = date.actions;
 
-export default dateStore;
+export default reduxStore;

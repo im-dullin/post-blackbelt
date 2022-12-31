@@ -8,7 +8,10 @@ import TechPieChart from "../../components/user/TechPieChart";
 import { SCREEN_NAME } from "../../constants/screen-constants";
 import profileImg from "../../../assets/images/user.png";
 import backgroundImg from "../../../assets/images/userBackground2.jpg";
-import { getStorageUser, isIncludeKey } from "../../utils/async-storage-fn";
+import {
+  getStorageUser,
+  setDefaultUser,
+} from "../../utils/local-storage-fn/diary-async";
 import {
   defaultUser,
   PROMOTION_DATE,
@@ -16,9 +19,9 @@ import {
 } from "../../constants/user-inputs-constants";
 import { dateDiffInDays, dateFormatter } from "../../utils/date-fn";
 import Belt from "../../components/user/Belt";
-import Header from "../../components/utils/Header";
 import MyPageProfile from "../../components/user/MyPageProfile";
 import MyPageGoals from "../../components/user/MyPageGoals";
+import MyPageHeader from "../../components/headers/MyPageHeader";
 
 export default function MyPage({ navigation }) {
   const [user, setUser] = useState(defaultUser);
@@ -28,23 +31,8 @@ export default function MyPage({ navigation }) {
       return () => {};
     }, [])
   );
-  const handleNavigateEditMyPage = () => {
-    navigation.navigate(SCREEN_NAME.EDIT_MY_PAGE);
-  };
 
-  const headerInfo = {
-    left: {
-      icon: "edit",
-      iconColor: "white",
-      onPress: () => {},
-    },
-    title: SCREEN_NAME.MY_PAGE,
-    right: {
-      icon: "settings",
-      iconColor: "white",
-      onPress: () => {},
-    },
-  };
+  const handleNavigateEditMyPage = () => {};
 
   const setFormattedStartDate = async (startDate) => {
     const today = new Date();
@@ -53,73 +41,66 @@ export default function MyPage({ navigation }) {
       [START_DATE]: dateFormatter(startDate),
       DDay,
     };
-    await setFormattedDate(updateUser);
+    await setUpdateUser(updateUser);
   };
   const setFormattedpPromotionDate = async (promotionDate) => {
     const updateUser = {
       [PROMOTION_DATE]: dateFormatter(promotionDate),
     };
-    await setFormattedDate(updateUser);
+    await setUpdateUser(updateUser);
   };
 
-  const setFormattedDate = async (updateUser) => {
+  const setUpdateUser = async (updateUser) => {
     setUser((prevUser) => {
       return { ...prevUser, ...updateUser };
     });
   };
   const loadUser = async () => {
     const asyncStorageUser = await getStorageUser();
-    // console.log(asyncStorageUser);
-    if (asyncStorageUser === null) {
-      return setUser(defaultUser);
-    }
-    await setFormattedDate(asyncStorageUser);
 
-    if (isIncludeKey(asyncStorageUser, START_DATE)) {
-      const startDate = new Date(asyncStorageUser[START_DATE]);
-      await setFormattedStartDate(startDate);
-    }
-    if (isIncludeKey(asyncStorageUser, PROMOTION_DATE)) {
-      const promotionDate = asyncStorageUser[PROMOTION_DATE];
-      await setFormattedpPromotionDate(promotionDate);
-    }
+    const loadedUser = asyncStorageUser
+      ? await setDefaultUser(asyncStorageUser)
+      : defaultUser;
+
+    await setUpdateUser(loadedUser);
+    await setFormattedStartDate(new Date(loadedUser[START_DATE]));
+    await setFormattedpPromotionDate(loadedUser[PROMOTION_DATE]);
   };
 
   return (
     <View style={styles.container}>
-      <Header headerInfo={headerInfo} />
+      <MyPageHeader navigation={navigation} />
       <View id="mypage-background" style={styles.backgroundContainer}>
         {/* <Image style={styles.backgroundImg} source={user[BACKGROUND_IMG]} /> */}
       </View>
       <View id="mypage-main" style={styles.mainContainer}>
         <TouchableOpacity
-          style={styles.editBtn}
-          onPress={handleNavigateEditMyPage}
+          style={styles.userContainer}
+          onPress={() => navigation.navigate(SCREEN_NAME.EDIT_MY_PAGE)}
         >
-          <Text style={styles.editBtnText}>수정하기</Text>
-        </TouchableOpacity>
-        <Image
-          id="mypage-profile-img"
-          style={styles.profileImg}
-          source={profileImg}
-          // source={user[PROFILE_IMG]}
-        />
-        <View id="mypage-profile-container" style={styles.profileContainer}>
-          <MyPageProfile user={user} />
-          <View id="mypage-belt-container">
-            <Belt user={user} />
+          <Image
+            id="mypage-profile-img"
+            style={styles.profileImg}
+            source={profileImg}
+          />
+          <View id="mypage-profile-container" style={styles.profileContainer}>
+            <MyPageProfile user={user} />
+            <View id="mypage-belt-container">
+              <Belt user={user} />
+            </View>
           </View>
-        </View>
-        <View id="mypage-goals" style={inheritStyles.goalsSubContainer}>
-          <MyPageGoals user={user} />
-        </View>
-        <View
+          <View id="mypage-goals" style={inheritStyles.goalsSubContainer}>
+            <MyPageGoals user={user} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
           id="mypage-tech-piechart"
           style={inheritStyles.pieChartSubContainer}
+          onPress={() => navigation.navigate(SCREEN_NAME.TECH_TREE)}
         >
           <Text>나의 기술 분포도</Text>
           <TechPieChart />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -129,14 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  editBtn: {
-    padding: 8,
-    backgroundColor: theme.purpleLight,
-    position: "absolute",
-    right: 20,
-    top: -10,
-    borderRadius: 10,
-  },
+
   editBtnText: {
     fontSize: 12,
     textAlign: "center",
@@ -145,17 +119,23 @@ const styles = StyleSheet.create({
     flex: 0.4,
     // backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
+  userContainer: {
+    width: "100%",
+    flex: 0.96,
+    alignItems: "center",
+    justifyContent: "space-around",
+    position: "relative",
+  },
   mainContainer: {
     flex: 4,
     alignItems: "center",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
     position: "relative",
   },
   subContainer: {
     backgroundColor: theme.white,
     width: "90%",
     borderRadius: 10,
-
     alignItems: "center",
   },
 

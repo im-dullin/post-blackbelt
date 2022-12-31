@@ -6,7 +6,7 @@ import { theme } from "../../theme";
 import {
   getUserProfileAndName,
   USER_NAME_ERROR,
-} from "../../utils/async-storage-fn";
+} from "../../utils/local-storage-fn/diary-async";
 
 export default function HomeProfile({ daysInMonth, countDiary }) {
   const defaultUser = {
@@ -22,9 +22,6 @@ export default function HomeProfile({ daysInMonth, countDiary }) {
   );
   const checkUser = async () => {
     const asyncStorageUser = await getUserProfileAndName();
-    if (!asyncStorageUser) {
-      return setUser(defaultUser);
-    }
     setUser(asyncStorageUser);
   };
 

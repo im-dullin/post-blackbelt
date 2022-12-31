@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useFocusEffect } from "@react-navigation/native";
 import DiaryEditor from "../../components/diary/DiaryEditor";
-import EditDiaryHeader from "../../components/utils/EditDiaryHeader";
+import EditDiaryHeader from "../../components/headers/EditDiaryHeader";
 
 import { theme } from "../../theme";
 import { initializeEditDiray, updateEditDiary } from "../../utils/store";
@@ -13,7 +13,7 @@ import {
   getDiaryByDate,
   saveNewDiary,
   updateDiaryById,
-} from "../../utils/sql-db";
+} from "../../utils/local-storage-fn/sql-db";
 import { DIARY_INPUT, DIARY_KEYS } from "../../constants/edit-diary-constants";
 import { handleAlert } from "../../utils/react-native-utils";
 import DiaryCatListPicker from "../../components/pickers/DiaryCatListPicker";
