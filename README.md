@@ -90,7 +90,15 @@
 > [[React Design Pattern] 변경에 유연한 Picker Component 만들기](https://velog.io/@skyu_dev/React-Design-Pattern-변경에-유연한-Picker-Component-만들기)
 
 
-### 2. 사용자 피드백 반영하여 UI 
+### 2. Firebase AuthService를 객체 지향적으로 구현
+
+- 횡단 관심사인 인증 서비스를 context API를 사용하여 별도의 레이어로 분리하고, 관련 로직을 class로 추출하여 코드 응집도 높임.
+
+> [[Refactoring] 프론트엔드의 AuthService에 Class, Context API, Custom hook을 첨가하여 객체 지향적으로 만들기](https://velog.io/@skyu_dev/Refactoring-프론트엔드의-AuthService를-Class-Context-API-Custom-hook을-첨가하여-객체-지향적으로-만들기)
+
+
+
+### 3. 사용자 피드백 반영하여 UI 
 
 **(기존) Input마다 정보를 저장 > (변경 후)모든 사용자 정보를 한 번에 저장**
 
