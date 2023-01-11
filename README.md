@@ -13,7 +13,9 @@
 1. **날짜와 일기 카테고리**를 기준으로 **달력 형식** 일기 확인
 2. **기술 카테고리**를 기준으로 분류된 **기술 트리 형식**의 일기 확인
 
-모든 일기는 사용자의 디바이스에 저장되어 프라이빗하게 관리됩니다.
+모든 일기는 사용자의 디바이스에 저장되어 프라이빗하게 관리되며, 필요 시 서버에 일기를 저장할 수 있습니다.
+
+> [앱 출시기 블로그 글](https://velog.io/@skyu_dev/주니어-웹-개발자의-4-개월만의-첫-앱-출시기-feat.-구글의-전화)
 
 ## 사용 기술
 
@@ -25,14 +27,13 @@
   <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=expo&logoColor=white"> 
 </div>
 
-### BE & local DB
+### BE
 
 <div style="float: left;">
-  <img src="https://img.shields.io/badge/firebase-firestore database-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"> 
-  <img src="https://img.shields.io/badge/firebase-authentication-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"> 
-  <img src="https://img.shields.io/badge/expo-sqlite-black?style=for-the-badge&logo=expo&logoColor=white"> 
- <img src="https://img.shields.io/badge/react native-async storage-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+  <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"> 
 </div>
+
+- Firestore database, Authentication
 
 ### Tools
 <div style="float: left;">
@@ -40,9 +41,10 @@
    <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=black"> 
 </div>
 
-> [AngularJS Git Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
+- [Git Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
 
 ### Packages
+- local DB: `react-native-async-storage` `expo-sqlite`
 - 홈 화면 달력 컴포넌트: `react-native-calendars`
 - 문자 picker: `react-native-picker`
 - 날짜 picker: `react-native-community/datetimepicker`
@@ -74,112 +76,76 @@
  ┗ 📜theme.js
 ```
 
-# 개발 시 고민한 내용들
+# Main implements: 개발 시 고민한 내용들
 
-### 1. 컴포넌트 재사용성
+### 1. 컴포넌트 재사용성 고려
 
-#### 1.1 ListPicker 컴포넌트의 재사용성 고려
+**ListPicker 컴포넌트**
 
 - 컴포넌트 분리 목적: 데이터 처리 로직이 유사한 2 개의 `ListPicker` 컴포넌트의 재사용성을 고려. 변경에 더 유연하도록 리팩토링
 - 데모 영상
 
 ![Dec-25-2022 22-24-10](https://user-images.githubusercontent.com/79842380/209470034-4362e1ed-5066-4bad-b275-f9a7a926cdb2.gif)
 
-- 코드 구현 방법
-
-![image](https://user-images.githubusercontent.com/79842380/209470857-310e1d0e-a234-4e1d-be72-1d949ec1c9e4.png)
-
-- 구현 코드
-
-  1.  도메인 분리하기
-
-      **`ListPicker`: 반복되는 디자인, 데이터 처리 담당**
-
-      - 디자인의 반복: 카테고리를 리스트 형태로 나열 & 사용자의 선택 항목만 `updateActiveIconOpacity` 함수를 사용하여 opacity 높임
-      - 데이터 처리의 반복: 사용자가 선택한 항목을 `dispatch` 함수를 사용하여 전역 상태 관리
-
-  ```jsx
-  export default function ListPicker({ items, dispatch, jsx }) {
-    const opacityArr = Array(items.length).fill(ICON_OPACITY.INACTIVE);
-    const [iconsOpacity, setIconOpacity] = useState(opacityArr);
-
-    const updateActiveIconOpacity = (i) => {
-      setIconOpacity(() => {
-        const result = opacityArr;
-        result[i] = ICON_OPACITY.ACTIVE;
-        return result;
-      });
-    };
-
-    const handleOnPress = (CAT, i) => {
-      updateActiveIconOpacity(i);
-      dispatch(CAT.ID);
-    };
-    return (
-      <>
-        {items.map((CAT, i) => {
-          return (
-            <Pressable
-              key={CAT.ID}
-              style={{ opacity: iconsOpacity[i] }}
-              onPress={handleOnPress.bind(this, CAT, i)}
-            >
-              {jsx(CAT)}
-            </Pressable>
-          );
-        })}
-      </>
-    );
-  }
-  ```
-
-  2.  데이터 로직 주입하기
-  3.  UI 로직 주입하기
-
-      **`DiaryCatListPicker: `ListPicker` 컴포넌트에 데이터와 UI로직을 주입하여 구현`**
-
-      - items: `ListPicker`에 주입될 데이터
-      - dispatch: `ListPicker`의 데이터를 처리할 로직
-      - jsx: `ListPicker`의 UI를 담당하는 리액트 컴포넌트(컴포넌트 합성)
-
-  ```jsx
-  export default function DiaryCatListPicker() {
-    return (
-      <View style={styles.container}>
-        <ListPicker
-          items={DIARY_CAT}
-          dispatch={dispatchPressedCategory}
-          jsx={DiaryJSX}
-        />
-      </View>
-    );
-  }
-
-  const DiaryJSX = (CAT) => {
-    return (
-      <View style={styles.diaryCategory}>
-        <Image style={styles.diaryCategoryImg} source={CAT.IMG_SRC} />
-        <Text style={styles.diaryCategoryTitle}>{CAT.KOR}</Text>
-      </View>
-    );
-  };
-  ```
-
 > [[React Design Pattern] 변경에 유연한 Picker Component 만들기](https://velog.io/@skyu_dev/React-Design-Pattern-변경에-유연한-Picker-Component-만들기)
 
-#### 1.2 Forms & Inputs 컴포넌트의 재사용성 고려
 
-### 2. 캘린더 UI
+### 2. 사용자 피드백 반영하여 UI 
 
-- 여러 캘린더 앱 비교하면서 리렌더링 발생 시기 비교
-
-### 3. 사용자 피드백 반영
-
-## 3.1 Input마다 정보를 저장 > 모든 사용자 정보를 한 번에 저장
+**(기존) Input마다 정보를 저장 > (변경 후)모든 사용자 정보를 한 번에 저장**
 
 ![image](https://user-images.githubusercontent.com/79842380/209470102-bb99d3d9-48f5-46f7-bfcf-6e29a252d684.png)
 
-# 화면(Screen)별 기능 목록
+- 각 input 별로 발생했던 submit event를 `EditMyPage` 페이지의 헤더에서 일괄로 처리하도록 함
+```jsx
+export default function EditMyPage({ navigation }) {
+  const [user, setUser] = useState(emptyUser);
+
+  ... 코드 중략
+
+  const setUserByType = (type, payload) => {
+    setUser((prev) => {
+      return { ...prev, [type]: payload };
+    });
+  };
+
+  const handleSubmit = async () => {
+    await saveStorageUser(user);
+    navigation.goBack();
+  };
+
+  return (
+    <View style={styles.container}>
+      <HeaderEditMyPage navigation={navigation} handleSubmit={handleSubmit} />
+      <View style={styles.inputs}>
+        <KeyboardAwareScrollView>
+          <SingleLineForm
+            title={INPUT_TITLE[INPUT_TYPE.NAME]}
+            text={user[INPUT_TYPE.NAME]}
+            setText={setUserByType.bind(this, INPUT_TYPE.NAME)}
+          />
+          <SingleLineForm /> // 하기 컴포넌트들의 props 중략함
+          <DatePickerForm />
+          <DropdownPickerForm />
+          <DropdownPickerForm />
+          <DatePickerForm />
+          <MultiLineForm /> 
+          <MultiLineForm
+            title={INPUT_TITLE[INPUT_TYPE.MONTHLY_GOAL]}
+            text={user[INPUT_TYPE.MONTHLY_GOAL]}
+            setText={setUserByType.bind(this, INPUT_TYPE.MONTHLY_GOAL)}
+          />
+        </KeyboardAwareScrollView>
+      </View>
+    </View>
+  );
+}
+
+```
+
+
+
+# 버전 별 기능 목록(화면/Screen 별로 분리)
 
 ## Version 1
 
